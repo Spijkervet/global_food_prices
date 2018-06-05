@@ -43,15 +43,47 @@ def get_values_column(df, column_name, value):
     """
     return df.loc[df[column_name] == value]
 
+def save_to_csv(df, filename):
+    """
+    Save dataframe to csv.
+    """
+    df.to_csv(filename, sep=',', encoding='utf-8')
+
+
 if __name__ == "__main__":
-    df = pd.read_csv('WFPVAM_FoodPrices_05-12-2017.csv', encoding="latin-1")
-    country_year = slice_columns(df, [COUNTRY, YEAR])
+    df = pd.read_csv('WFPVAM_FoodPrices_compressed.csv')
 
-    country_dict = {}
-    for country in df.eval(COUNTRY).unique():
-        country_dict[country] = get_values_column(country_year, COUNTRY, country)[YEAR].unique()
+    print(df)
+    save_to_csv(df2,'WFPVAM_FoodPrices_compressed.csv')
+    # df.loc[df[CURR] == 'Somaliland Shilling', CURR] = 'SOS'
 
-    print(unique_per_cat(df))
+    # print(get_values_column(df, CURR, 'SOS'))
+    # print(get_values_column(df, CURR, 'Somaliland Shilling'))
+
+
+
+
+    # check currency per country
+    # country_curr = slice_columns(df, [COUNTRY, CURR])
+    # for country in df.eval(COUNTRY).unique():
+    #     print(country, get_values_column(country_curr, COUNTRY, country)[CURR].unique().size)
+
+
+
+
+
+
+
+
+    # welke jaren per land
+    # country_year = slice_columns(df, [COUNTRY, YEAR])
+    # country_dict = {}
+    # for country in df.eval(COUNTRY).unique():
+    #     country_dict[country] = get_values_column(country_year, COUNTRY, country)[YEAR].unique()
+
+
+
+
 
     # with open('country_year.pk', 'wb') as handle:
     #     pickle.dump(country_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
