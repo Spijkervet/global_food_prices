@@ -4,6 +4,7 @@ import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
 
+
 COUNTRY = 'adm0_name'
 REGION = 'adm1_name'
 CITY = 'mkt_name'
@@ -13,8 +14,10 @@ SELLER = 'pt_name'
 UNIT = 'um_name'
 MONTH = 'mp_month'
 YEAR = 'mp_year'
+DATE = 'datetime'
 PRICE = 'mp_price'
 SOURCE = 'mp_commoditysource'
+
 
 def unique_per_cat(df):
     """
@@ -50,21 +53,28 @@ def save_to_csv(df, filename):
     """
     df.to_csv(filename, sep=',', encoding='utf-8', index=False)
 
+def join_YEAR_month(df):
+    df['datetime'] = pd.to_datetime(df.eval(YEAR)*10000+df.eval(MONTH)*100+1, format='%Y%m%d')
+    df = df.drop([YEAR, MONTH], axis=1)
+    return df
 
 if __name__ == "__main__":
-    df = pd.read_csv('WFPVAM_FoodPrices_c_CURR.csv')
+    df = pd.read_csv('WFPVAM_FoodPrices_c_CURR_DATE.csv')
+    print(df)
+    # save_to_csv(join_YEAR_month(df), 'WFPVAM_FoodPrices_c_CURR_DATE.csv')
+
 
     df2 = get_values_column(df, CITY, 'Fayzabad')
-
     prod_city_dic = {}
     for prod in df2.eval(PROD).unique():
         df_tmp = get_values_column(df2, PROD, prod).sort_values(by=[YEAR, MONTH])
+        df_tmp = slice_columns(df_tmp, [])
         print(df_tmp)
         # prod_city_dic[prod] =
-
-
-    plt.plot(value, time)
-    plt.show()
+    #
+    #
+    # plt.plot(value, time)
+    # plt.show()
 
 
 
