@@ -2,6 +2,7 @@
 import numpy as np
 import pandas as pd
 import pickle
+import matplotlib.pyplot as plt
 
 COUNTRY = 'adm0_name'
 REGION = 'adm1_name'
@@ -47,26 +48,37 @@ def save_to_csv(df, filename):
     """
     Save dataframe to csv.
     """
-    df.to_csv(filename, sep=',', encoding='utf-8')
+    df.to_csv(filename, sep=',', encoding='utf-8', index=False)
 
 
 if __name__ == "__main__":
-    df = pd.read_csv('WFPVAM_FoodPrices_compressed.csv')
+    df = pd.read_csv('WFPVAM_FoodPrices_c_CURR.csv')
 
-    print(df)
-    save_to_csv(df2,'WFPVAM_FoodPrices_compressed.csv')
-    # df.loc[df[CURR] == 'Somaliland Shilling', CURR] = 'SOS'
+    df2 = get_values_column(df, CITY, 'Fayzabad')
 
-    # print(get_values_column(df, CURR, 'SOS'))
-    # print(get_values_column(df, CURR, 'Somaliland Shilling'))
+    prod_city_dic = {}
+    for prod in df2.eval(PROD).unique():
+        df_tmp = get_values_column(df2, PROD, prod).sort_values(by=[YEAR, MONTH])
+        print(df_tmp)
+        # prod_city_dic[prod] =
+
+
+    plt.plot(value, time)
+    plt.show()
+
+
+
+
+
+
 
 
 
 
     # check currency per country
-    # country_curr = slice_columns(df, [COUNTRY, CURR])
+    # country_curr = slice_columns(df, [COUNTRY, CURR, YEAR])
     # for country in df.eval(COUNTRY).unique():
-    #     print(country, get_values_column(country_curr, COUNTRY, country)[CURR].unique().size)
+    #     print(country, get_values_column(country_curr, COUNTRY, country)[CURR].unique())
 
 
 
