@@ -3,7 +3,8 @@ import numpy as np
 import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
-
+from matplotlib.dates import drange
+import datetime
 
 COUNTRY = 'adm0_name'
 REGION = 'adm1_name'
@@ -60,21 +61,31 @@ def join_YEAR_month(df):
 
 if __name__ == "__main__":
     df = pd.read_csv('WFPVAM_FoodPrices_c_CURR_DATE.csv')
-    print(df)
     # save_to_csv(join_YEAR_month(df), 'WFPVAM_FoodPrices_c_CURR_DATE.csv')
 
 
-    df2 = get_values_column(df, CITY, 'Fayzabad')
-    prod_city_dic = {}
+    df2 = get_values_column(df, CITY, 'Istanbul')
+    plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
+    i = 0
     for prod in df2.eval(PROD).unique():
-        df_tmp = get_values_column(df2, PROD, prod).sort_values(by=[YEAR, MONTH])
-        df_tmp = slice_columns(df_tmp, [])
-        print(df_tmp)
-        # prod_city_dic[prod] =
-    #
-    #
-    # plt.plot(value, time)
-    # plt.show()
+        df_tmp = get_values_column(df2, PROD, prod).sort_values(by=[DATE])
+        values = df_tmp[PRICE].tolist()
+        try:
+            values = [(value - min(values)) / (max(values) - min(values)) for value in values]
+        except:
+            values = [value/value for value in values]
+
+        dates = [float(date.split("-")[0]) + float(date.split("-")[1])/13 for date in df_tmp[DATE].tolist()]
+        plt.plot(dates, values, label=prod)
+        print(prod)
+        i +=1
+        if i == 6:
+            break
+
+
+    plt.rcParams['legend.fontsize'] = 11
+    plt.legend(fancybox=True,loc="best",framealpha=0.8)
+    plt.show()
 
 
 
