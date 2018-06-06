@@ -6,3 +6,9 @@ Download the dataset:
 ```
 python3 download.py
 ```
+
+
+Start the Bokeh server:
+```
+bokeh serve dashboard --show
+```
