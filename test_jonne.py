@@ -145,15 +145,34 @@ def calc_diff(df, n = 1):
 
     return np.diff(df[PRICE], n, axis = 0)
 
+UNIT_PRICE_CONVERTER = {'1.5 KG': (1.5, 'KG')}
+CONV_PRICE = 0
+CONV_UNIT = 1
+
+def norm_price_unit(row, Col):
+    """
+
+    """
+    if Col:
+        try:
+            return UNIT_PRICE_CONVERTER[row.get(UNIT)][Col]
+        except:
+            return row.get(UNIT)
+    else:
+        try:
+            return row.get(PRICE) / UNIT_PRICE_CONVERTER[row.get(UNIT)][Col]
+        except:
+            return row.get(PRICE)
+
 if __name__ == "__main__":
-    df = pd.read_csv('WFPVAM_FoodPrices_compressed.csv')
+    df = pd.read_csv('WFPVAM_FoodPrices_version1.csv')
     # unique_per_cat(df)
-    df2 = remove_less_then(remove_Region(change_duplicate_city(remove_Curr(join_YEAR_month(df)))), gap = 2)
-    unique_per_cat(df2)
-    save_to_csv(df2, 'WFPVAM_FoodPrices_version1.csv')
+    # print(df.size)
+    print(get_values_column(df, UNIT, '1.5 KG'))
+    df[PRICE] = df.apply(lambda row: norm_price_unit(row, CONV_PRICE), axis = 1)
+    df[UNIT] = df.apply(lambda row: norm_price_unit(row, CONV_UNIT), axis = 1)
 
-
-
+    print(get_values_column(df, UNIT, '1.5 KG'))
     # print({(df_group.eval(SELLER).unique()[0],df_group.eval(SELLER).unique()[1], group) for group, df_group in df.groupby([COUNTRY, CITY, PROD]) if len(df_group.eval(SELLER).unique()) > 1})
 
 
