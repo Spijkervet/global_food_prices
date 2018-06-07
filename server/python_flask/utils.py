@@ -1,6 +1,8 @@
 from tqdm import tqdm
+import os
 import requests
 import math
+import pandas as pd
 
 def download(url, file_name):
     r = requests.get(url, stream=True)
@@ -19,3 +21,9 @@ def download(url, file_name):
         print("ERROR, something went wrong")
     else:
         print("Successfully downloaded the dataset")
+
+
+def get_dataset(url, file_name):
+    if not os.path.isfile(file_name):
+        download(url, file_name)
+    return pd.read_csv(file_name, encoding='latin-1')
