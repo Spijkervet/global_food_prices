@@ -1,0 +1,9 @@
+flask
+flask_restful
+flask_sqlalchemy
+tqdm
+requests
+pandas
+mysqlclient
+geopy
+flask-cors

@@ -29,13 +29,13 @@ class ProductsPerRegion():
 
     def make_plot(self, src, title):
         plot = figure(x_axis_type='datetime')
-        plot.title.text = title
+        plot.title.text = title + " - per sub-region"
         plot.legend.click_policy="hide"
         plot.legend.location = "top_left"
         return plot
 
     def redraw_plot(self, attrname, old, new):
-        self.plot.title.text = new
+        self.plot.title.text = new  + " - per sub-region"
         # Remove all renderers.
         remove_renderers(self.plot)
         product_group = self.df.loc[self.df['cm_name'] == new]

@@ -17,6 +17,10 @@ def get_dataset(url, file_name):
 
 # Add region and datetime cols.
 df = get_dataset(url, file_name)
+
+# Remove national average
+df = df[df.mkt_name != 'National Average']
+
 region_df = get_dataset(url_2, regional_file_name)
 region_df.rename(columns={'name': 'adm0_name'}, inplace=True)
 new_regions = region_df.loc[:, ['adm0_name', 'sub-region']]
@@ -39,17 +43,20 @@ from bokeh.layouts import gridplot, layout
 
 from panels.products_per_country import ProductsPerCountry
 from panels.products_per_region import ProductsPerRegion
+from panels.products_per_market import ProductsPerMarket
 
 default_product = "Apples"
 
 # Initialize plot
 prod_per_country = ProductsPerCountry(df, default_product)
 prod_per_region = ProductsPerRegion(df, default_product)
+prod_per_market = ProductsPerMarket(df, default_product)
 
 # Initialize selectors.
 country_select = Select(value=default_product, title='Product', options=sorted(products))
 country_select.on_change('value', prod_per_country.redraw_plot)
 country_select.on_change('value', prod_per_region.redraw_plot)
+country_select.on_change('value', prod_per_market.redraw_plot)
 
 
 # Put all the tabs into one application
