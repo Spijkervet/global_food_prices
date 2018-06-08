@@ -174,8 +174,12 @@ if __name__ == "__main__":
 
 
     # per currency het aantal jaren
-    [print(n+'\n', sorted(x[DATE].unique())[:4],'\n', sorted(x[DATE].unique())[-10:], '\n\n' ) for n,x in df.groupby([CURR])]
+    dingetje = [(n, sorted(x[DATE].unique())[:4], sorted(x[DATE].unique())[-10:]) for n,x in df.groupby([CURR])]
+    print(dingetje)
 
+    with open('currencies.txt', 'w') as file:
+        for i in dingetje:
+            file.write(i[0] + '\n')
 
 
 
