@@ -138,49 +138,52 @@ def remove_less_then(df, m = 12, gap = 0):
     """
     return df.groupby([CITY, PROD]).filter(lambda x: len(x) > m and max(consecutive_dates(x.eval(DATE), gap = gap)) > m)
 
-def calc_diff(df, n = 1):
-    """
-    geeft de diverentiaal terug van de dataset.
-    """
+START_CURRENCY = {'AFN':'2003-1'}
 
-    return np.diff(df[PRICE], n, axis = 0)
+def is_earlier_date(date0, date1):
+    date0 = list(map(int, date0.split("-")))
+    date1 = list(map(int, date1.split("-")))
+    return ((date0[0] - date1[0]) * 12 + date0[1] - date1[1]) <= 0
 
-UNIT_PRICE_CONVERTER = {'1.5 KG': (1.5, 'KG')}
-CONV_PRICE = 0
-CONV_UNIT = 1
-
-def norm_price_unit(row, Col):
+def check_date(curr, date):
     """
-
+    Dit controleerd of de datum niet voor de start datum van de currency is.
     """
-    if Col:
-        try:
-            return UNIT_PRICE_CONVERTER[row.get(UNIT)][Col]
-        except:
-            return row.get(UNIT)
+    if curr in START_CURRENCY:
+        return is_earlier_date(START_CURRENCY[curr], date)
     else:
-        try:
-            return row.get(PRICE) / UNIT_PRICE_CONVERTER[row.get(UNIT)][Col]
-        except:
-            return row.get(PRICE)
+        return True
+
+def remove_unvalid_curr_dates(df):
+    """
+    verwijder all data punten van currencies waar geen exchange rate van bekend is of niet bestaat.
+    """
+    return df.groupby([CURR, DATE]).filter(lambda x: check_date(x.eval(CURR).iloc[0], x.eval(DATE).iloc[0]))
+
+
+
+
 
 if __name__ == "__main__":
     df = pd.read_csv('WFPVAM_FoodPrices_version1.csv')
-    # unique_per_cat(df)
-    # print(df.size)
-    print(get_values_column(df, UNIT, '1.5 KG'))
-    df[PRICE] = df.apply(lambda row: norm_price_unit(row, CONV_PRICE), axis = 1)
-    df[UNIT] = df.apply(lambda row: norm_price_unit(row, CONV_UNIT), axis = 1)
 
-    print(get_values_column(df, UNIT, '1.5 KG'))
+
+    df = remove_unvalid_curr_dates(df)
+
+
+
+
+    # per currency het aantal jaren
+    [print(n+'\n', sorted(x[DATE].unique())[:4],'\n', sorted(x[DATE].unique())[-10:], '\n\n' ) for n,x in df.groupby([CURR])]
+
+
+
+
+
+
+
+    # per product en stad kijken of het 1 seller is.
     # print({(df_group.eval(SELLER).unique()[0],df_group.eval(SELLER).unique()[1], group) for group, df_group in df.groupby([COUNTRY, CITY, PROD]) if len(df_group.eval(SELLER).unique()) > 1})
-
-
-
-
-
-
-
 
 
 
@@ -189,11 +192,6 @@ if __name__ == "__main__":
     # country_curr = slice_columns(df, [COUNTRY, CURR, YEAR])
     # for country in df.eval(COUNTRY).unique():
     #     print(country, get_values_column(country_curr, COUNTRY, country)[CURR].unique())
-
-
-
-
-
 
 
 
