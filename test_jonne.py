@@ -21,8 +21,19 @@ SOURCE = 'mp_commoditysource'
 
 CONV_PRICE = 0
 CONV_CURR = 1
-START_CURRENCY = {'AFN':'2003-1'}
-
+START_CURRENCY = {
+    'AFN':'2003-1',
+    'AMD':'2006-2',
+    'CDF':'2009-1',
+    'KGS':'2007-9',
+    'MGA':'2005-2',
+    'MMK':'2012-5',
+    'SDG':'2007-2',
+    'SPP':'2018-1',
+    'TJS':'2008-7',
+    'XOF':'1995-6',
+    'ZMW':'2013-2'
+    }
 
 def unique_per_cat(df):
     """
@@ -181,7 +192,7 @@ def norm_curr(df):
             curr_df_dic[curr] = pd.read_csv('../dataset/' + curr + '_to_USD.csv')
             curr_df_dic[curr]['Date'] = pd.to_datetime(curr_df_dic[curr]['Date'])
             print(curr_df_dic[curr])
-            
+
     df[PRICE] = df.apply(lambda row: row.get(PRICE) * get_values_column(curr_df_dic[row.get(CURR)], 'Date', datetime.strptime(row.get(DATE)+'-1', '%Y-%m-%d')).iloc[0].get('Rate') if row.get(CURR) == 'AFN' else row.get(PRICE), axis = 1)
     # norm_price_curr(row, CONV_PRICE, curr_df_dic)
     return df
@@ -189,10 +200,12 @@ def norm_curr(df):
 
 if __name__ == "__main__":
     df = pd.read_csv('WFPVAM_FoodPrices_version1.csv')
-    # norm_curr(df)
+    print(df.size)
     print(get_values_column(df, CURR, 'AFN'))
     df = norm_curr(remove_unvalid_curr_dates(df))
     print(get_values_column(df, CURR, 'AFN'))
+    unique_per_cat(df)
+    print(df.size)
     # per currency het aantal jaren
     # [print(n+'\n', sorted(x[DATE].unique())[:4],'\n', sorted(x[DATE].unique())[-10:], '\n\n' ) for n,x in df.groupby([CURR])]
 
