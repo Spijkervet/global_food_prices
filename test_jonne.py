@@ -4,7 +4,7 @@ import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
 from matplotlib.dates import drange
-import datetime
+from datetime import datetime
 
 COUNTRY = 'adm0_name'
 REGION = 'adm1_name'
@@ -18,6 +18,10 @@ YEAR = 'mp_year'
 DATE = 'date'
 PRICE = 'mp_price'
 SOURCE = 'mp_commoditysource'
+
+CONV_PRICE = 0
+CONV_CURR = 1
+START_CURRENCY = {'AFN':'2003-1'}
 
 
 def unique_per_cat(df):
@@ -138,9 +142,10 @@ def remove_less_then(df, m = 12, gap = 0):
     """
     return df.groupby([CITY, PROD]).filter(lambda x: len(x) > m and max(consecutive_dates(x.eval(DATE), gap = gap)) > m)
 
-START_CURRENCY = {'AFN':'2003-1'}
-
 def is_earlier_date(date0, date1):
+    """
+    return true als date1 na date0 is.
+    """
     date0 = list(map(int, date0.split("-")))
     date1 = list(map(int, date1.split("-")))
     return ((date0[0] - date1[0]) * 12 + date0[1] - date1[1]) <= 0
@@ -160,21 +165,36 @@ def remove_unvalid_curr_dates(df):
     """
     return df.groupby([CURR, DATE]).filter(lambda x: check_date(x.eval(CURR).iloc[0], x.eval(DATE).iloc[0]))
 
+def norm_price_curr(row, col):
+    """
+    verander de prijs in de row op basis van de currency, zodat de currency USD wordt.
+    """
+    UNIT_PRICE_CONVERTER[row.get(UNIT)][Col]
 
-
+def norm_curr(df):
+    """
+    normalize data prijzen door alles naar USD te zetten.
+    """
+    curr_df_dic = {}
+    for curr in df.eval(CURR).unique():
+        if curr == 'AFN':
+            curr_df_dic[curr] = pd.read_csv('../dataset/' + curr + '_to_USD.csv')
+            curr_df_dic[curr]['Date'] = pd.to_datetime(curr_df_dic[curr]['Date'])
+            print(curr_df_dic[curr])
+            
+    df[PRICE] = df.apply(lambda row: row.get(PRICE) * get_values_column(curr_df_dic[row.get(CURR)], 'Date', datetime.strptime(row.get(DATE)+'-1', '%Y-%m-%d')).iloc[0].get('Rate') if row.get(CURR) == 'AFN' else row.get(PRICE), axis = 1)
+    # norm_price_curr(row, CONV_PRICE, curr_df_dic)
+    return df
 
 
 if __name__ == "__main__":
     df = pd.read_csv('WFPVAM_FoodPrices_version1.csv')
-
-
-    df = remove_unvalid_curr_dates(df)
-
-
-
-
+    # norm_curr(df)
+    print(get_values_column(df, CURR, 'AFN'))
+    df = norm_curr(remove_unvalid_curr_dates(df))
+    print(get_values_column(df, CURR, 'AFN'))
     # per currency het aantal jaren
-    [print(n+'\n', sorted(x[DATE].unique())[:4],'\n', sorted(x[DATE].unique())[-10:], '\n\n' ) for n,x in df.groupby([CURR])]
+    # [print(n+'\n', sorted(x[DATE].unique())[:4],'\n', sorted(x[DATE].unique())[-10:], '\n\n' ) for n,x in df.groupby([CURR])]
 
 
 
