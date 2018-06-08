@@ -182,35 +182,52 @@ def norm_price_curr(row, col):
     """
     UNIT_PRICE_CONVERTER[row.get(UNIT)][Col]
 
+import time
+
 def norm_curr(df):
     """
-    normalize data prijzen door alles naar USD te zetten.
+    normalize data prijzen door alles naar USD te zetten en verwijder CURR kolom.
     """
-    curr_df_dic = {}
-    for curr in df.eval(CURR).unique():
-        if curr == 'AFN':
-            curr_df_dic[curr] = pd.read_csv('../dataset/' + curr + '_to_USD.csv')
-            curr_df_dic[curr]['Date'] = pd.to_datetime(curr_df_dic[curr]['Date'])
-            print(curr_df_dic[curr])
+    # curr_df_dic = {}
+    # for curr in df.eval(CURR).unique():
+    #     if curr == 'AFN':
+    #         curr_df_dic[curr] = pd.read_csv('../dataset/' + curr + '_to_USD.csv')
+    #         curr_df_dic[curr]['Date'] = pd.to_datetime(curr_df_dic[curr]['Date'])
+    #         print(curr_df_dic[curr])
+    #
+    # df[PRICE] = df.apply(lambda row: row.get(PRICE) * get_values_column(curr_df_dic[row.get(CURR)], 'Date', datetime.strptime(row.get(DATE)+'-1', '%Y-%m-%d')).iloc[0].get('Rate') if row.get(CURR) == 'AFN' else row.get(PRICE), axis = 1)
 
-    df[PRICE] = df.apply(lambda row: row.get(PRICE) * get_values_column(curr_df_dic[row.get(CURR)], 'Date', datetime.strptime(row.get(DATE)+'-1', '%Y-%m-%d')).iloc[0].get('Rate') if row.get(CURR) == 'AFN' else row.get(PRICE), axis = 1)
-    # norm_price_curr(row, CONV_PRICE, curr_df_dic)
-    return df
+    curr_df = pd.read_csv('all_currencies.csv')
+    curr_dic_df = {}
+    for curr in curr_df['base_currency'].unique():
+        curr_dic_df[curr] = get_values_column(curr_df, 'base_currency', curr)
+
+    print('done make dict from currency table')
+
+    df[PRICE] = df.apply(lambda row: row.get(PRICE) * get_values_column(curr_dic_df[row.get(CURR)], 'datetime', row.get(DATE)).iloc[0].get('rate'), axis = 1)
+
+    return df.drop(CURR, axis=1)
 
 
 if __name__ == "__main__":
     df = pd.read_csv('WFPVAM_FoodPrices_version1.csv')
-    print(df.size)
-    print(get_values_column(df, CURR, 'AFN'))
-    df = norm_curr(remove_unvalid_curr_dates(df))
-    print(get_values_column(df, CURR, 'AFN'))
-    unique_per_cat(df)
-    print(df.size)
+    # print(df.shape)
+    # print(df)
+    # df = norm_curr(remove_unvalid_curr_dates(df))
+    # print(df)
+    # unique_per_cat(df)
+    # print(df.size)
+
+    curr_df = pd.read_csv('all_currencies.csv')
+
+    curr_df[curr_df['base_currency'] == 'ILS'] = 'NIS'
+
+    save_to_csv(curr_df, 'all_currencies.csv')
+
+
+
     # per currency het aantal jaren
     # [print(n+'\n', sorted(x[DATE].unique())[:4],'\n', sorted(x[DATE].unique())[-10:], '\n\n' ) for n,x in df.groupby([CURR])]
-
-
-
 
 
 
