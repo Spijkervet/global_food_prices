@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from sqlalchemy import create_engine
 from flask_restful import Resource, Api
 from flask_cors import CORS
@@ -60,6 +60,12 @@ class Products(Resource):
         return {product_id: products[product_id]}
 
 api.add_resource(Products, '/<string:product_id>')
+
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
