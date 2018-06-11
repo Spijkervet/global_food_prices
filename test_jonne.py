@@ -21,6 +21,17 @@ SOURCE = 'mp_commoditysource'
 
 CONV_PRICE = 0
 CONV_CURR = 1
+
+NON_FOOD = [
+    'Wage (non-qualified labour)',
+    'Wage (non-qualified labour, non-agricultural)',
+    'Wage (non-qualified labour, non-agricultural)',
+    'Wage (qualified labour)',
+    'Exchange rate',
+    'Exchange rate (unofficial)',
+    'Transport (public)',
+    ]
+
 START_CURRENCY = {
     'AFN':'2003-1',
     'AMD':'2006-2',
@@ -33,6 +44,36 @@ START_CURRENCY = {
     'TJS':'2008-7',
     'XOF':'1995-6',
     'ZMW':'2013-2'
+    }
+
+UNIT_PRICE_CONVERTER = {
+    '1.5 KG': (1.5, 'KG'), '5 KG': (5.0, 'KG'), '1.8 KG': (1.8, 'KG'),
+    '2 KG': (2.0, 'KG'), '12.5 KG': (12.5, 'KG'), '10 KG': (10.0, 'KG'),
+    '60 KG': (60.0, 'KG'), '18 KG': (18.0, 'KG'), '25 KG': (25.0, 'KG'),
+    '3 KG': (3.0, 'KG'), '3.5 KG': (3.5, 'KG'), '12 KG': (12.0, 'KG'),
+    '500 G': (0.5, 'KG'), '125 G': (0.125, 'KG'), '90 KG': (90.0, 'KG'),
+    'Pound': (0.45359237, 'KG'), '380 G': (0.380, 'KG'), '85 G': (0.085, 'KG'),
+    '45 KG': (45.0, 'KG'), '100 KG': (100.0, 'KG'), '50 KG': (50.0, 'KG'),
+    '91 KG': (91.0, 'KG'), '650 G': (0.650, 'KG'), '115 G': (0.115, 'KG'),
+    '350 G': (0.350, 'KG'), '385 G': (0.385, 'KG'), '11.5 KG': (11.5, 'KG'),
+    '400 G': (0.400, 'KG'), '150 G': (0.150, 'KG'), '160 G': (0.160, 'KG'),
+    '200 G': (0.200, 'KG'), '185 G': (0.185, 'KG'), '750 G': (0.750, 'KG'),
+    '168 G': (0.168, 'KG'), 'Libra': (0.329, 'KG'), 'MT': (1000.0, 'KG'),
+    'Marmite': (2.445, 'KG'),
+    'Gallon': (3.78541178, 'L'), '500 ML': (0.500, 'L'), '750 ML': (0.750, 'L'),
+    '1.5 L': (1.5, 'L'), '3 L': (3.0, 'L'), 'Cubic Meter': (1000.0, 'L'),
+    '5 L': (5.0, 'L'),
+    '10 pcs': (10.0, 'Unit'), '30 pcs': (30.0, 'Unit'), 'Dozen': (12.0, "Unit"),
+    'Loaf': (1, 'Unit')
+    }
+
+UNIT_PROD_PRICE_CONVERTER = {
+    "Fuel (diesel)": ('KG', 'L', 0.851),
+    "Milk (pasteurized)": ('KG', 'L', 1.04), "Milk": ('KG', 'L', 1.04),
+    "Oil (olive)": ('KG', 'L', 0.913), "Oil (palm)": ('KG', 'L', 0.913),
+    "Oil (sunflower)": ('KG', 'L', 0.921), "Oil (groundnut)": ('KG', 'L', 0.921),
+    "Oil (soybean)": ('KG', 'L', 0.921), "Oil (vegetable)": ('KG', 'L', 0.921),
+    "Eggs": ('KG', 'Unit', 16.66667)
     }
 
 def unique_per_cat(df):
@@ -160,6 +201,27 @@ def remove_Region(df):
     """
     return df.drop(REGION, axis=1)
 
+def without_non_food(df):
+    """
+    returns all "real", not service, products.
+    """
+    return df[~df.cm_name.isin(NON_FOOD)]
+
+def remove_non_measures(df):
+    """
+    verwijder geen vaste maten uit de df.
+    """
+    return df[~df[UNIT].isin(['Cuartilla', 'Head', '100 Tubers'])]
+
+def change_dubble_unit_names(df):
+    """
+    Dit veranderd alle producten die een unit en kg hebben in verschillende producten.
+    """
+    for prod, group_df in df.groupby([PROD]):
+        if group_df[UNIT].nunique() > 1:
+            df.loc[(df[PROD] == prod) & (df[UNIT] == 'Unit'), PROD] = prod + ' (Unit)'
+    return df
+
 def remove_less_then(df, m = 12, gap = 0):
     """
     Dit verwijderd alle data producten per markt/stad dat hebben minder dan m data punten.
@@ -197,36 +259,96 @@ def norm_curr(df):
     source: https://www.oanda.com/fx-for-business/historical-rates
     """
     df = remove_unvalid_curr_dates(df)
-    print(df.shape)
     curr_df = pd.read_csv('all_currencies.csv')
-    t = time.clock()
-
     curr_df.columns = [CURR, DATE, 'rate']
 
     # Only join things from the main dataframe (WFPVAM_FoodPrices_version1.csv with a LEFT join)
     df = pd.DataFrame.merge(df, curr_df, on=[CURR, DATE], how='left')
     df[PRICE] = df[PRICE].multiply(df['rate'], axis = 'index')
     return df.drop(['rate', CURR], axis = 1)
-    
+
+def norm_unit(df):
+    """
+    normalize de data op basis van de units.
+    Dit zorgt ervoor dat zoveel mogelijk producten dezelfde units hebben (KG en L).
+    En dat alle producten maar 1 unit hebben.
+    source conversion: http://www.webconversiononline.com/weightof.aspx
+    source Marmite: https://www.enfants-soleil.org/spip.php?article122
+    source Eggs: https://en.wikipedia.org/wiki/Chicken_egg_sizes
+    meeste komen uit oude soviet landen en vanuit gaand dat het gemiddelde van alle
+    Eggs het gemiddelde gewicht is, is dit 60gr.
+
+    op basis van zelfde statitieken voor is het logisch dat een Unit 1 pcs/loaf is.
+
+    min          avg     max         std
+    0.063 		 0.135 	 8.125 		 0.11677 	 Eggs Unit
+    0.012 		 0.112 	 0.253 		 0.04438 	 Eggs pcs
+
+    (avg)    mp_price
+    um_name
+    KG       1.341224
+    Loaf     0.438143
+    Unit     0.520290
+
+    (std)    mp_price
+    um_name
+    KG       0.750623
+    Loaf     0.052283
+    Unit     0.510107
+    """
+
+    df_unit = pd.DataFrame.from_dict(UNIT_PRICE_CONVERTER, orient = 'index')
+    df_unit.columns = ['factor', 'unit_new']
+
+    df = pd.DataFrame.merge(df, df_unit, left_on = UNIT, how = 'left', right_index = True)
+
+    df.unit_new.fillna(df.eval(UNIT), inplace = True)
+
+
+    df[PRICE] = df[PRICE].divide(df['factor'], axis='index', fill_value = 1)
+
+    df.drop([UNIT,'factor'], axis=1, inplace = True)
+    df.rename(columns = {'unit_new': UNIT}, inplace = True)
+
+    for product, (unit_N, unit_O, conversion) in UNIT_PROD_PRICE_CONVERTER.items():
+        # CREATES MASK
+        df_product = df[PROD] == product
+        df_unit_O = df[UNIT] == unit_O
+
+        df.loc[df_product & df_unit_O, PRICE] = df[df_product & df_unit_O][PRICE].apply(lambda x: x * conversion)
+        df.loc[df_product & df_unit_O, UNIT] = unit_N
+
+    df = change_dubble_unit_names(df)
+    return remove_non_measures(df)
+
+def split_national_average(df):
+    """
+    returnt twee dataframes: 1 dataframe met alle rijen die national average bevatten
+    en 1 dataframe alleen gaat over de steden en niet de national averages
+    """
+    return [df.loc[df[CITY] == 'National Average'], df.loc[df[CITY] != 'National Average']]
+
+def split_sellers(df):
+    """
+    returns dataframes for all different types of sellers with the seller names.
+    """
+    return [(seller, df.loc[df['pt_name'] == seller].drop([SELLER], axis = 1))
+            for seller in df.eval(SELLER).unique()]
+
 if __name__ == "__main__":
     df = pd.read_csv('WFPVAM_FoodPrices_version1.csv')
-    # print(df.shape)
-    print(df)
-    df = norm_curr(df)
-    print(df)
-    print(df.shape)
-
-
-
-
+    for tmp_df1 in split_national_average(norm_unit(norm_curr(without_non_food(df)))):
+        for (seller, tmp_df2) in split_sellers(tmp_df1):
+            if tmp_df2[CITY].iloc[0] == 'National Average':
+                save_to_csv(tmp_df2, 'WFPVAM_FoodPrices_version2_Nat_' + seller + '.csv')
+            else:
+                save_to_csv(tmp_df2, 'WFPVAM_FoodPrices_version2_' + seller + '.csv')
 
 
 
 
     # per currency het aantal jaren
     # [print(n+'\n', sorted(x[DATE].unique())[:4],'\n', sorted(x[DATE].unique())[-10:], '\n\n' ) for n,x in df.groupby([CURR])]
-
-
 
 
     # per product en stad kijken of het 1 seller is.
