@@ -29,7 +29,7 @@ START_CURRENCY = {
     'MGA':'2005-2',
     'MMK':'2012-5',
     'SDG':'2007-2',
-    'SPP':'2018-1',
+    'SSP':'2018-1',
     'TJS':'2008-7',
     'XOF':'1995-6',
     'ZMW':'2013-2'
@@ -114,6 +114,9 @@ def save_to_csv(df, filename):
     df.to_csv(filename, sep=',', encoding='utf-8', index=False)
 
 def join_YEAR_month(df):
+    """
+    verander de kolommen jaar en maand naar 1 kolom met jaar-maand
+    """
     df['date'] = df.eval(YEAR).astype(str)+"-"+df.eval(MONTH).astype(str)
 
     df = df.drop([YEAR, MONTH], axis=1)
@@ -140,6 +143,16 @@ def change_duplicate_city(df):
             else:
                 df.loc[(df[CITY] == c) & (df[COUNTRY] == L), CITY] = c + ' (' + L[:3] + ')'
     return df
+
+def norm_all_currencies():
+    """
+    transform the dataframe of all_currencies to our standards
+    """
+    curr_df = pd.read_csv('all_currencies.txt')
+    curr_df = curr_df.drop('quote_currency', axis=1)
+    curr_df['base_currency'] = curr_df.apply(lambda row: 'NIS' if row.get('base_currency') == 'ILS' else row.get('base_currency'), axis=1)
+    curr_df['datetime'] = curr_df.apply(lambda row: '-'.join(list(map(str,map(int, row.get('datetime').split('-')[:2])))), axis = 1)
+    save_to_csv(curr_df, 'all_currencies.csv')
 
 def remove_Region(df):
     """
@@ -176,58 +189,38 @@ def remove_unvalid_curr_dates(df):
     """
     return df.groupby([CURR, DATE]).filter(lambda x: check_date(x.eval(CURR).iloc[0], x.eval(DATE).iloc[0]))
 
-
-def norm_price_curr(row, col):
-    """
-    verander de prijs in de row op basis van de currency, zodat de currency USD wordt.
-    """
-    UNIT_PRICE_CONVERTER[row.get(UNIT)][Col]
-
-import time
-
 def norm_curr(df):
     """
-    normalize data prijzen door alles naar USD te zetten en verwijder CURR kolom.
+    normalize data prijzen door alles naar USD te zetten.
+    Data waar geen currency rate van is wordt verwijderd.
+    CURR kolom wordt ook verwijderd.
+    source: https://www.oanda.com/fx-for-business/historical-rates
     """
+    df = remove_unvalid_curr_dates(df)
+    print(df.shape)
     curr_df = pd.read_csv('all_currencies.csv')
-    # curr_dic_df = {}
-    # for curr in curr_df['base_currency'].unique():
-    #     curr_dic_df[curr] = get_values_column(curr_df, 'base_currency', curr)
-    # print('done make dict from currency table')
-    #
-    # df[PRICE] = df.apply(lambda row: row.get(PRICE) * get_values_column(curr_dic_df[row[CURR]], 'datetime', row[DATE]).iloc[0]['rate'], axis = 1)
-    
     t = time.clock()
-    for curr in curr_df['base_currency'].unique():
-        print(curr)
-        a = get_values_column(curr_df, 'base_currency', curr)
-        x = df.loc[df[CURR] == curr]
-        x[PRICE] = x.apply(lambda row: row.get(PRICE) * get_values_column(a, 'datetime', row.get(DATE)).iloc[0].get('rate'), axis = 1)
-    print(t - time.clock())
-    return df.drop(CURR, axis=1)
 
+    curr_df.columns = [CURR, DATE, 'rate']
 
+    # Only join things from the main dataframe (WFPVAM_FoodPrices_version1.csv with a LEFT join)
+    df = pd.DataFrame.merge(df, curr_df, on=[CURR, DATE], how='left')
+    df[PRICE] = df[PRICE].multiply(df['rate'], axis = 'index')
+    return df.drop(['rate', CURR], axis = 1)
+    
 if __name__ == "__main__":
     df = pd.read_csv('WFPVAM_FoodPrices_version1.csv')
     # print(df.shape)
     print(df)
-    df = norm_curr(remove_unvalid_curr_dates(df))
+    df = norm_curr(df)
     print(df)
-    unique_per_cat(df)
-    # print(df.size)
+    print(df.shape)
 
 
 
 
 
 
-
-    # transform the dataframe of all_currencies to our standards
-    # curr_df = pd.read_csv('all_currencies.txt')
-    # curr_df = curr_df.drop('quote_currency', axis=1)
-    # curr_df['base_currency'] = curr_df.apply(lambda row: 'NIS' if row.get('base_currency') == 'ILS' else row.get('base_currency'), axis=1)
-    # curr_df['datetime'] = curr_df.apply(lambda row: '-'.join(list(map(str,map(int, row.get('datetime').split('-')[:2])))), axis = 1)
-    # save_to_csv(curr_df, 'all_currencies.csv')
 
 
     # per currency het aantal jaren
