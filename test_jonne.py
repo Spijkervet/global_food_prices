@@ -176,6 +176,7 @@ def remove_unvalid_curr_dates(df):
     """
     return df.groupby([CURR, DATE]).filter(lambda x: check_date(x.eval(CURR).iloc[0], x.eval(DATE).iloc[0]))
 
+
 def norm_price_curr(row, col):
     """
     verander de prijs in de row op basis van de currency, zodat de currency USD wordt.
@@ -188,42 +189,45 @@ def norm_curr(df):
     """
     normalize data prijzen door alles naar USD te zetten en verwijder CURR kolom.
     """
-    # curr_df_dic = {}
-    # for curr in df.eval(CURR).unique():
-    #     if curr == 'AFN':
-    #         curr_df_dic[curr] = pd.read_csv('../dataset/' + curr + '_to_USD.csv')
-    #         curr_df_dic[curr]['Date'] = pd.to_datetime(curr_df_dic[curr]['Date'])
-    #         print(curr_df_dic[curr])
-    #
-    # df[PRICE] = df.apply(lambda row: row.get(PRICE) * get_values_column(curr_df_dic[row.get(CURR)], 'Date', datetime.strptime(row.get(DATE)+'-1', '%Y-%m-%d')).iloc[0].get('Rate') if row.get(CURR) == 'AFN' else row.get(PRICE), axis = 1)
-
     curr_df = pd.read_csv('all_currencies.csv')
-    curr_dic_df = {}
+    # curr_dic_df = {}
+    # for curr in curr_df['base_currency'].unique():
+    #     curr_dic_df[curr] = get_values_column(curr_df, 'base_currency', curr)
+    # print('done make dict from currency table')
+    #
+    # df[PRICE] = df.apply(lambda row: row.get(PRICE) * get_values_column(curr_dic_df[row[CURR]], 'datetime', row[DATE]).iloc[0]['rate'], axis = 1)
+    
+    t = time.clock()
     for curr in curr_df['base_currency'].unique():
-        curr_dic_df[curr] = get_values_column(curr_df, 'base_currency', curr)
-
-    print('done make dict from currency table')
-
-    df[PRICE] = df.apply(lambda row: row.get(PRICE) * get_values_column(curr_dic_df[row.get(CURR)], 'datetime', row.get(DATE)).iloc[0].get('rate'), axis = 1)
-
+        print(curr)
+        a = get_values_column(curr_df, 'base_currency', curr)
+        x = df.loc[df[CURR] == curr]
+        x[PRICE] = x.apply(lambda row: row.get(PRICE) * get_values_column(a, 'datetime', row.get(DATE)).iloc[0].get('rate'), axis = 1)
+    print(t - time.clock())
     return df.drop(CURR, axis=1)
 
 
 if __name__ == "__main__":
     df = pd.read_csv('WFPVAM_FoodPrices_version1.csv')
     # print(df.shape)
-    # print(df)
-    # df = norm_curr(remove_unvalid_curr_dates(df))
-    # print(df)
-    # unique_per_cat(df)
+    print(df)
+    df = norm_curr(remove_unvalid_curr_dates(df))
+    print(df)
+    unique_per_cat(df)
     # print(df.size)
 
-    curr_df = pd.read_csv('all_currencies.csv')
 
-    curr_df[curr_df['base_currency'] == 'ILS'] = 'NIS'
 
-    save_to_csv(curr_df, 'all_currencies.csv')
 
+
+
+
+    # transform the dataframe of all_currencies to our standards
+    # curr_df = pd.read_csv('all_currencies.txt')
+    # curr_df = curr_df.drop('quote_currency', axis=1)
+    # curr_df['base_currency'] = curr_df.apply(lambda row: 'NIS' if row.get('base_currency') == 'ILS' else row.get('base_currency'), axis=1)
+    # curr_df['datetime'] = curr_df.apply(lambda row: '-'.join(list(map(str,map(int, row.get('datetime').split('-')[:2])))), axis = 1)
+    # save_to_csv(curr_df, 'all_currencies.csv')
 
 
     # per currency het aantal jaren
