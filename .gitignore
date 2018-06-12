@@ -3,3 +3,4 @@
 __*
 *.csv
 !/all_currencies.csv
+!/WFPVAM_FoodPrices_with_rates.csv
