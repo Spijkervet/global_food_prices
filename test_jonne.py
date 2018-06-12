@@ -251,7 +251,12 @@ def remove_unvalid_curr_dates(df):
     """
     return df.groupby([CURR, DATE]).filter(lambda x: check_date(x.eval(CURR).iloc[0], x.eval(DATE).iloc[0]))
 
+<<<<<<< HEAD
+
+def norm_price_curr(row, col):
+=======
 def norm_curr(df):
+>>>>>>> b696e502e44d6dd8ac0ab3ebb74631a14deb12cb
     """
     normalize data prijzen door alles naar USD te zetten.
     Data waar geen currency rate van is wordt verwijderd.
@@ -296,6 +301,24 @@ def norm_unit(df):
     Loaf     0.052283
     Unit     0.510107
     """
+<<<<<<< HEAD
+    curr_df = pd.read_csv('all_currencies.csv')
+    # curr_dic_df = {}
+    # for curr in curr_df['base_currency'].unique():
+    #     curr_dic_df[curr] = get_values_column(curr_df, 'base_currency', curr)
+    # print('done make dict from currency table')
+    #
+    # df[PRICE] = df.apply(lambda row: row.get(PRICE) * get_values_column(curr_dic_df[row[CURR]], 'datetime', row[DATE]).iloc[0]['rate'], axis = 1)
+    
+    t = time.clock()
+    for curr in curr_df['base_currency'].unique():
+        print(curr)
+        a = get_values_column(curr_df, 'base_currency', curr)
+        x = df.loc[df[CURR] == curr]
+        x[PRICE] = x.apply(lambda row: row.get(PRICE) * get_values_column(a, 'datetime', row.get(DATE)).iloc[0].get('rate'), axis = 1)
+    print(t - time.clock())
+    return df.drop(CURR, axis=1)
+=======
 
     df_unit = pd.DataFrame.from_dict(UNIT_PRICE_CONVERTER, orient = 'index')
     df_unit.columns = ['factor', 'unit_new']
@@ -304,9 +327,23 @@ def norm_unit(df):
 
     df.unit_new.fillna(df.eval(UNIT), inplace = True)
 
+>>>>>>> b696e502e44d6dd8ac0ab3ebb74631a14deb12cb
 
     df[PRICE] = df[PRICE].divide(df['factor'], axis='index', fill_value = 1)
 
+<<<<<<< HEAD
+if __name__ == "__main__":
+    df = pd.read_csv('WFPVAM_FoodPrices_version1.csv')
+    # print(df.shape)
+    print(df)
+    df = norm_curr(remove_unvalid_curr_dates(df))
+    print(df)
+    unique_per_cat(df)
+    # print(df.size)
+
+
+
+=======
     df.drop([UNIT,'factor'], axis=1, inplace = True)
     df.rename(columns = {'unit_new': UNIT}, inplace = True)
 
@@ -320,6 +357,7 @@ def norm_unit(df):
 
     df = change_dubble_unit_names(df)
     return remove_non_measures(df)
+>>>>>>> b696e502e44d6dd8ac0ab3ebb74631a14deb12cb
 
 def split_national_average(df):
     """
@@ -370,6 +408,20 @@ if __name__ == "__main__":
     #             save_to_csv(tmp_df2, 'WFPVAM_FoodPrices_version2_' + seller + '.csv')
 
 
+<<<<<<< HEAD
+
+    # transform the dataframe of all_currencies to our standards
+    # curr_df = pd.read_csv('all_currencies.txt')
+    # curr_df = curr_df.drop('quote_currency', axis=1)
+    # curr_df['base_currency'] = curr_df.apply(lambda row: 'NIS' if row.get('base_currency') == 'ILS' else row.get('base_currency'), axis=1)
+    # curr_df['datetime'] = curr_df.apply(lambda row: '-'.join(list(map(str,map(int, row.get('datetime').split('-')[:2])))), axis = 1)
+    # save_to_csv(curr_df, 'all_currencies.csv')
+
+
+    # per currency het aantal jaren
+    # [print(n+'\n', sorted(x[DATE].unique())[:4],'\n', sorted(x[DATE].unique())[-10:], '\n\n' ) for n,x in df.groupby([CURR])]
+=======
+>>>>>>> b696e502e44d6dd8ac0ab3ebb74631a14deb12cb
 
 
     # per currency het aantal jaren
