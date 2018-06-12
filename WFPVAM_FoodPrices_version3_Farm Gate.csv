@@ -1,0 +1,665 @@
+adm0_name,mkt_name,cm_name,mp_price,date,um_name
+Philippines,Lingayen,Rice (paddy),17027.720273057123,2008-1,KG
+Philippines,Lingayen,Rice (paddy),15949.533913173611,2008-2,KG
+Philippines,Lingayen,Rice (paddy),14931.601940431052,2008-3,KG
+Philippines,Lingayen,Rice (paddy),13505.61789836021,2008-4,KG
+Philippines,Lingayen,Rice (paddy),13034.902352528889,2008-5,KG
+Philippines,Lingayen,Rice (paddy),12370.523291657042,2008-6,KG
+Philippines,Lingayen,Rice (paddy),12191.013104550431,2008-7,KG
+Philippines,Lingayen,Rice (paddy),15668.938042385491,2008-8,KG
+Philippines,Lingayen,Rice (paddy),16838.694080949852,2008-9,KG
+Philippines,Lingayen,Rice (paddy),18534.005006391388,2008-10,KG
+Philippines,Lingayen,Rice (paddy),18202.69625387736,2008-11,KG
+Philippines,Lingayen,Rice (paddy),17608.586893740077,2008-12,KG
+Philippines,Lingayen,Rice (paddy),16993.348848097605,2009-1,KG
+Philippines,Lingayen,Rice (paddy),14494.650118295867,2009-2,KG
+Philippines,Lingayen,Rice (paddy),15108.244844275972,2009-3,KG
+Philippines,Lingayen,Rice (paddy),14688.75406401763,2009-4,KG
+Philippines,Lingayen,Rice (paddy),14712.366213295147,2009-5,KG
+Philippines,Lingayen,Rice (paddy),14947.09853771889,2009-6,KG
+Philippines,Lingayen,Rice (paddy),15835.645093107325,2009-7,KG
+Philippines,Lingayen,Rice (paddy),17101.563124855973,2009-8,KG
+Philippines,Lingayen,Rice (paddy),17288.454456666186,2009-9,KG
+Philippines,Lingayen,Rice (paddy),17654.16132576451,2009-10,KG
+Philippines,Lingayen,Rice (paddy),16672.307236073702,2009-11,KG
+Philippines,Lingayen,Rice (paddy),15151.843280035622,2009-12,KG
+Philippines,Lingayen,Rice (paddy),15958.736517170211,2010-1,KG
+Philippines,Lingayen,Rice (paddy),16378.714867401708,2010-2,KG
+Philippines,Lingayen,Rice (paddy),14538.801178536552,2010-3,KG
+Philippines,Lingayen,Rice (paddy),15845.072875237787,2010-4,KG
+Philippines,Lingayen,Rice (paddy),15642.41092993382,2010-5,KG
+Philippines,Lingayen,Rice (paddy),16882.966690248577,2010-6,KG
+Philippines,Lingayen,Rice (paddy),16897.50115687182,2010-7,KG
+Philippines,Lingayen,Rice (paddy),16913.604693038375,2010-8,KG
+Philippines,Lingayen,Rice (paddy),16626.693267669594,2010-9,KG
+Philippines,Lingayen,Rice (paddy),16679.96169684975,2010-10,KG
+Philippines,Lingayen,Rice (paddy),16333.80026367831,2010-11,KG
+Philippines,Lingayen,Rice (paddy),16869.211875990128,2010-12,KG
+Philippines,Lingayen,Rice (paddy),14774.173916044205,2012-1,KG
+Philippines,Lingayen,Rice (paddy),14779.842724248694,2012-2,KG
+Philippines,Lingayen,Rice (paddy),14783.053196601171,2012-3,KG
+Philippines,Lingayen,Rice (paddy),14963.064634506687,2012-5,KG
+Philippines,Lingayen,Rice (paddy),14922.529954021733,2012-6,KG
+Philippines,Lingayen,Rice (paddy),14240.513307137522,2012-7,KG
+Philippines,Lingayen,Rice (paddy),14329.854670233242,2012-8,KG
+Philippines,Lingayen,Rice (paddy),14584.374839352187,2012-9,KG
+Philippines,Lingayen,Rice (paddy),15359.233530770909,2012-10,KG
+Philippines,Lingayen,Rice (paddy),15166.671175323636,2012-11,KG
+Philippines,Lingayen,Rice (paddy),15021.584686796801,2012-12,KG
+Philippines,Lingayen,Rice (paddy),15302.136639670578,2013-1,KG
+Philippines,Lingayen,Rice (paddy),15218.55009793494,2013-2,KG
+Philippines,Lingayen,Rice (paddy),15204.257549713982,2013-3,KG
+Philippines,Tuguegarao,Rice (paddy),17069.01628018661,2008-1,KG
+Philippines,Tuguegarao,Rice (paddy),16083.871488246283,2008-2,KG
+Philippines,Tuguegarao,Rice (paddy),16102.707974974663,2008-3,KG
+Philippines,Tuguegarao,Rice (paddy),12666.956212814706,2008-4,KG
+Philippines,Tuguegarao,Rice (paddy),11442.494178534378,2008-5,KG
+Philippines,Tuguegarao,Rice (paddy),12008.206709893027,2008-6,KG
+Philippines,Tuguegarao,Rice (paddy),14009.35865818809,2008-7,KG
+Philippines,Tuguegarao,Rice (paddy),18538.249945051622,2008-8,KG
+Philippines,Tuguegarao,Rice (paddy),18459.530944356793,2008-9,KG
+Philippines,Tuguegarao,Rice (paddy),18687.524626173246,2008-10,KG
+Philippines,Tuguegarao,Rice (paddy),20262.28419654715,2008-11,KG
+Philippines,Tuguegarao,Rice (paddy),18018.684987335186,2008-12,KG
+Philippines,Tuguegarao,Rice (paddy),16993.348848097605,2009-1,KG
+Philippines,Tuguegarao,Rice (paddy),13968.767120806675,2009-2,KG
+Philippines,Tuguegarao,Rice (paddy),15714.089249058967,2009-3,KG
+Philippines,Tuguegarao,Rice (paddy),15107.414731700364,2009-4,KG
+Philippines,Tuguegarao,Rice (paddy),15064.164056531512,2009-5,KG
+Philippines,Tuguegarao,Rice (paddy),15566.764683126834,2009-6,KG
+Philippines,Tuguegarao,Rice (paddy),15795.504040906799,2009-7,KG
+Philippines,Tuguegarao,Rice (paddy),16645.82526676521,2009-8,KG
+Philippines,Tuguegarao,Rice (paddy),17397.18687463264,2009-9,KG
+Philippines,Tuguegarao,Rice (paddy),15971.154493262306,2009-10,KG
+Philippines,Tuguegarao,Rice (paddy),17675.06194664915,2009-11,KG
+Philippines,Tuguegarao,Rice (paddy),15977.94111844182,2009-12,KG
+Philippines,Tuguegarao,Rice (paddy),15958.736517170211,2010-1,KG
+Philippines,Tuguegarao,Rice (paddy),15755.720804960662,2010-2,KG
+Philippines,Tuguegarao,Rice (paddy),16027.603827666086,2010-3,KG
+Philippines,Tuguegarao,Rice (paddy),16755.70924737789,2010-4,KG
+Philippines,Tuguegarao,Rice (paddy),16918.062088658367,2010-5,KG
+Philippines,Tuguegarao,Rice (paddy),16882.966690248577,2010-6,KG
+Philippines,Tuguegarao,Rice (paddy),16820.040444299386,2010-7,KG
+Philippines,Tuguegarao,Rice (paddy),16578.01729833523,2010-8,KG
+Philippines,Tuguegarao,Rice (paddy),16866.83120344749,2010-9,KG
+Philippines,Tuguegarao,Rice (paddy),16530.93111124216,2010-10,KG
+Philippines,Tuguegarao,Rice (paddy),16523.59835286664,2010-11,KG
+Philippines,Tuguegarao,Rice (paddy),16058.512424411932,2010-12,KG
+Philippines,Tuguegarao,Rice (paddy),15882.896913912922,2012-1,KG
+Philippines,Tuguegarao,Rice (paddy),15685.818660470668,2012-2,KG
+Philippines,Tuguegarao,Rice (paddy),15893.349136261104,2012-3,KG
+Philippines,Tuguegarao,Rice (paddy),15752.956468841767,2012-5,KG
+Philippines,Tuguegarao,Rice (paddy),15561.686501725224,2012-6,KG
+Philippines,Tuguegarao,Rice (paddy),15059.509964472896,2012-7,KG
+Philippines,Tuguegarao,Rice (paddy),15372.958649808692,2012-8,KG
+Philippines,Tuguegarao,Rice (paddy),15552.521524790305,2012-9,KG
+Philippines,Tuguegarao,Rice (paddy),15331.358333800363,2012-10,KG
+Philippines,Tuguegarao,Rice (paddy),15503.085323389962,2012-11,KG
+Philippines,Tuguegarao,Rice (paddy),15580.700742136634,2012-12,KG
+Philippines,Tuguegarao,Rice (paddy),17153.360377288383,2013-1,KG
+Philippines,Tuguegarao,Rice (paddy),16866.664136406678,2013-2,KG
+Philippines,Tuguegarao,Rice (paddy),16626.102083664795,2013-3,KG
+Philippines,Palayan,Rice (paddy),15060.180555342966,2008-1,KG
+Philippines,Palayan,Rice (paddy),16158.104741268959,2008-2,KG
+Philippines,Palayan,Rice (paddy),12619.498093863122,2008-3,KG
+Philippines,Palayan,Rice (paddy),14329.022037955403,2008-4,KG
+Philippines,Palayan,Rice (paddy),11683.388792819314,2008-5,KG
+Philippines,Palayan,Rice (paddy),10436.223286052485,2008-6,KG
+Philippines,Palayan,Rice (paddy),12242.47912293376,2008-7,KG
+Philippines,Palayan,Rice (paddy),15893.54398019443,2008-8,KG
+Philippines,Palayan,Rice (paddy),18907.297344415525,2008-9,KG
+Philippines,Palayan,Rice (paddy),19602.71145620701,2008-10,KG
+Philippines,Palayan,Rice (paddy),18400.265315967197,2008-11,KG
+Philippines,Palayan,Rice (paddy),18204.171450440102,2008-12,KG
+Philippines,Palayan,Rice (paddy),15272.772277227723,2009-1,KG
+Philippines,Palayan,Rice (paddy),13890.025479764925,2009-2,KG
+Philippines,Palayan,Rice (paddy),17587.437897263753,2009-3,KG
+Philippines,Palayan,Rice (paddy),16051.628152431638,2009-4,KG
+Philippines,Palayan,Rice (paddy),15213.406548732439,2009-5,KG
+Philippines,Palayan,Rice (paddy),14391.573388814124,2009-6,KG
+Philippines,Palayan,Rice (paddy),13971.58373125052,2009-7,KG
+Philippines,Palayan,Rice (paddy),15225.706109332466,2009-8,KG
+Philippines,Palayan,Rice (paddy),20885.38122281821,2009-9,KG
+Philippines,Palayan,Rice (paddy),15897.988209588984,2009-10,KG
+Philippines,Palayan,Rice (paddy),14927.530897414828,2009-11,KG
+Philippines,Palayan,Rice (paddy),14312.580966132518,2009-12,KG
+Philippines,Palayan,Rice (paddy),14994.660352203331,2010-1,KG
+Philippines,Palayan,Rice (paddy),14793.677944749928,2010-2,KG
+Philippines,Palayan,Rice (paddy),16626.668364175574,2010-3,KG
+Philippines,Palayan,Rice (paddy),16744.38782221074,2010-4,KG
+Philippines,Palayan,Rice (paddy),15432.573710142024,2010-5,KG
+Philippines,Palayan,Rice (paddy),16010.43478782602,2010-6,KG
+Philippines,Palayan,Rice (paddy),15135.06291010322,2010-7,KG
+Philippines,Palayan,Rice (paddy),19281.509350063745,2010-8,KG
+Philippines,Palayan,Rice (paddy),17246.394212245184,2010-9,KG
+Philippines,Palayan,Rice (paddy),16306.782892784639,2010-10,KG
+Philippines,Palayan,Rice (paddy),16603.03872956312,2010-11,KG
+Philippines,Palayan,Rice (paddy),14837.51847486723,2010-12,KG
+Philippines,Palayan,Rice (paddy),13781.593756309969,2012-1,KG
+Philippines,Palayan,Rice (paddy),13665.550916766066,2012-2,KG
+Philippines,Palayan,Rice (paddy),15264.641898759211,2012-3,KG
+Philippines,Palayan,Rice (paddy),14397.02764997765,2012-5,KG
+Philippines,Palayan,Rice (paddy),13456.376033642024,2012-6,KG
+Philippines,Palayan,Rice (paddy),13159.694861262467,2012-7,KG
+Philippines,Palayan,Rice (paddy),14918.980137278153,2012-8,KG
+Philippines,Palayan,Rice (paddy),15273.469105087128,2012-9,KG
+Philippines,Palayan,Rice (paddy),14640.517230370884,2012-10,KG
+Philippines,Palayan,Rice (paddy),14369.792963941696,2012-11,KG
+Philippines,Palayan,Rice (paddy),13807.635841849507,2012-12,KG
+Philippines,Palayan,Rice (paddy),14630.253581946297,2013-1,KG
+Philippines,Palayan,Rice (paddy),15768.18393806166,2013-2,KG
+Philippines,Palayan,Rice (paddy),15450.908309500766,2013-3,KG
+Philippines,Santa Cruz,Rice (paddy),18751.6635333844,2008-1,KG
+Philippines,Santa Cruz,Rice (paddy),18139.495823531648,2008-2,KG
+Philippines,Santa Cruz,Rice (paddy),14776.60261232969,2008-3,KG
+Philippines,Santa Cruz,Rice (paddy),14234.690095638382,2008-4,KG
+Philippines,Santa Cruz,Rice (paddy),13891.388427006694,2008-5,KG
+Philippines,Santa Cruz,Rice (paddy),11210.786733064195,2008-6,KG
+Philippines,Santa Cruz,Rice (paddy),15664.752152572233,2008-7,KG
+Philippines,Santa Cruz,Rice (paddy),18899.38468424094,2008-8,KG
+Philippines,Santa Cruz,Rice (paddy),24581.409975750805,2008-9,KG
+Philippines,Santa Cruz,Rice (paddy),24693.564879162255,2008-10,KG
+Philippines,Santa Cruz,Rice (paddy),22643.95963193826,2008-11,KG
+Philippines,Santa Cruz,Rice (paddy),21070.36014689238,2008-12,KG
+Philippines,Santa Cruz,Rice (paddy),17392.480885099187,2009-1,KG
+Philippines,Santa Cruz,Rice (paddy),14418.317847339365,2009-2,KG
+Philippines,Santa Cruz,Rice (paddy),16445.696027211878,2009-3,KG
+Philippines,Santa Cruz,Rice (paddy),18660.769207920526,2009-4,KG
+Philippines,Santa Cruz,Rice (paddy),17765.47474779674,2009-5,KG
+Philippines,Santa Cruz,Rice (paddy),16801.552119008757,2009-6,KG
+Philippines,Santa Cruz,Rice (paddy),15926.71270067152,2009-7,KG
+Philippines,Santa Cruz,Rice (paddy),18210.921082663688,2009-8,KG
+Philippines,Santa Cruz,Rice (paddy),19900.37923069489,2009-9,KG
+Philippines,Santa Cruz,Rice (paddy),21068.626178882885,2009-10,KG
+Philippines,Santa Cruz,Rice (paddy),17140.959582836138,2009-11,KG
+Philippines,Santa Cruz,Rice (paddy),16757.896403163526,2009-12,KG
+Philippines,Santa Cruz,Rice (paddy),16886.324901259362,2010-1,KG
+Philippines,Santa Cruz,Rice (paddy),15250.489852782588,2010-2,KG
+Philippines,Santa Cruz,Rice (paddy),17190.284240927285,2010-3,KG
+Philippines,Santa Cruz,Rice (paddy),18062.459166816254,2010-4,KG
+Philippines,Santa Cruz,Rice (paddy),18169.002788681206,2010-5,KG
+Philippines,Santa Cruz,Rice (paddy),17084.889215447565,2010-6,KG
+Philippines,Santa Cruz,Rice (paddy),15992.653647848794,2010-7,KG
+Philippines,Santa Cruz,Rice (paddy),16633.020673578547,2010-8,KG
+Philippines,Santa Cruz,Rice (paddy),18792.622658860273,2010-9,KG
+Philippines,Santa Cruz,Rice (paddy),19459.955312991377,2010-10,KG
+Philippines,Santa Cruz,Rice (paddy),19323.760503792084,2010-11,KG
+Philippines,Santa Cruz,Rice (paddy),19374.805697126074,2010-12,KG
+Philippines,Santa Cruz,Rice (paddy),18859.53601022616,2012-1,KG
+Philippines,Santa Cruz,Rice (paddy),17160.553748207225,2012-2,KG
+Philippines,Santa Cruz,Rice (paddy),18662.816091014996,2012-3,KG
+Philippines,Santa Cruz,Rice (paddy),16952.988013918162,2012-5,KG
+Philippines,Santa Cruz,Rice (paddy),16431.655156658355,2012-6,KG
+Philippines,Santa Cruz,Rice (paddy),17073.456406827554,2012-7,KG
+Philippines,Santa Cruz,Rice (paddy),16410.878151005974,2012-8,KG
+Philippines,Santa Cruz,Rice (paddy),18930.496918981233,2012-9,KG
+Philippines,Santa Cruz,Rice (paddy),18484.85435869584,2012-10,KG
+Philippines,Santa Cruz,Rice (paddy),17186.822049086004,2012-11,KG
+Philippines,Santa Cruz,Rice (paddy),16800.059930651674,2012-12,KG
+Philippines,Santa Cruz,Rice (paddy),17735.410529811143,2013-1,KG
+Philippines,Santa Cruz,Rice (paddy),18329.292960348346,2013-2,KG
+Philippines,Santa Cruz,Rice (paddy),18493.944342717285,2013-3,KG
+Philippines,Puerto Princesa,Rice (paddy),21072.22868122838,2008-1,KG
+Philippines,Puerto Princesa,Rice (paddy),19631.342209018363,2008-2,KG
+Philippines,Puerto Princesa,Rice (paddy),16892.555992734495,2008-3,KG
+Philippines,Puerto Princesa,Rice (paddy),14871.041441041749,2008-4,KG
+Philippines,Puerto Princesa,Rice (paddy),14978.70358053758,2008-5,KG
+Philippines,Puerto Princesa,Rice (paddy),14494.754563961787,2008-6,KG
+Philippines,Puerto Princesa,Rice (paddy),16811.230389825705,2008-7,KG
+Philippines,Puerto Princesa,Rice (paddy),19682.199434475773,2008-8,KG
+Philippines,Puerto Princesa,Rice (paddy),21308.22399132543,2008-9,KG
+Philippines,Puerto Princesa,Rice (paddy),21211.13906287015,2008-10,KG
+Philippines,Puerto Princesa,Rice (paddy),21550.141242937854,2008-11,KG
+Philippines,Puerto Princesa,Rice (paddy),19555.823990994115,2008-12,KG
+Philippines,Puerto Princesa,Rice (paddy),18373.259882379214,2009-1,KG
+Philippines,Puerto Princesa,Rice (paddy),17088.006380792634,2009-2,KG
+Philippines,Puerto Princesa,Rice (paddy),15723.941342632043,2009-3,KG
+Philippines,Puerto Princesa,Rice (paddy),16229.398627083972,2009-4,KG
+Philippines,Puerto Princesa,Rice (paddy),16534.085852088083,2009-5,KG
+Philippines,Puerto Princesa,Rice (paddy),15694.926773614896,2009-6,KG
+Philippines,Puerto Princesa,Rice (paddy),16683.6046697128,2009-7,KG
+Philippines,Puerto Princesa,Rice (paddy),17183.895271949503,2009-8,KG
+Philippines,Puerto Princesa,Rice (paddy),19996.284672770526,2009-9,KG
+Philippines,Puerto Princesa,Rice (paddy),18586.17137280181,2009-10,KG
+Philippines,Puerto Princesa,Rice (paddy),18367.157745764933,2009-11,KG
+Philippines,Puerto Princesa,Rice (paddy),17853.509243786404,2009-12,KG
+Philippines,Puerto Princesa,Rice (paddy),17274.253986828833,2010-1,KG
+Philippines,Puerto Princesa,Rice (paddy),17132.638366968564,2010-2,KG
+Philippines,Puerto Princesa,Rice (paddy),15632.348492828452,2010-3,KG
+Philippines,Puerto Princesa,Rice (paddy),15156.99937423358,2010-4,KG
+Philippines,Puerto Princesa,Rice (paddy),16761.205883862865,2010-5,KG
+Philippines,Puerto Princesa,Rice (paddy),17005.792506116788,2010-6,KG
+Philippines,Puerto Princesa,Rice (paddy),15992.653647848794,2010-7,KG
+Philippines,Puerto Princesa,Rice (paddy),15444.215745584022,2010-8,KG
+Philippines,Puerto Princesa,Rice (paddy),16878.439483697628,2010-9,KG
+Philippines,Puerto Princesa,Rice (paddy),19119.638129457344,2010-10,KG
+Philippines,Puerto Princesa,Rice (paddy),18739.553790886745,2010-11,KG
+Philippines,Puerto Princesa,Rice (paddy),19206.992419434428,2010-12,KG
+Philippines,Puerto Princesa,Rice (paddy),17813.883713065992,2012-1,KG
+Philippines,Puerto Princesa,Rice (paddy),17505.83651980093,2012-2,KG
+Philippines,Puerto Princesa,Rice (paddy),17741.662896529466,2012-3,KG
+Philippines,Puerto Princesa,Rice (paddy),15687.083891015074,2012-5,KG
+Philippines,Puerto Princesa,Rice (paddy),15533.9637823041,2012-6,KG
+Philippines,Puerto Princesa,Rice (paddy),15840.373444112234,2012-7,KG
+Philippines,Puerto Princesa,Rice (paddy),17222.64618788728,2012-8,KG
+Philippines,Puerto Princesa,Rice (paddy),17795.986302233923,2012-9,KG
+Philippines,Puerto Princesa,Rice (paddy),16794.390540604374,2012-10,KG
+Philippines,Puerto Princesa,Rice (paddy),16434.68809919132,2012-11,KG
+Philippines,Puerto Princesa,Rice (paddy),17039.409495470998,2012-12,KG
+Philippines,Puerto Princesa,Rice (paddy),16764.982406481853,2013-1,KG
+Philippines,Puerto Princesa,Rice (paddy),17017.548032834595,2013-2,KG
+Philippines,Puerto Princesa,Rice (paddy),16932.233487110047,2013-3,KG
+Philippines,Legazpi,Rice (paddy),18685.285963354716,2008-1,KG
+Philippines,Legazpi,Rice (paddy),16539.792254842243,2008-2,KG
+Philippines,Legazpi,Rice (paddy),16500.920227833387,2008-3,KG
+Philippines,Legazpi,Rice (paddy),14779.558616045591,2008-4,KG
+Philippines,Legazpi,Rice (paddy),15059.999122358679,2008-5,KG
+Philippines,Legazpi,Rice (paddy),13822.812299407266,2008-6,KG
+Philippines,Legazpi,Rice (paddy),20243.889998219434,2008-7,KG
+Philippines,Legazpi,Rice (paddy),21128.894674214916,2008-8,KG
+Philippines,Legazpi,Rice (paddy),22795.779251097207,2008-9,KG
+Philippines,Legazpi,Rice (paddy),22747.05105734012,2008-10,KG
+Philippines,Legazpi,Rice (paddy),21441.118605958403,2008-11,KG
+Philippines,Legazpi,Rice (paddy),20614.215797334342,2008-12,KG
+Philippines,Legazpi,Rice (paddy),18639.539011109347,2009-1,KG
+Philippines,Legazpi,Rice (paddy),17207.336034289787,2009-2,KG
+Philippines,Legazpi,Rice (paddy),17213.23709093899,2009-3,KG
+Philippines,Legazpi,Rice (paddy),18117.910467326474,2009-4,KG
+Philippines,Legazpi,Rice (paddy),18914.28142894757,2009-5,KG
+Philippines,Legazpi,Rice (paddy),20018.004342114633,2009-6,KG
+Philippines,Legazpi,Rice (paddy),19232.488716474483,2009-7,KG
+Philippines,Legazpi,Rice (paddy),19043.73759559038,2009-8,KG
+Philippines,Legazpi,Rice (paddy),22129.22170453272,2009-9,KG
+Philippines,Legazpi,Rice (paddy),19052.647830785856,2009-10,KG
+Philippines,Legazpi,Rice (paddy),18520.56604888066,2009-11,KG
+Philippines,Legazpi,Rice (paddy),18246.638908228168,2009-12,KG
+Philippines,Legazpi,Rice (paddy),18634.034912905743,2010-1,KG
+Philippines,Legazpi,Rice (paddy),18022.33327163921,2010-2,KG
+Philippines,Legazpi,Rice (paddy),18440.48673117654,2010-3,KG
+Philippines,Legazpi,Rice (paddy),18816.77598851321,2010-4,KG
+Philippines,Legazpi,Rice (paddy),18706.1499516873,2010-5,KG
+Philippines,Legazpi,Rice (paddy),18976.205364759102,2010-6,KG
+Philippines,Legazpi,Rice (paddy),19311.42989356779,2010-7,KG
+Philippines,Legazpi,Rice (paddy),17144.980954229053,2010-8,KG
+Philippines,Legazpi,Rice (paddy),18821.46782027065,2010-9,KG
+Philippines,Legazpi,Rice (paddy),18688.814892663046,2010-10,KG
+Philippines,Legazpi,Rice (paddy),19605.8591972781,2010-11,KG
+Philippines,Legazpi,Rice (paddy),19012.37753131857,2010-12,KG
+Philippines,Legazpi,Rice (paddy),19379.55644310715,2012-3,KG
+Philippines,Legazpi,Rice (paddy),17779.403137142337,2012-5,KG
+Philippines,Legazpi,Rice (paddy),17346.946292705637,2012-6,KG
+Philippines,Legazpi,Rice (paddy),19086.12880695492,2012-9,KG
+Philippines,Legazpi,Rice (paddy),18814.205884017818,2012-10,KG
+Philippines,Legazpi,Rice (paddy),19295.63457044625,2012-11,KG
+Philippines,Legazpi,Rice (paddy),20057.428161253687,2013-1,KG
+Philippines,Legazpi,Rice (paddy),18808.236349848972,2013-2,KG
+Philippines,Legazpi,Rice (paddy),18055.69921611261,2013-3,KG
+Philippines,Iloilo City,Rice (paddy),18602.971928273862,2008-1,KG
+Philippines,Iloilo City,Rice (paddy),18688.199433851998,2008-2,KG
+Philippines,Iloilo City,Rice (paddy),17473.151206887404,2008-3,KG
+Philippines,Iloilo City,Rice (paddy),14141.592057079597,2008-4,KG
+Philippines,Iloilo City,Rice (paddy),16945.373058287554,2008-5,KG
+Philippines,Iloilo City,Rice (paddy),14513.079158859337,2008-6,KG
+Philippines,Iloilo City,Rice (paddy),16395.404903151568,2008-7,KG
+Philippines,Iloilo City,Rice (paddy),18247.6817640947,2008-8,KG
+Philippines,Iloilo City,Rice (paddy),19439.68302989786,2008-9,KG
+Philippines,Iloilo City,Rice (paddy),19252.93460322581,2008-10,KG
+Philippines,Iloilo City,Rice (paddy),19500.89468302659,2008-11,KG
+Philippines,Iloilo City,Rice (paddy),19162.285737305378,2008-12,KG
+Philippines,Iloilo City,Rice (paddy),18526.486462141285,2009-1,KG
+Philippines,Iloilo City,Rice (paddy),16842.72399255159,2009-2,KG
+Philippines,Iloilo City,Rice (paddy),17014.71264687796,2009-3,KG
+Philippines,Iloilo City,Rice (paddy),16563.914157296476,2009-4,KG
+Philippines,Iloilo City,Rice (paddy),18928.853294455235,2009-5,KG
+Philippines,Iloilo City,Rice (paddy),19330.958951277626,2009-6,KG
+Philippines,Iloilo City,Rice (paddy),19533.938382876906,2009-7,KG
+Philippines,Iloilo City,Rice (paddy),20803.816590686572,2009-8,KG
+Philippines,Iloilo City,Rice (paddy),20763.44822151735,2009-9,KG
+Philippines,Iloilo City,Rice (paddy),19511.747778515637,2009-10,KG
+Philippines,Iloilo City,Rice (paddy),18791.668325405106,2009-11,KG
+Philippines,Iloilo City,Rice (paddy),17489.682272297305,2009-12,KG
+Philippines,Iloilo City,Rice (paddy),17427.331902185877,2010-1,KG
+Philippines,Iloilo City,Rice (paddy),18623.513351766407,2010-2,KG
+Philippines,Iloilo City,Rice (paddy),17201.94657759006,2010-3,KG
+Philippines,Iloilo City,Rice (paddy),15645.008823782766,2010-4,KG
+Philippines,Iloilo City,Rice (paddy),15517.731995483091,2010-5,KG
+Philippines,Iloilo City,Rice (paddy),16212.33182172042,2010-6,KG
+Philippines,Iloilo City,Rice (paddy),15585.073882551678,2010-7,KG
+Philippines,Iloilo City,Rice (paddy),16501.620905255346,2010-8,KG
+Philippines,Iloilo City,Rice (paddy),20118.4352500514,2010-9,KG
+Philippines,Iloilo City,Rice (paddy),22168.207158393863,2010-10,KG
+Philippines,Iloilo City,Rice (paddy),23769.93548696549,2010-11,KG
+Philippines,Iloilo City,Rice (paddy),21529.46193528837,2010-12,KG
+Philippines,Iloilo City,Rice (paddy),18519.016610041523,2012-1,KG
+Philippines,Iloilo City,Rice (paddy),18075.624827578387,2012-2,KG
+Philippines,Iloilo City,Rice (paddy),17016.8089649592,2012-3,KG
+Philippines,Iloilo City,Rice (paddy),16002.54627273567,2012-5,KG
+Philippines,Iloilo City,Rice (paddy),15636.09982630012,2012-6,KG
+Philippines,Iloilo City,Rice (paddy),15733.540759939802,2012-7,KG
+Philippines,Iloilo City,Rice (paddy),17142.434262860526,2012-8,KG
+Philippines,Iloilo City,Rice (paddy),18411.853167776266,2012-9,KG
+Philippines,Iloilo City,Rice (paddy),19213.597669273695,2012-10,KG
+Philippines,Iloilo City,Rice (paddy),18624.357868143532,2012-11,KG
+Philippines,Iloilo City,Rice (paddy),18004.36530202456,2012-12,KG
+Philippines,Iloilo City,Rice (paddy),18851.712889891194,2013-1,KG
+Philippines,Iloilo City,Rice (paddy),18469.114196522984,2013-2,KG
+Philippines,Iloilo City,Rice (paddy),18532.500168310162,2013-3,KG
+Philippines,Catarman,Rice (paddy),20659.856299991025,2008-1,KG
+Philippines,Catarman,Rice (paddy),20838.82555917624,2008-2,KG
+Philippines,Catarman,Rice (paddy),18534.887825361464,2008-3,KG
+Philippines,Catarman,Rice (paddy),15544.568120254997,2008-4,KG
+Philippines,Catarman,Rice (paddy),16027.753578596892,2008-5,KG
+Philippines,Catarman,Rice (paddy),16078.215146579463,2008-6,KG
+Philippines,Catarman,Rice (paddy),16043.912820165611,2008-7,KG
+Philippines,Catarman,Rice (paddy),17679.606629449383,2008-8,KG
+Philippines,Catarman,Rice (paddy),17358.854889484945,2008-9,KG
+Philippines,Catarman,Rice (paddy),17464.484661194976,2008-10,KG
+Philippines,Catarman,Rice (paddy),18215.735434574974,2008-11,KG
+Philippines,Catarman,Rice (paddy),17734.722903007554,2008-12,KG
+Philippines,Catarman,Rice (paddy),17529.724278023208,2009-1,KG
+Philippines,Catarman,Rice (paddy),18347.658377589705,2009-2,KG
+Philippines,Catarman,Rice (paddy),17837.614823256125,2009-3,KG
+Philippines,Catarman,Rice (paddy),19771.52927982056,2009-4,KG
+Philippines,Catarman,Rice (paddy),17499.751834902345,2009-5,KG
+Philippines,Catarman,Rice (paddy),17790.588209287806,2009-6,KG
+Philippines,Catarman,Rice (paddy),17565.40195669551,2009-7,KG
+Philippines,Catarman,Rice (paddy),17657.515000292988,2009-8,KG
+Philippines,Catarman,Rice (paddy),17544.308962367377,2009-9,KG
+Philippines,Catarman,Rice (paddy),17216.24803986674,2009-10,KG
+Philippines,Catarman,Rice (paddy),16798.61259392275,2009-11,KG
+Philippines,Catarman,Rice (paddy),15903.920213194242,2009-12,KG
+Philippines,Catarman,Rice (paddy),17494.431139023076,2010-2,KG
+Philippines,Catarman,Rice (paddy),17225.318787613956,2010-3,KG
+Philippines,Catarman,Rice (paddy),17790.160787417015,2010-4,KG
+Philippines,Catarman,Rice (paddy),17760.997112023102,2010-5,KG
+Philippines,Catarman,Rice (paddy),15876.240770202865,2010-10,KG
+Philippines,Catarman,Rice (paddy),15758.816421280248,2010-11,KG
+Philippines,Catarman,Rice (paddy),16100.911137083649,2010-12,KG
+Philippines,Catarman,Rice (paddy),20645.097894545303,2012-3,KG
+Philippines,Catarman,Rice (paddy),18677.225059430464,2012-5,KG
+Philippines,Catarman,Rice (paddy),18364.300960704346,2012-10,KG
+Philippines,Catarman,Rice (paddy),18299.2781671723,2012-11,KG
+Philippines,Catarman,Rice (paddy),18279.541190920125,2012-12,KG
+Philippines,Catarman,Rice (paddy),19539.59110153055,2013-2,KG
+Philippines,Catarman,Rice (paddy),19062.378657754343,2013-3,KG
+Philippines,Zamboanga City,Rice (paddy),19568.464447257495,2008-1,KG
+Philippines,Zamboanga City,Rice (paddy),19413.61937490725,2008-2,KG
+Philippines,Zamboanga City,Rice (paddy),16629.432067614023,2008-3,KG
+Philippines,Zamboanga City,Rice (paddy),14160.114116093453,2008-4,KG
+Philippines,Zamboanga City,Rice (paddy),12422.181704732342,2008-5,KG
+Philippines,Zamboanga City,Rice (paddy),12357.207335476574,2008-6,KG
+Philippines,Zamboanga City,Rice (paddy),12216.69191045786,2008-7,KG
+Philippines,Zamboanga City,Rice (paddy),20317.663116042615,2008-8,KG
+Philippines,Zamboanga City,Rice (paddy),24407.602026427314,2008-9,KG
+Philippines,Zamboanga City,Rice (paddy),22643.278014195315,2008-10,KG
+Philippines,Zamboanga City,Rice (paddy),21790.20279920023,2008-11,KG
+Philippines,Zamboanga City,Rice (paddy),19901.666537458637,2008-12,KG
+Philippines,Zamboanga City,Rice (paddy),19675.06895617098,2009-1,KG
+Philippines,Zamboanga City,Rice (paddy),19371.78081847718,2009-2,KG
+Philippines,Zamboanga City,Rice (paddy),19351.609908563358,2009-3,KG
+Philippines,Zamboanga City,Rice (paddy),17618.19440776089,2009-4,KG
+Philippines,Zamboanga City,Rice (paddy),17739.820632637467,2009-5,KG
+Philippines,Zamboanga City,Rice (paddy),17958.18070691153,2009-6,KG
+Philippines,Zamboanga City,Rice (paddy),17803.789554679235,2009-7,KG
+Philippines,Zamboanga City,Rice (paddy),18814.294973956763,2009-8,KG
+Philippines,Zamboanga City,Rice (paddy),20973.35671238358,2009-9,KG
+Philippines,Zamboanga City,Rice (paddy),20413.551247270563,2009-10,KG
+Philippines,Zamboanga City,Rice (paddy),21321.315984594254,2009-11,KG
+Philippines,Zamboanga City,Rice (paddy),18386.24593889556,2009-12,KG
+Philippines,Zamboanga City,Rice (paddy),18183.42524929351,2010-1,KG
+Philippines,Zamboanga City,Rice (paddy),19619.4231566737,2010-2,KG
+Philippines,Zamboanga City,Rice (paddy),19107.51262650169,2010-3,KG
+Philippines,Zamboanga City,Rice (paddy),18618.853476237342,2010-4,KG
+Philippines,Zamboanga City,Rice (paddy),18078.157774737803,2010-5,KG
+Philippines,Zamboanga City,Rice (paddy),18823.39551189501,2010-6,KG
+Philippines,Zamboanga City,Rice (paddy),19039.437923235848,2010-7,KG
+Philippines,Zamboanga City,Rice (paddy),18917.707286855,2010-8,KG
+Philippines,Zamboanga City,Rice (paddy),18453.25249797792,2010-9,KG
+Philippines,Zamboanga City,Rice (paddy),21323.142523809696,2010-10,KG
+Philippines,Zamboanga City,Rice (paddy),18696.074547752436,2010-11,KG
+Philippines,Zamboanga City,Rice (paddy),17299.9151579303,2010-12,KG
+Philippines,Zamboanga City,Rice (paddy),18442.174217468735,2012-1,KG
+Philippines,Zamboanga City,Rice (paddy),18278.152836850975,2012-2,KG
+Philippines,Zamboanga City,Rice (paddy),18702.722326419876,2012-3,KG
+Philippines,Zamboanga City,Rice (paddy),17518.464598772003,2012-5,KG
+Philippines,Zamboanga City,Rice (paddy),14956.658095711893,2012-6,KG
+Philippines,Zamboanga City,Rice (paddy),17222.41944930323,2012-7,KG
+Philippines,Zamboanga City,Rice (paddy),17623.172843419543,2012-8,KG
+Philippines,Zamboanga City,Rice (paddy),15421.038854894734,2012-9,KG
+Philippines,Zamboanga City,Rice (paddy),16467.014506674466,2012-10,KG
+Philippines,Zamboanga City,Rice (paddy),16338.641220689553,2012-11,KG
+Philippines,Zamboanga City,Rice (paddy),17850.809947636284,2012-12,KG
+Philippines,Zamboanga City,Rice (paddy),18745.655433407977,2013-1,KG
+Philippines,Zamboanga City,Rice (paddy),17338.84288501702,2013-2,KG
+Philippines,Zamboanga City,Rice (paddy),17521.857912088253,2013-3,KG
+Philippines,Tubod,Rice (paddy),17713.400284052714,2008-1,KG
+Philippines,Tubod,Rice (paddy),16410.575127851283,2008-2,KG
+Philippines,Tubod,Rice (paddy),16759.961361708323,2008-3,KG
+Philippines,Tubod,Rice (paddy),12032.551060253034,2008-4,KG
+Philippines,Tubod,Rice (paddy),13830.802932309467,2008-5,KG
+Philippines,Tubod,Rice (paddy),14322.951484289128,2008-6,KG
+Philippines,Tubod,Rice (paddy),14382.825751989756,2008-7,KG
+Philippines,Tubod,Rice (paddy),16305.3514922863,2008-8,KG
+Philippines,Tubod,Rice (paddy),18716.90627897989,2008-9,KG
+Philippines,Tubod,Rice (paddy),19696.057701236565,2008-10,KG
+Philippines,Tubod,Rice (paddy),19758.48225848226,2008-11,KG
+Philippines,Tubod,Rice (paddy),20160.9716389239,2008-12,KG
+Philippines,Tubod,Rice (paddy),18826.22160521137,2009-1,KG
+Philippines,Tubod,Rice (paddy),14120.862579428638,2009-2,KG
+Philippines,Tubod,Rice (paddy),14058.12020263347,2009-3,KG
+Philippines,Tubod,Rice (paddy),14864.037525402086,2009-4,KG
+Philippines,Tubod,Rice (paddy),15194.589719358622,2009-5,KG
+Philippines,Tubod,Rice (paddy),15231.89267088993,2009-6,KG
+Philippines,Tubod,Rice (paddy),15244.835092691696,2009-7,KG
+Philippines,Tubod,Rice (paddy),14671.393849333279,2009-8,KG
+Philippines,Tubod,Rice (paddy),16487.002925562454,2009-9,KG
+Philippines,Tubod,Rice (paddy),17240.685581442136,2009-10,KG
+Philippines,Tubod,Rice (paddy),17189.278003083742,2009-11,KG
+Philippines,Tubod,Rice (paddy),16641.844489014195,2009-12,KG
+Philippines,Tubod,Rice (paddy),16129.902776344907,2010-1,KG
+Philippines,Tubod,Rice (paddy),15612.051618289286,2010-2,KG
+Philippines,Tubod,Rice (paddy),15030.035124699316,2010-3,KG
+Philippines,Tubod,Rice (paddy),17090.823432325447,2010-4,KG
+Philippines,Tubod,Rice (paddy),16940.710096809184,2010-5,KG
+Philippines,Tubod,Rice (paddy),17210.681572455545,2010-6,KG
+Philippines,Tubod,Rice (paddy),15604.010788848822,2010-7,KG
+Philippines,Tubod,Rice (paddy),15453.737456894494,2010-8,KG
+Philippines,Tubod,Rice (paddy),15017.98687679893,2010-9,KG
+Philippines,Tubod,Rice (paddy),16088.631951075144,2010-10,KG
+Philippines,Tubod,Rice (paddy),15486.242402462463,2010-11,KG
+Philippines,Tubod,Rice (paddy),15245.550232926078,2010-12,KG
+Philippines,Tubod,Rice (paddy),15705.173096854998,2012-1,KG
+Philippines,Tubod,Rice (paddy),15517.956153997142,2012-2,KG
+Philippines,Tubod,Rice (paddy),15544.975962065808,2012-3,KG
+Philippines,Tubod,Rice (paddy),15474.471675638912,2012-5,KG
+Philippines,Tubod,Rice (paddy),15524.744812700354,2012-6,KG
+Philippines,Tubod,Rice (paddy),15704.65421019695,2012-7,KG
+Philippines,Tubod,Rice (paddy),16133.424356342748,2012-8,KG
+Philippines,Tubod,Rice (paddy),15237.016911518904,2012-9,KG
+Philippines,Tubod,Rice (paddy),17216.532150660325,2012-10,KG
+Philippines,Tubod,Rice (paddy),16553.623342014413,2012-11,KG
+Philippines,Tubod,Rice (paddy),15668.178163645824,2012-12,KG
+Philippines,Tubod,Rice (paddy),15561.19207606897,2013-1,KG
+Philippines,Tubod,Rice (paddy),15529.132752994838,2013-2,KG
+Philippines,Tubod,Rice (paddy),14890.155076604313,2013-3,KG
+Philippines,Davao City,Rice (paddy),20822.85319387656,2008-1,KG
+Philippines,Davao City,Rice (paddy),20373.943902666968,2008-2,KG
+Philippines,Davao City,Rice (paddy),16386.946105001076,2008-3,KG
+Philippines,Davao City,Rice (paddy),14492.288374848995,2008-4,KG
+Philippines,Davao City,Rice (paddy),13396.764457668496,2008-5,KG
+Philippines,Davao City,Rice (paddy),13481.909118799453,2008-6,KG
+Philippines,Davao City,Rice (paddy),17495.850631945304,2008-7,KG
+Philippines,Davao City,Rice (paddy),18642.14726259795,2008-8,KG
+Philippines,Davao City,Rice (paddy),21440.573208662856,2008-9,KG
+Philippines,Davao City,Rice (paddy),21598.810011799884,2008-10,KG
+Philippines,Davao City,Rice (paddy),22847.409404013175,2008-11,KG
+Philippines,Davao City,Rice (paddy),21890.073538990757,2008-12,KG
+Philippines,Davao City,Rice (paddy),19195.943160694704,2009-1,KG
+Philippines,Davao City,Rice (paddy),18279.603264913185,2009-2,KG
+Philippines,Davao City,Rice (paddy),17213.23709093899,2009-3,KG
+Philippines,Davao City,Rice (paddy),15877.709937905609,2009-4,KG
+Philippines,Davao City,Rice (paddy),16534.085852088083,2009-5,KG
+Philippines,Davao City,Rice (paddy),18357.251389287347,2009-6,KG
+Philippines,Davao City,Rice (paddy),19750.638174763015,2009-7,KG
+Philippines,Davao City,Rice (paddy),21300.412383132632,2009-8,KG
+Philippines,Davao City,Rice (paddy),19449.511263749457,2009-9,KG
+Philippines,Davao City,Rice (paddy),18700.63586162584,2009-10,KG
+Philippines,Davao City,Rice (paddy),18820.667813561595,2009-11,KG
+Philippines,Davao City,Rice (paddy),18628.54530398178,2009-12,KG
+Philippines,Davao City,Rice (paddy),19666.073769620518,2010-1,KG
+Philippines,Davao City,Rice (paddy),17711.603387645435,2010-2,KG
+Philippines,Davao City,Rice (paddy),17919.200887185685,2010-3,KG
+Philippines,Davao City,Rice (paddy),17802.941075339008,2010-4,KG
+Philippines,Davao City,Rice (paddy),19246.707897059256,2010-5,KG
+Philippines,Davao City,Rice (paddy),19824.794347917177,2010-6,KG
+Philippines,Davao City,Rice (paddy),19987.705648595456,2010-7,KG
+Philippines,Davao City,Rice (paddy),18790.076578023138,2010-8,KG
+Philippines,Davao City,Rice (paddy),18072.49268224956,2010-9,KG
+Philippines,Davao City,Rice (paddy),18235.409224304276,2010-10,KG
+Philippines,Davao City,Rice (paddy),17973.25233475383,2010-11,KG
+Philippines,Davao City,Rice (paddy),18190.06739200725,2010-12,KG
+Philippines,Davao City,Rice (paddy),18583.54280032041,2012-1,KG
+Philippines,Davao City,Rice (paddy),16872.141080170128,2012-2,KG
+Philippines,Davao City,Rice (paddy),16863.701429284756,2012-3,KG
+Philippines,Davao City,Rice (paddy),17074.238253289488,2012-5,KG
+Philippines,Davao City,Rice (paddy),17097.51307803928,2012-6,KG
+Philippines,Davao City,Rice (paddy),16313.67131561463,2012-7,KG
+Philippines,Davao City,Rice (paddy),15884.758752823285,2012-8,KG
+Philippines,Davao City,Rice (paddy),17360.46250421868,2012-9,KG
+Philippines,Davao City,Rice (paddy),17405.724811656593,2012-10,KG
+Philippines,Davao City,Rice (paddy),17497.5712655507,2012-11,KG
+Philippines,Davao City,Rice (paddy),17662.51026464434,2012-12,KG
+Philippines,Davao City,Rice (paddy),19135.90956662322,2013-1,KG
+Philippines,Davao City,Rice (paddy),19354.98740653063,2013-2,KG
+Philippines,Davao City,Rice (paddy),18767.253865023453,2013-3,KG
+Philippines,Koronadal,Rice (paddy),17758.09347232198,2008-1,KG
+Philippines,Koronadal,Rice (paddy),16592.050682187713,2008-2,KG
+Philippines,Koronadal,Rice (paddy),15218.952797445763,2008-3,KG
+Philippines,Koronadal,Rice (paddy),13754.767337961008,2008-4,KG
+Philippines,Koronadal,Rice (paddy),12779.757459042423,2008-5,KG
+Philippines,Koronadal,Rice (paddy),12397.241484511593,2008-6,KG
+Philippines,Koronadal,Rice (paddy),15353.737880846775,2008-7,KG
+Philippines,Koronadal,Rice (paddy),17612.739735994583,2008-8,KG
+Philippines,Koronadal,Rice (paddy),19486.714521099224,2008-9,KG
+Philippines,Koronadal,Rice (paddy),18274.692712487533,2008-10,KG
+Philippines,Koronadal,Rice (paddy),18753.072763028515,2008-11,KG
+Philippines,Koronadal,Rice (paddy),18284.8398615942,2008-12,KG
+Philippines,Koronadal,Rice (paddy),16623.42560786691,2009-1,KG
+Philippines,Koronadal,Rice (paddy),14826.056077679284,2009-2,KG
+Philippines,Koronadal,Rice (paddy),15190.603538157548,2009-3,KG
+Philippines,Koronadal,Rice (paddy),15134.949509461663,2009-4,KG
+Philippines,Koronadal,Rice (paddy),14756.547493214952,2009-5,KG
+Philippines,Koronadal,Rice (paddy),15459.943465712984,2009-6,KG
+Philippines,Koronadal,Rice (paddy),15967.524264286309,2009-7,KG
+Philippines,Koronadal,Rice (paddy),18144.79573377965,2009-8,KG
+Philippines,Koronadal,Rice (paddy),18482.089396881445,2009-9,KG
+Philippines,Koronadal,Rice (paddy),17143.34931845587,2009-10,KG
+Philippines,Koronadal,Rice (paddy),16891.679699706252,2009-11,KG
+Philippines,Koronadal,Rice (paddy),16084.888515486276,2009-12,KG
+Philippines,Koronadal,Rice (paddy),16590.45807949817,2010-1,KG
+Philippines,Koronadal,Rice (paddy),16021.101005668046,2010-2,KG
+Philippines,Koronadal,Rice (paddy),15367.072275980454,2010-3,KG
+Philippines,Koronadal,Rice (paddy),15714.454011966964,2010-4,KG
+Philippines,Koronadal,Rice (paddy),16151.513008700013,2010-5,KG
+Philippines,Koronadal,Rice (paddy),16356.716456265003,2010-6,KG
+Philippines,Koronadal,Rice (paddy),16102.947810937405,2010-7,KG
+Philippines,Koronadal,Rice (paddy),15434.70576051901,2010-8,KG
+Philippines,Koronadal,Rice (paddy),17719.922377032264,2010-9,KG
+Philippines,Koronadal,Rice (paddy),17058.51401904776,2010-10,KG
+Philippines,Koronadal,Rice (paddy),16671.740958788898,2010-11,KG
+Philippines,Koronadal,Rice (paddy),15646.491579654732,2010-12,KG
+Philippines,Koronadal,Rice (paddy),15677.474378871128,2012-1,KG
+Philippines,Koronadal,Rice (paddy),15157.492596413003,2012-2,KG
+Philippines,Koronadal,Rice (paddy),14634.645523684932,2012-3,KG
+Philippines,Koronadal,Rice (paddy),14703.347387211217,2012-5,KG
+Philippines,Koronadal,Rice (paddy),14056.526066308492,2012-6,KG
+Philippines,Koronadal,Rice (paddy),13774.237777488897,2012-7,KG
+Philippines,Koronadal,Rice (paddy),14833.090787034756,2012-8,KG
+Philippines,Koronadal,Rice (paddy),16359.53897738993,2012-9,KG
+Philippines,Koronadal,Rice (paddy),15576.358528440074,2012-10,KG
+Philippines,Koronadal,Rice (paddy),14986.0080285062,2012-11,KG
+Philippines,Koronadal,Rice (paddy),15221.872482620758,2012-12,KG
+Philippines,Koronadal,Rice (paddy),16935.401541490563,2013-1,KG
+Philippines,Koronadal,Rice (paddy),16603.779720315553,2013-2,KG
+Philippines,Koronadal,Rice (paddy),15513.826493425435,2013-3,KG
+Philippines,Tandag,Rice (paddy),17068.09814134005,2008-3,KG
+Philippines,Tandag,Rice (paddy),15345.98598671022,2008-4,KG
+Philippines,Tandag,Rice (paddy),12005.645595649918,2008-5,KG
+Philippines,Tandag,Rice (paddy),14242.984633570391,2008-6,KG
+Philippines,Tandag,Rice (paddy),19677.13844150085,2008-9,KG
+Philippines,Tandag,Rice (paddy),20442.3663126508,2008-10,KG
+Philippines,Tandag,Rice (paddy),23458.64083640836,2008-11,KG
+Philippines,Tandag,Rice (paddy),21342.82170051599,2008-12,KG
+Philippines,Tandag,Rice (paddy),17236.897897936848,2009-3,KG
+Philippines,Tandag,Rice (paddy),15877.709937905609,2009-4,KG
+Philippines,Tandag,Rice (paddy),15923.299790150935,2009-5,KG
+Philippines,Tandag,Rice (paddy),17588.565915924708,2009-6,KG
+Philippines,Tandag,Rice (paddy),17618.80708959611,2009-9,KG
+Philippines,Tandag,Rice (paddy),16695.619233162863,2009-10,KG
+Philippines,Tandag,Rice (paddy),18464.48560664332,2009-11,KG
+Philippines,Tandag,Rice (paddy),17669.72311921801,2009-12,KG
+Philippines,Tandag,Rice (paddy),16550.697947367982,2010-3,KG
+Philippines,Tandag,Rice (paddy),18549.172138377173,2010-4,KG
+Philippines,Tandag,Rice (paddy),17588.200753740737,2010-5,KG
+Philippines,Tandag,Rice (paddy),17385.232095502764,2010-6,KG
+Philippines,Tandag,Rice (paddy),16797.51545877579,2010-9,KG
+Philippines,Tandag,Rice (paddy),17229.587941874885,2010-10,KG
+Philippines,Tandag,Rice (paddy),17429.00100233879,2010-11,KG
+Philippines,Tandag,Rice (paddy),17548.83480049045,2010-12,KG
+Philippines,Tandag,Rice (paddy),15731.366561131344,2012-3,KG
+Philippines,Tandag,Rice (paddy),16160.109805267222,2012-5,KG
+Philippines,Tandag,Rice (paddy),15442.263878040198,2012-6,KG
+Philippines,Tandag,Rice (paddy),15084.016741704478,2012-9,KG
+Philippines,Tandag,Rice (paddy),15968.957357134215,2012-10,KG
+Philippines,Tandag,Rice (paddy),16139.517305876785,2012-11,KG
+Philippines,Tandag,Rice (paddy),16340.982170672904,2012-12,KG
+Philippines,Tandag,Rice (paddy),18780.470240984738,2013-3,KG
+Philippines,Shariff Aguak,Rice (paddy),20282.779191729907,2008-1,KG
+Philippines,Shariff Aguak,Rice (paddy),18409.76000319864,2008-2,KG
+Philippines,Shariff Aguak,Rice (paddy),18172.077255162898,2008-3,KG
+Philippines,Shariff Aguak,Rice (paddy),12174.827846438455,2008-4,KG
+Philippines,Shariff Aguak,Rice (paddy),12506.162651468563,2008-5,KG
+Philippines,Shariff Aguak,Rice (paddy),8930.257187598394,2008-6,KG
+Philippines,Shariff Aguak,Rice (paddy),20938.17503425945,2008-7,KG
+Philippines,Shariff Aguak,Rice (paddy),20055.161008600204,2008-8,KG
+Philippines,Shariff Aguak,Rice (paddy),22947.318144504312,2008-9,KG
+Philippines,Shariff Aguak,Rice (paddy),20924.985416153515,2008-10,KG
+Philippines,Shariff Aguak,Rice (paddy),19337.769328263625,2008-11,KG
+Philippines,Shariff Aguak,Rice (paddy),18366.22638916806,2008-12,KG
+Philippines,Shariff Aguak,Rice (paddy),18375.022521329585,2009-2,KG
+Philippines,Shariff Aguak,Rice (paddy),18702.227025725664,2009-3,KG
+Philippines,Shariff Aguak,Rice (paddy),14400.073348308611,2009-4,KG
+Philippines,Shariff Aguak,Rice (paddy),16714.048691294483,2009-5,KG
+Philippines,Shariff Aguak,Rice (paddy),16858.70025546797,2009-6,KG
+Philippines,Shariff Aguak,Rice (paddy),31078.934384726846,2009-7,KG
+Philippines,Shariff Aguak,Rice (paddy),29958.493675557045,2009-8,KG
+Philippines,Shariff Aguak,Rice (paddy),29850.568846042337,2009-9,KG
+Philippines,Shariff Aguak,Rice (paddy),24389.684723144543,2009-10,KG
+Philippines,Shariff Aguak,Rice (paddy),22460.023468117706,2009-11,KG
+Philippines,Shariff Aguak,Rice (paddy),22148.22437063272,2009-12,KG
+Philippines,Shariff Aguak,Rice (paddy),21041.88963004665,2010-1,KG
+Philippines,Shariff Aguak,Rice (paddy),18423.116866632627,2010-2,KG
+Philippines,Shariff Aguak,Rice (paddy),17559.327739174343,2010-3,KG
+Philippines,Shariff Aguak,Rice (paddy),16207.778925357685,2010-4,KG
+Philippines,Shariff Aguak,Rice (paddy),17147.30412238003,2010-5,KG
+Philippines,Shariff Aguak,Rice (paddy),18300.895565301482,2010-6,KG
+Philippines,Shariff Aguak,Rice (paddy),17873.487653754462,2010-7,KG
+Philippines,Shariff Aguak,Rice (paddy),17286.870451781288,2010-8,KG
+Philippines,Shariff Aguak,Rice (paddy),16913.360392974242,2010-9,KG
+Philippines,Shariff Aguak,Rice (paddy),19211.265788224715,2010-10,KG
+Philippines,Shariff Aguak,Rice (paddy),19308.326190290656,2010-11,KG
+Philippines,Shariff Aguak,Rice (paddy),21896.66101676995,2010-12,KG
+Philippines,Shariff Aguak,Rice (paddy),26325.15687903237,2012-1,KG
+Philippines,Shariff Aguak,Rice (paddy),17171.84358619947,2012-2,KG
+Philippines,Shariff Aguak,Rice (paddy),16451.360140418234,2012-3,KG
+Philippines,Shariff Aguak,Rice (paddy),15838.467088998332,2012-5,KG
+Philippines,Shariff Aguak,Rice (paddy),16997.52762144256,2012-6,KG
+Philippines,Shariff Aguak,Rice (paddy),15998.382156771704,2012-7,KG
+Philippines,Shariff Aguak,Rice (paddy),16023.058891218516,2012-8,KG
+Philippines,Shariff Aguak,Rice (paddy),17313.383283868257,2012-9,KG
+Philippines,Shariff Aguak,Rice (paddy),18579.71798077126,2012-10,KG
+Philippines,Shariff Aguak,Rice (paddy),17400.765892020685,2012-11,KG
+Philippines,Shariff Aguak,Rice (paddy),16879.09247064802,2012-12,KG
+Philippines,Shariff Aguak,Rice (paddy),20012.25377350311,2013-1,KG
+Philippines,Shariff Aguak,Rice (paddy),19326.8959879435,2013-2,KG
+Philippines,Shariff Aguak,Rice (paddy),19522.890001609314,2013-3,KG

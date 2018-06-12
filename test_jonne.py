@@ -335,14 +335,39 @@ def split_sellers(df):
     return [(seller, df.loc[df['pt_name'] == seller].drop([SELLER], axis = 1))
             for seller in df.eval(SELLER).unique()]
 
+def norm_GDP(df):
+    """
+    normaliseer de dataframe op basis van GDP.
+    Alle data waar geen GDP voor is wordt verwijderd.
+    source: http://www.imf.org/external/datamapper/PPPPC@WEO/OEMDC/ADVEC/WEOWORLD
+    """
+
+    GDP_df = pd.read_csv('GDP_per_capita.csv')
+    GDP_df = GDP_df.melt(id_vars=['country'])
+    GDP_df.columns = [COUNTRY, YEAR, 'GDP']
+
+    df_date = df[DATE].str.split('-', expand = True).rename(columns = {0: YEAR, 1: MONTH})
+
+    df = pd.DataFrame.merge(df, df_date, how='left', left_index=True, right_index=True)
+    df = pd.DataFrame.merge(df, GDP_df, on=[COUNTRY, YEAR], how='left')
+
+    df['GDP'] = df['GDP'].astype(float)
+    df[PRICE] = df['GDP'].divide(df[PRICE], axis = 'index')
+    df.dropna(inplace = True)
+    return df.drop([YEAR, MONTH, 'GDP'], axis = 1)
+
 if __name__ == "__main__":
-    df = pd.read_csv('WFPVAM_FoodPrices_version1.csv')
-    for tmp_df1 in split_national_average(norm_unit(norm_curr(without_non_food(df)))):
-        for (seller, tmp_df2) in split_sellers(tmp_df1):
-            if tmp_df2[CITY].iloc[0] == 'National Average':
-                save_to_csv(tmp_df2, 'WFPVAM_FoodPrices_version2_Nat_' + seller + '.csv')
-            else:
-                save_to_csv(tmp_df2, 'WFPVAM_FoodPrices_version2_' + seller + '.csv')
+    df = pd.read_csv('WFPVAM_FoodPrices_version3_Retail.csv')
+
+
+    # maak de version2 dataframes
+    # df = pd.read_csv('WFPVAM_FoodPrices_version1.csv')
+    # for tmp_df1 in split_national_average(norm_unit(norm_curr(without_non_food(df)))):
+    #     for (seller, tmp_df2) in split_sellers(tmp_df1):
+    #         if tmp_df2[CITY].iloc[0] == 'National Average':
+    #             save_to_csv(tmp_df2, 'WFPVAM_FoodPrices_version2_Nat_' + seller + '.csv')
+    #         else:
+    #             save_to_csv(tmp_df2, 'WFPVAM_FoodPrices_version2_' + seller + '.csv')
 
 
 
