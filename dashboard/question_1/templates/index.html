@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Global Food Prices</title>
+    {{ bokeh_css }}
+    {{ bokeh_js }}
+    <style>
+      {% include 'styles.css' %}
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <h1>UvA Data Analysis and Visualization</h1>
+
+      <p>The Global Food Prices Database has data on food prices (e.g., beans, rice, fish, and sugar) for 76 countries and some 1,500 markets. The dataset includes around 500,000 records and is updated monthly. The data goes back as far as 1992 for a few countries, although most of the price trends start in 2000-2002.</p>
+
+      {{ plot_div|indent(8) }}
+
+      <h3>Questions</h3>
+      <p>
+        <li>Are there any food prices that are show negative/positive correlation, and is this correlation present throughout the years, or perhaps only in certain period? Can you perhaps detect possible ingredients of a certain other food product?</li>
+        <li>Do countries in similar regions, also show similar price differences? And if differences occur, can you find a potential explanation?</li>
+        <li>Can we see any correlations between other types of data, like: currency fluctuations, weather patterns, and/or refugee movements. Can we perhaps visualize refugee movements from the food price data? Do certain weather conditions influence market prices?</li>
+      </p>
+    </div>
+    {{ plot_script|indent(8) }}
+  </body>
+</html>

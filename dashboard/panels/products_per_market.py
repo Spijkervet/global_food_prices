@@ -11,7 +11,7 @@ class ProductsPerMarket():
         self.df = df
 
         # Pre-processing
-        avg_price = self.df.groupby(['mkt_name', 'cm_name', 'datetime'])['mp_price']
+        avg_price = self.df.groupby(['mkt_name', 'cm_name', 'date'])['mp_price']
         df_means = avg_price.mean().reset_index()
         normalized = df_means.groupby(['mkt_name', 'cm_name'])['mp_price'].apply(lambda x: (x - np.mean(x)) / (np.max(x) - np.min(x)))
         df_means['mp_price_norm'] = normalized
@@ -48,7 +48,7 @@ class ProductsPerMarket():
             datetime = []
             prices = []
             for i, data in row.iterrows():
-                datetime.append(data['datetime'])
+                datetime.append(data['date'])
                 prices.append(data['mp_price_norm'])
             self.plot.line(datetime, prices, line_width=4, legend=data['mkt_name'], color=palette[color_idx % 5])
             color_idx += 1
