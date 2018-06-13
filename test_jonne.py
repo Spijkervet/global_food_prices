@@ -332,8 +332,7 @@ def split_sellers(df):
     """
     returns dataframes for all different types of sellers with the seller names.
     """
-    return [(seller, df.loc[df['pt_name'] == seller].drop([SELLER], axis = 1))
-            for seller in df.eval(SELLER).unique()]
+    return [(seller, df.loc[df['pt_name'] == seller].drop([SELLER], axis = 1)) for seller in df.eval(SELLER).unique()]
 
 def norm_GDP(df):
     """
@@ -357,7 +356,14 @@ def norm_GDP(df):
     return df.drop([YEAR, MONTH, 'GDP'], axis = 1)
 
 if __name__ == "__main__":
-    df = pd.read_csv('WFPVAM_FoodPrices_version3_Retail.csv')
+    df = pd.read_csv('WFPVAM_FoodPrices_version3_Wholesale.csv')
+
+    df['Diff'] = df.groupby([CITY, PROD])[PRICE].transform(pd.Series.diff)
+    df.dropna(inplace = True)
+    save_to_csv(df, 'WFPVAM_FoodPrices_version5_Wholesale.csv')
+
+
+
 
 
     # maak de version2 dataframes

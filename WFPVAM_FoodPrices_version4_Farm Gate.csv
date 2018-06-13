@@ -1,0 +1,651 @@
+adm0_name,mkt_name,cm_name,mp_price,date,um_name,Diff
+Philippines,Lingayen,Rice (paddy),0.32448246000000003,2008-2,KG,0.020546059999999977
+Philippines,Lingayen,Rice (paddy),0.3466034,2008-3,KG,0.022120939999999978
+Philippines,Lingayen,Rice (paddy),0.3831993500000001,2008-4,KG,0.0365959500000001
+Philippines,Lingayen,Rice (paddy),0.39703742,2008-5,KG,0.013838069999999869
+Philippines,Lingayen,Rice (paddy),0.41836096,2008-6,KG,0.02132354000000003
+Philippines,Lingayen,Rice (paddy),0.4245212400000001,2008-7,KG,0.0061602800000000735
+Philippines,Lingayen,Rice (paddy),0.33029322,2008-8,KG,-0.09422802000000008
+Philippines,Lingayen,Rice (paddy),0.3073483,2008-9,KG,-0.02294491999999998
+Philippines,Lingayen,Rice (paddy),0.27923506000000003,2008-10,KG,-0.028113239999999984
+Philippines,Lingayen,Rice (paddy),0.28431744,2008-11,KG,0.005082379999999942
+Philippines,Lingayen,Rice (paddy),0.29391024,2008-12,KG,0.009592800000000012
+Philippines,Lingayen,Rice (paddy),0.3049998,2009-1,KG,0.011089559999999998
+Philippines,Lingayen,Rice (paddy),0.357578,2009-2,KG,0.05257820000000002
+Philippines,Lingayen,Rice (paddy),0.34305559999999996,2009-3,KG,-0.014522400000000046
+Philippines,Lingayen,Rice (paddy),0.35285279999999997,2009-4,KG,0.009797200000000006
+Philippines,Lingayen,Rice (paddy),0.35228649999999995,2009-5,KG,-0.0005663000000000196
+Philippines,Lingayen,Rice (paddy),0.34675411999999994,2009-6,KG,-0.005532380000000003
+Philippines,Lingayen,Rice (paddy),0.32729756,2009-7,KG,-0.019456559999999956
+Philippines,Lingayen,Rice (paddy),0.30306984,2009-8,KG,-0.024227720000000008
+Philippines,Lingayen,Rice (paddy),0.2997936,2009-9,KG,-0.003276239999999986
+Philippines,Lingayen,Rice (paddy),0.29358336,2009-10,KG,-0.006210239999999978
+Philippines,Lingayen,Rice (paddy),0.31087287,2009-11,KG,0.017289510000000008
+Philippines,Lingayen,Rice (paddy),0.34206848,2009-12,KG,0.031195609999999985
+Philippines,Lingayen,Rice (paddy),0.3477942,2010-1,KG,0.00572571999999999
+Philippines,Lingayen,Rice (paddy),0.33887616,2010-2,KG,-0.008918040000000016
+Philippines,Lingayen,Rice (paddy),0.3817616,2010-3,KG,0.04288544
+Philippines,Lingayen,Rice (paddy),0.35028908000000003,2010-4,KG,-0.03147251999999995
+Philippines,Lingayen,Rice (paddy),0.3548274,2010-5,KG,0.004538319999999985
+Philippines,Lingayen,Rice (paddy),0.32875478,2010-6,KG,-0.02607261999999999
+Philippines,Lingayen,Rice (paddy),0.328472,2010-7,KG,-0.000282780000000038
+Philippines,Lingayen,Rice (paddy),0.32815926,2010-8,KG,-0.00031273999999997804
+Philippines,Lingayen,Rice (paddy),0.333822,2010-9,KG,0.0056627399999999994
+Philippines,Lingayen,Rice (paddy),0.33275592,2010-10,KG,-0.0010660800000000248
+Philippines,Lingayen,Rice (paddy),0.33980800000000005,2010-11,KG,0.007052080000000072
+Philippines,Lingayen,Rice (paddy),0.32902284000000004,2010-12,KG,-0.010785160000000016
+Philippines,Lingayen,Rice (paddy),0.4143919000000001,2012-1,KG,0.08536906000000005
+Philippines,Lingayen,Rice (paddy),0.41423296,2012-2,KG,-0.00015894000000010733
+Philippines,Lingayen,Rice (paddy),0.41414300000000004,2012-3,KG,-8.995999999994453e-05
+Philippines,Lingayen,Rice (paddy),0.4091607,2012-5,KG,-0.004982300000000051
+Philippines,Lingayen,Rice (paddy),0.4102721200000001,2012-6,KG,0.0011114200000000851
+Philippines,Lingayen,Rice (paddy),0.42992116,2012-7,KG,0.01964903999999995
+Philippines,Lingayen,Rice (paddy),0.42724076,2012-8,KG,-0.002680400000000027
+Philippines,Lingayen,Rice (paddy),0.41978474,2012-9,KG,-0.007456020000000008
+Philippines,Lingayen,Rice (paddy),0.398607,2012-10,KG,-0.02117774
+Philippines,Lingayen,Rice (paddy),0.40366788,2012-11,KG,0.00506087999999999
+Philippines,Lingayen,Rice (paddy),0.40756672,2012-12,KG,0.0038988400000000145
+Philippines,Lingayen,Rice (paddy),0.42778294,2013-1,KG,0.020216220000000007
+Philippines,Lingayen,Rice (paddy),0.4301325,2013-2,KG,0.0023495599999999728
+Philippines,Lingayen,Rice (paddy),0.43053684,2013-3,KG,0.00040434000000000303
+Philippines,Tuguegarao,Rice (paddy),0.32177228,2008-2,KG,0.018571210000000005
+Philippines,Tuguegarao,Rice (paddy),0.32139588,2008-3,KG,-0.00037639999999999896
+Philippines,Tuguegarao,Rice (paddy),0.40857045,2008-4,KG,0.08717456999999995
+Philippines,Tuguegarao,Rice (paddy),0.4522916,2008-5,KG,0.04372115000000004
+Philippines,Tuguegarao,Rice (paddy),0.43098392,2008-6,KG,-0.021307679999999996
+Philippines,Tuguegarao,Rice (paddy),0.36942048,2008-7,KG,-0.061563440000000025
+Philippines,Tuguegarao,Rice (paddy),0.27917112,2008-8,KG,-0.09024936
+Philippines,Tuguegarao,Rice (paddy),0.28036162,2008-9,KG,0.0011904999999999832
+Philippines,Tuguegarao,Rice (paddy),0.27694112,2008-10,KG,-0.003420499999999993
+Philippines,Tuguegarao,Rice (paddy),0.25541759999999997,2008-11,KG,-0.021523520000000018
+Philippines,Tuguegarao,Rice (paddy),0.28722096,2008-12,KG,0.03180336000000006
+Philippines,Tuguegarao,Rice (paddy),0.3049998,2009-1,KG,0.017778839999999962
+Philippines,Tuguegarao,Rice (paddy),0.37103976,2009-2,KG,0.06603996000000001
+Philippines,Tuguegarao,Rice (paddy),0.32982936,2009-3,KG,-0.04121039999999998
+Philippines,Tuguegarao,Rice (paddy),0.34307445,2009-4,KG,0.01324508999999996
+Philippines,Tuguegarao,Rice (paddy),0.34405944999999993,2009-5,KG,0.0009849999999999581
+Philippines,Tuguegarao,Rice (paddy),0.33295087999999995,2009-6,KG,-0.011108569999999984
+Philippines,Tuguegarao,Rice (paddy),0.32812932,2009-7,KG,-0.004821559999999947
+Philippines,Tuguegarao,Rice (paddy),0.31136744,2009-8,KG,-0.016761880000000007
+Philippines,Tuguegarao,Rice (paddy),0.29791989,2009-9,KG,-0.013447549999999975
+Philippines,Tuguegarao,Rice (paddy),0.32452056,2009-10,KG,0.026600669999999993
+Philippines,Tuguegarao,Rice (paddy),0.2932362,2009-11,KG,-0.03128436000000001
+Philippines,Tuguegarao,Rice (paddy),0.32438272,2009-12,KG,0.03114652000000001
+Philippines,Tuguegarao,Rice (paddy),0.3477942,2010-1,KG,0.023411479999999985
+Philippines,Tuguegarao,Rice (paddy),0.35227559999999997,2010-2,KG,0.004481399999999969
+Philippines,Tuguegarao,Rice (paddy),0.3462998,2010-3,KG,-0.005975799999999976
+Philippines,Tuguegarao,Rice (paddy),0.33125163,2010-4,KG,-0.015048169999999972
+Philippines,Tuguegarao,Rice (paddy),0.32807280000000005,2010-5,KG,-0.003178829999999966
+Philippines,Tuguegarao,Rice (paddy),0.32875478,2010-6,KG,0.0006819799999999709
+Philippines,Tuguegarao,Rice (paddy),0.3299847,2010-7,KG,0.0012299199999999955
+Philippines,Tuguegarao,Rice (paddy),0.33480216,2010-8,KG,0.004817459999999996
+Philippines,Tuguegarao,Rice (paddy),0.32906928,2010-9,KG,-0.005732879999999996
+Philippines,Tuguegarao,Rice (paddy),0.3357558,2010-10,KG,0.006686519999999974
+Philippines,Tuguegarao,Rice (paddy),0.3359048000000001,2010-11,KG,0.00014900000000012126
+Philippines,Tuguegarao,Rice (paddy),0.34563326,2010-12,KG,0.009728459999999883
+Philippines,Tuguegarao,Rice (paddy),0.38546482,2012-1,KG,0.03983155999999999
+Philippines,Tuguegarao,Rice (paddy),0.39030784,2012-2,KG,0.004843020000000031
+Philippines,Tuguegarao,Rice (paddy),0.38521132,2012-3,KG,-0.005096519999999993
+Philippines,Tuguegarao,Rice (paddy),0.3886443800000001,2012-5,KG,0.003433060000000099
+Philippines,Tuguegarao,Rice (paddy),0.39342124,2012-6,KG,0.004776859999999883
+Philippines,Tuguegarao,Rice (paddy),0.40654032,2012-7,KG,0.013119080000000005
+Philippines,Tuguegarao,Rice (paddy),0.39825112,2012-8,KG,-0.008289199999999997
+Philippines,Tuguegarao,Rice (paddy),0.39365308,2012-9,KG,-0.0045980400000000254
+Philippines,Tuguegarao,Rice (paddy),0.39933174,2012-10,KG,0.005678660000000002
+Philippines,Tuguegarao,Rice (paddy),0.39490836,2012-11,KG,-0.004423379999999977
+Philippines,Tuguegarao,Rice (paddy),0.39294112,2012-12,KG,-0.0019672400000000367
+Philippines,Tuguegarao,Rice (paddy),0.38161578,2013-1,KG,-0.011325339999999962
+Philippines,Tuguegarao,Rice (paddy),0.38810241,2013-2,KG,0.006486629999999993
+Philippines,Tuguegarao,Rice (paddy),0.3937178399999999,2013-3,KG,0.005615429999999866
+Philippines,Palayan,Rice (paddy),0.320294,2008-2,KG,-0.023350219999999977
+Philippines,Palayan,Rice (paddy),0.41010696,2008-3,KG,0.08981296
+Philippines,Palayan,Rice (paddy),0.36117915,2008-4,KG,-0.048927810000000016
+Philippines,Palayan,Rice (paddy),0.44296599999999997,2008-5,KG,0.08178684999999997
+Philippines,Palayan,Rice (paddy),0.495902,2008-6,KG,0.05293600000000004
+Philippines,Palayan,Rice (paddy),0.4227366,2008-7,KG,-0.07316539999999999
+Philippines,Palayan,Rice (paddy),0.32562555,2008-8,KG,-0.09711105000000003
+Philippines,Palayan,Rice (paddy),0.27372204,2008-9,KG,-0.051903509999999986
+Philippines,Palayan,Rice (paddy),0.26401164,2008-10,KG,-0.009710400000000008
+Philippines,Palayan,Rice (paddy),0.28126464,2008-11,KG,0.01725300000000002
+Philippines,Palayan,Rice (paddy),0.28429440000000006,2008-12,KG,0.003029760000000048
+Philippines,Palayan,Rice (paddy),0.33936,2009-1,KG,0.05506559999999994
+Philippines,Palayan,Rice (paddy),0.37314316,2009-2,KG,0.03378315999999998
+Philippines,Palayan,Rice (paddy),0.29469716,2009-3,KG,-0.07844599999999996
+Philippines,Palayan,Rice (paddy),0.32289359999999995,2009-4,KG,0.028196439999999934
+Philippines,Palayan,Rice (paddy),0.34068425,2009-5,KG,0.017790650000000074
+Philippines,Palayan,Rice (paddy),0.36013907999999994,2009-6,KG,0.019454829999999923
+Philippines,Palayan,Rice (paddy),0.37096496,2009-7,KG,0.010825880000000065
+Philippines,Palayan,Rice (paddy),0.34040904,2009-8,KG,-0.030555920000000014
+Philippines,Palayan,Rice (paddy),0.24816248,2009-9,KG,-0.09224656
+Philippines,Palayan,Rice (paddy),0.32601408,2009-10,KG,0.07785159999999999
+Philippines,Palayan,Rice (paddy),0.34720866,2009-11,KG,0.02119458000000002
+Philippines,Palayan,Rice (paddy),0.36212672,2009-12,KG,0.01491806000000001
+Philippines,Palayan,Rice (paddy),0.37015549999999997,2010-1,KG,0.008028779999999958
+Philippines,Palayan,Rice (paddy),0.37518432,2010-2,KG,0.005028820000000045
+Philippines,Palayan,Rice (paddy),0.33382249999999997,2010-3,KG,-0.04136182000000005
+Philippines,Palayan,Rice (paddy),0.33147560000000004,2010-4,KG,-0.0023468999999999296
+Philippines,Palayan,Rice (paddy),0.359652,2010-5,KG,0.02817639999999999
+Philippines,Palayan,Rice (paddy),0.34667116,2010-6,KG,-0.012980840000000049
+Philippines,Palayan,Rice (paddy),0.3667217,2010-7,KG,0.020050540000000006
+Philippines,Palayan,Rice (paddy),0.28785900000000003,2010-8,KG,-0.07886269999999995
+Philippines,Palayan,Rice (paddy),0.32182704,2010-9,KG,0.03396803999999998
+Philippines,Palayan,Rice (paddy),0.340371,2010-10,KG,0.01854395999999997
+Philippines,Palayan,Rice (paddy),0.33429760000000003,2010-11,KG,-0.006073399999999951
+Philippines,Palayan,Rice (paddy),0.37407576,2010-12,KG,0.03977815999999995
+Philippines,Palayan,Rice (paddy),0.4442373000000001,2012-1,KG,0.07016154000000013
+Philippines,Palayan,Rice (paddy),0.4480096000000001,2012-2,KG,0.003772300000000006
+Philippines,Palayan,Rice (paddy),0.40107708,2012-3,KG,-0.046932520000000144
+Philippines,Palayan,Rice (paddy),0.42524736,2012-5,KG,0.024170280000000044
+Philippines,Palayan,Rice (paddy),0.4549737600000001,2012-6,KG,0.029726400000000097
+Philippines,Palayan,Rice (paddy),0.46523100000000006,2012-7,KG,0.010257239999999945
+Philippines,Palayan,Rice (paddy),0.41036974,2012-8,KG,-0.05486126000000008
+Philippines,Palayan,Rice (paddy),0.40084528,2012-9,KG,-0.009524459999999957
+Philippines,Palayan,Rice (paddy),0.41817498,2012-10,KG,0.017329699999999948
+Philippines,Palayan,Rice (paddy),0.42605332,2012-11,KG,0.00787834000000004
+Philippines,Palayan,Rice (paddy),0.44339944,2012-12,KG,0.017346119999999965
+Philippines,Palayan,Rice (paddy),0.4474285399999999,2013-1,KG,0.004029099999999897
+Philippines,Palayan,Rice (paddy),0.41513931,2013-2,KG,-0.03228922999999989
+Philippines,Palayan,Rice (paddy),0.42366396,2013-3,KG,0.008524650000000022
+Philippines,Santa Cruz,Rice (paddy),0.28530804,2008-2,KG,0.00931417999999995
+Philippines,Santa Cruz,Rice (paddy),0.3502391,2008-3,KG,0.06493106000000004
+Philippines,Santa Cruz,Rice (paddy),0.36357265,2008-4,KG,0.013333549999999972
+Philippines,Santa Cruz,Rice (paddy),0.37255772,2008-5,KG,0.008985069999999984
+Philippines,Santa Cruz,Rice (paddy),0.46163968,2008-6,KG,0.08908196000000002
+Philippines,Santa Cruz,Rice (paddy),0.33038148,2008-7,KG,-0.1312582
+Philippines,Santa Cruz,Rice (paddy),0.27383664,2008-8,KG,-0.056544839999999985
+Philippines,Santa Cruz,Rice (paddy),0.21053894,2008-9,KG,-0.06329770000000001
+Philippines,Santa Cruz,Rice (paddy),0.20958270000000004,2008-10,KG,-0.0009562399999999693
+Philippines,Santa Cruz,Rice (paddy),0.22855296,2008-11,KG,0.01897025999999996
+Philippines,Santa Cruz,Rice (paddy),0.245622,2008-12,KG,0.017069040000000008
+Philippines,Santa Cruz,Rice (paddy),0.2980005,2009-1,KG,0.052378499999999995
+Philippines,Santa Cruz,Rice (paddy),0.35947106,2009-2,KG,0.06147056000000001
+Philippines,Santa Cruz,Rice (paddy),0.3151565,2009-3,KG,-0.04431456
+Philippines,Santa Cruz,Rice (paddy),0.27774675,2009-4,KG,-0.03740975000000002
+Philippines,Santa Cruz,Rice (paddy),0.29174385,2009-5,KG,0.01399710000000004
+Philippines,Santa Cruz,Rice (paddy),0.3084815,2009-6,KG,0.016737649999999993
+Philippines,Santa Cruz,Rice (paddy),0.3254261,2009-7,KG,0.016944599999999976
+Philippines,Santa Cruz,Rice (paddy),0.28460768,2009-8,KG,-0.04081842000000002
+Philippines,Santa Cruz,Rice (paddy),0.26044569,2009-9,KG,-0.024161989999999967
+Philippines,Santa Cruz,Rice (paddy),0.24600408,2009-10,KG,-0.014441609999999994
+Philippines,Santa Cruz,Rice (paddy),0.30237327,2009-11,KG,0.05636919000000001
+Philippines,Santa Cruz,Rice (paddy),0.30928512,2009-12,KG,0.006911849999999997
+Philippines,Santa Cruz,Rice (paddy),0.3286894,2010-1,KG,0.019404279999999996
+Philippines,Santa Cruz,Rice (paddy),0.36394608,2010-2,KG,0.035256679999999985
+Philippines,Santa Cruz,Rice (paddy),0.3228775,2010-3,KG,-0.04106858000000002
+Philippines,Santa Cruz,Rice (paddy),0.30728684,2010-4,KG,-0.015590659999999978
+Philippines,Santa Cruz,Rice (paddy),0.3054849,2010-5,KG,-0.0018019400000000019
+Philippines,Santa Cruz,Rice (paddy),0.32486929999999997,2010-6,KG,0.01938439999999997
+Philippines,Santa Cruz,Rice (paddy),0.3470566,2010-7,KG,0.02218730000000002
+Philippines,Santa Cruz,Rice (paddy),0.33369501,2010-8,KG,-0.013361589999999979
+Philippines,Santa Cruz,Rice (paddy),0.2953476,2010-9,KG,-0.038347410000000026
+Philippines,Santa Cruz,Rice (paddy),0.28521936,2010-10,KG,-0.01012824000000001
+Philippines,Santa Cruz,Rice (paddy),0.28722960000000003,2010-11,KG,0.002010240000000052
+Philippines,Santa Cruz,Rice (paddy),0.28647286,2010-12,KG,-0.0007567400000000335
+Philippines,Santa Cruz,Rice (paddy),0.3246261200000001,2012-1,KG,0.03815326000000008
+Philippines,Santa Cruz,Rice (paddy),0.35676576000000004,2012-2,KG,0.03213963999999997
+Philippines,Santa Cruz,Rice (paddy),0.32804792,2012-3,KG,-0.02871784000000005
+Philippines,Santa Cruz,Rice (paddy),0.36113386,2012-5,KG,0.03308593999999998
+Philippines,Santa Cruz,Rice (paddy),0.37259168,2012-6,KG,0.011457820000000007
+Philippines,Santa Cruz,Rice (paddy),0.35858574,2012-7,KG,-0.014005939999999995
+Philippines,Santa Cruz,Rice (paddy),0.3730633999999999,2012-8,KG,0.014477659999999892
+Philippines,Santa Cruz,Rice (paddy),0.32340926,2012-9,KG,-0.0496541399999999
+Philippines,Santa Cruz,Rice (paddy),0.33120618,2012-10,KG,0.0077969200000000405
+Philippines,Santa Cruz,Rice (paddy),0.35622048,2012-11,KG,0.02501429999999999
+Philippines,Santa Cruz,Rice (paddy),0.3644212,2012-12,KG,0.008200719999999995
+Philippines,Santa Cruz,Rice (paddy),0.36909171,2013-1,KG,0.004670510000000017
+Philippines,Santa Cruz,Rice (paddy),0.35713287,2013-2,KG,-0.011958840000000026
+Philippines,Santa Cruz,Rice (paddy),0.35395332,2013-3,KG,-0.0031795499999999755
+Philippines,Puerto Princesa,Rice (paddy),0.2636266,2008-2,KG,0.01802637999999998
+Philippines,Puerto Princesa,Rice (paddy),0.30636832,2008-3,KG,0.04274172000000004
+Philippines,Puerto Princesa,Rice (paddy),0.3480149,2008-4,KG,0.04164657999999999
+Philippines,Puerto Princesa,Rice (paddy),0.34551348000000004,2008-5,KG,-0.0025014199999999764
+Philippines,Puerto Princesa,Rice (paddy),0.35704944,2008-6,KG,0.011535959999999956
+Philippines,Puerto Princesa,Rice (paddy),0.3078504,2008-7,KG,-0.04919903999999997
+Philippines,Puerto Princesa,Rice (paddy),0.26294541,2008-8,KG,-0.044904990000000033
+Philippines,Puerto Princesa,Rice (paddy),0.24288012,2008-9,KG,-0.020065289999999986
+Philippines,Puerto Princesa,Rice (paddy),0.24399179999999995,2008-10,KG,0.0011116799999999483
+Philippines,Puerto Princesa,Rice (paddy),0.2401536,2008-11,KG,-0.0038381999999999583
+Philippines,Puerto Princesa,Rice (paddy),0.26464464,2008-12,KG,0.02449103999999999
+Philippines,Puerto Princesa,Rice (paddy),0.28209300000000004,2009-1,KG,0.01744836000000005
+Philippines,Puerto Princesa,Rice (paddy),0.30331028,2009-2,KG,0.02121727999999995
+Philippines,Puerto Princesa,Rice (paddy),0.32962270000000005,2009-3,KG,0.02631242000000006
+Philippines,Puerto Princesa,Rice (paddy),0.31935675,2009-4,KG,-0.010265950000000024
+Philippines,Puerto Princesa,Rice (paddy),0.3134717,2009-5,KG,-0.005885050000000003
+Philippines,Puerto Princesa,Rice (paddy),0.33023205999999994,2009-6,KG,0.01676035999999992
+Philippines,Puerto Princesa,Rice (paddy),0.31066236,2009-7,KG,-0.019569699999999912
+Philippines,Puerto Princesa,Rice (paddy),0.30161776,2009-8,KG,-0.009044600000000014
+Philippines,Puerto Princesa,Rice (paddy),0.25919655,2009-9,KG,-0.04242120999999999
+Philippines,Puerto Princesa,Rice (paddy),0.27886152000000003,2009-10,KG,0.019664970000000004
+Philippines,Puerto Princesa,Rice (paddy),0.28218672,2009-11,KG,0.0033251999999999726
+Philippines,Puerto Princesa,Rice (paddy),0.29030528,2009-12,KG,0.008118559999999997
+Philippines,Puerto Princesa,Rice (paddy),0.32130800000000004,2010-1,KG,0.03100272000000004
+Philippines,Puerto Princesa,Rice (paddy),0.32396388,2010-2,KG,0.002655879999999944
+Philippines,Puerto Princesa,Rice (paddy),0.3550558,2010-3,KG,0.031091919999999995
+Philippines,Puerto Princesa,Rice (paddy),0.36619095,2010-4,KG,0.011135150000000038
+Philippines,Puerto Princesa,Rice (paddy),0.33114299999999997,2010-5,KG,-0.03504795000000005
+Philippines,Puerto Princesa,Rice (paddy),0.32638032,2010-6,KG,-0.004762679999999964
+Philippines,Puerto Princesa,Rice (paddy),0.3470566,2010-7,KG,0.02067627999999999
+Philippines,Puerto Princesa,Rice (paddy),0.35938089,2010-8,KG,0.012324290000000016
+Philippines,Puerto Princesa,Rice (paddy),0.32884296,2010-9,KG,-0.03053792999999999
+Philippines,Puerto Princesa,Rice (paddy),0.29029608,2010-10,KG,-0.038546880000000006
+Philippines,Puerto Princesa,Rice (paddy),0.296184,2010-11,KG,0.005887919999999991
+Philippines,Puerto Princesa,Rice (paddy),0.2889758,2010-12,KG,-0.007208199999999998
+Philippines,Puerto Princesa,Rice (paddy),0.34368126000000004,2012-1,KG,0.05470546000000004
+Philippines,Puerto Princesa,Rice (paddy),0.34972896000000003,2012-2,KG,0.006047699999999989
+Philippines,Puerto Princesa,Rice (paddy),0.34508028,2012-3,KG,-0.004648680000000016
+Philippines,Puerto Princesa,Rice (paddy),0.39027636,2012-5,KG,0.04519607999999997
+Philippines,Puerto Princesa,Rice (paddy),0.39412336,2012-6,KG,0.0038469999999999893
+Philippines,Puerto Princesa,Rice (paddy),0.38649959999999994,2012-7,KG,-0.007623760000000035
+Philippines,Puerto Princesa,Rice (paddy),0.35547952,2012-8,KG,-0.03102007999999995
+Philippines,Puerto Princesa,Rice (paddy),0.3440269,2012-9,KG,-0.011452619999999969
+Philippines,Puerto Princesa,Rice (paddy),0.36454422,2012-10,KG,0.02051731999999995
+Philippines,Puerto Princesa,Rice (paddy),0.37252292,2012-11,KG,0.007978700000000005
+Philippines,Puerto Princesa,Rice (paddy),0.35930224,2012-12,KG,-0.013220679999999985
+Philippines,Puerto Princesa,Rice (paddy),0.39045630000000003,2013-1,KG,0.03115406000000004
+Philippines,Puerto Princesa,Rice (paddy),0.38466135,2013-2,KG,-0.005794950000000021
+Philippines,Puerto Princesa,Rice (paddy),0.3865995,2013-3,KG,0.0019381499999999718
+Philippines,Legazpi,Rice (paddy),0.3129026,2008-2,KG,0.03592829999999986
+Philippines,Legazpi,Rice (paddy),0.31363972,2008-3,KG,0.0007371200000000355
+Philippines,Legazpi,Rice (paddy),0.35016905000000004,2008-4,KG,0.036529330000000027
+Philippines,Legazpi,Rice (paddy),0.34364836000000004,2008-5,KG,-0.006520689999999996
+Philippines,Legazpi,Rice (paddy),0.37440601,2008-6,KG,0.03075764999999997
+Philippines,Legazpi,Rice (paddy),0.25564968000000005,2008-7,KG,-0.11875632999999997
+Philippines,Legazpi,Rice (paddy),0.24494154,2008-8,KG,-0.010708140000000033
+Philippines,Legazpi,Rice (paddy),0.2270308,2008-9,KG,-0.01791074000000001
+Philippines,Legazpi,Rice (paddy),0.22751714,2008-10,KG,0.00048634000000000177
+Philippines,Legazpi,Rice (paddy),0.24137472,2008-11,KG,0.01385757999999998
+Philippines,Legazpi,Rice (paddy),0.25105704,2008-12,KG,0.009682320000000022
+Philippines,Legazpi,Rice (paddy),0.2780631,2009-1,KG,0.02700606
+Philippines,Legazpi,Rice (paddy),0.30120688,2009-2,KG,0.023143780000000003
+Philippines,Legazpi,Rice (paddy),0.30110362,2009-3,KG,-0.00010325999999999391
+Philippines,Legazpi,Rice (paddy),0.28606875,2009-4,KG,-0.015034870000000033
+Philippines,Legazpi,Rice (paddy),0.27402405,2009-5,KG,-0.012044699999999964
+Philippines,Legazpi,Rice (paddy),0.25891532,2009-6,KG,-0.015108730000000015
+Philippines,Legazpi,Rice (paddy),0.26949024,2009-7,KG,0.010574919999999988
+Philippines,Legazpi,Rice (paddy),0.27216127999999995,2009-8,KG,0.002671039999999958
+Philippines,Legazpi,Rice (paddy),0.23421375,2009-9,KG,-0.03794752999999995
+Philippines,Legazpi,Rice (paddy),0.272034,2009-10,KG,0.03782025
+Philippines,Legazpi,Rice (paddy),0.27984933,2009-11,KG,0.00781533000000001
+Philippines,Legazpi,Rice (paddy),0.28405056,2009-12,KG,0.00420123
+Philippines,Legazpi,Rice (paddy),0.2978612,2010-1,KG,0.013810639999999985
+Philippines,Legazpi,Rice (paddy),0.307971,2010-2,KG,0.010109800000000002
+Philippines,Legazpi,Rice (paddy),0.3009875,2010-3,KG,-0.006983499999999976
+Philippines,Legazpi,Rice (paddy),0.29496849,2010-4,KG,-0.006019009999999991
+Philippines,Legazpi,Rice (paddy),0.29671290000000006,2010-5,KG,0.0017444100000000295
+Philippines,Legazpi,Rice (paddy),0.29249030000000004,2010-6,KG,-0.004222600000000021
+Philippines,Legazpi,Rice (paddy),0.28741300000000003,2010-7,KG,-0.005077300000000007
+Philippines,Legazpi,Rice (paddy),0.32373065999999995,2010-8,KG,0.03631765999999992
+Philippines,Legazpi,Rice (paddy),0.29489496,2010-9,KG,-0.028835699999999964
+Philippines,Legazpi,Rice (paddy),0.29698812,2010-10,KG,0.0020931600000000383
+Philippines,Legazpi,Rice (paddy),0.28309680000000004,2010-11,KG,-0.013891319999999985
+Philippines,Legazpi,Rice (paddy),0.29193382,2010-12,KG,0.008837019999999973
+Philippines,Legazpi,Rice (paddy),0.31591528,2012-3,KG,0.02398146000000001
+Philippines,Legazpi,Rice (paddy),0.34434778,2012-5,KG,0.02843249999999997
+Philippines,Legazpi,Rice (paddy),0.35293232,2012-6,KG,0.00858454000000003
+Philippines,Legazpi,Rice (paddy),0.32077212,2012-9,KG,-0.03216020000000003
+Philippines,Legazpi,Rice (paddy),0.32540826,2012-10,KG,0.004636140000000011
+Philippines,Legazpi,Rice (paddy),0.31728927999999995,2012-11,KG,-0.008118980000000053
+Philippines,Legazpi,Rice (paddy),0.32636253,2013-1,KG,0.009073250000000033
+Philippines,Legazpi,Rice (paddy),0.34803864,2013-2,KG,0.021676110000000026
+Philippines,Legazpi,Rice (paddy),0.36254442,2013-3,KG,0.014505779999999968
+Philippines,Iloilo City,Rice (paddy),0.27693112000000003,2008-2,KG,-0.0012687299999999957
+Philippines,Iloilo City,Rice (paddy),0.29618836,2008-3,KG,0.019257239999999953
+Philippines,Iloilo City,Rice (paddy),0.36596615,2008-4,KG,0.06977779
+Philippines,Iloilo City,Rice (paddy),0.3054134,2008-5,KG,-0.06055274999999999
+Philippines,Iloilo City,Rice (paddy),0.35659862,2008-6,KG,0.051185219999999976
+Philippines,Iloilo City,Rice (paddy),0.3156582000000001,2008-7,KG,-0.040940419999999866
+Philippines,Iloilo City,Rice (paddy),0.28361652,2008-8,KG,-0.03204168000000013
+Philippines,Iloilo City,Rice (paddy),0.26622574,2008-9,KG,-0.017390779999999995
+Philippines,Iloilo City,Rice (paddy),0.26880806,2008-10,KG,0.002582320000000027
+Philippines,Iloilo City,Rice (paddy),0.26539008,2008-11,KG,-0.0034179800000000427
+Philippines,Iloilo City,Rice (paddy),0.27007968,2008-12,KG,0.004689600000000016
+Philippines,Iloilo City,Rice (paddy),0.2797599,2009-1,KG,0.009680220000000017
+Philippines,Iloilo City,Rice (paddy),0.30772742000000003,2009-2,KG,0.027967520000000023
+Philippines,Iloilo City,Rice (paddy),0.30461684,2009-3,KG,-0.0031105800000000294
+Philippines,Iloilo City,Rice (paddy),0.3129072,2009-4,KG,0.008290359999999997
+Philippines,Iloilo City,Rice (paddy),0.2738131,2009-5,KG,-0.03909410000000002
+Philippines,Iloilo City,Rice (paddy),0.26811748,2009-6,KG,-0.005695619999999957
+Philippines,Iloilo City,Rice (paddy),0.26533144,2009-7,KG,-0.002786040000000045
+Philippines,Iloilo City,Rice (paddy),0.24913544,2009-8,KG,-0.01619599999999996
+Philippines,Iloilo City,Rice (paddy),0.24961981000000005,2009-9,KG,0.0004843700000000395
+Philippines,Iloilo City,Rice (paddy),0.2656332,2009-10,KG,0.01601338999999996
+Philippines,Iloilo City,Rice (paddy),0.27581202,2009-11,KG,0.010178819999999977
+Philippines,Iloilo City,Rice (paddy),0.29634432,2009-12,KG,0.020532300000000003
+Philippines,Iloilo City,Rice (paddy),0.3184857,2010-1,KG,0.02214137999999999
+Philippines,Iloilo City,Rice (paddy),0.29802948,2010-2,KG,-0.02045621999999997
+Philippines,Iloilo City,Rice (paddy),0.32265859999999996,2010-3,KG,0.02462911999999995
+Philippines,Iloilo City,Rice (paddy),0.35476848,2010-4,KG,0.032109880000000035
+Philippines,Iloilo City,Rice (paddy),0.3576783,2010-5,KG,0.0029098200000000074
+Philippines,Iloilo City,Rice (paddy),0.34235396,2010-6,KG,-0.015324339999999992
+Philippines,Iloilo City,Rice (paddy),0.35613279999999997,2010-7,KG,0.013778839999999959
+Philippines,Iloilo City,Rice (paddy),0.33635217,2010-8,KG,-0.019780629999999966
+Philippines,Iloilo City,Rice (paddy),0.27588408,2010-9,KG,-0.06046809000000003
+Philippines,Iloilo City,Rice (paddy),0.2503746,2010-10,KG,-0.025509479999999973
+Philippines,Iloilo City,Rice (paddy),0.2335032,2010-11,KG,-0.01687140000000001
+Philippines,Iloilo City,Rice (paddy),0.25780282,2010-12,KG,0.024299619999999994
+Philippines,Iloilo City,Rice (paddy),0.33059520000000003,2012-1,KG,0.07279238000000005
+Philippines,Iloilo City,Rice (paddy),0.33870464,2012-2,KG,0.008109439999999968
+Philippines,Iloilo City,Rice (paddy),0.35977943999999995,2012-3,KG,0.02107479999999995
+Philippines,Iloilo City,Rice (paddy),0.38258274,2012-5,KG,0.022803300000000026
+Philippines,Iloilo City,Rice (paddy),0.39154892,2012-6,KG,0.008966180000000046
+Philippines,Iloilo City,Rice (paddy),0.38912398,2012-7,KG,-0.002424940000000042
+Philippines,Iloilo City,Rice (paddy),0.35714285999999995,2012-8,KG,-0.03198112000000003
+Philippines,Iloilo City,Rice (paddy),0.33251938,2012-9,KG,-0.024623479999999975
+Philippines,Iloilo City,Rice (paddy),0.31864402,2012-10,KG,-0.013875360000000003
+Philippines,Iloilo City,Rice (paddy),0.32872532,2012-11,KG,0.010081300000000015
+Philippines,Iloilo City,Rice (paddy),0.34004519999999994,2012-12,KG,0.011319879999999949
+Philippines,Iloilo City,Rice (paddy),0.34723598,2013-1,KG,0.007190780000000063
+Philippines,Iloilo City,Rice (paddy),0.35442918,2013-2,KG,0.007193200000000011
+Philippines,Iloilo City,Rice (paddy),0.35321694,2013-3,KG,-0.001212240000000031
+Philippines,Catarman,Rice (paddy),0.24835104,2008-2,KG,-0.0021513800000001193
+Philippines,Catarman,Rice (paddy),0.27922176,2008-3,KG,0.03087071999999999
+Philippines,Catarman,Rice (paddy),0.33293585000000003,2008-4,KG,0.05371409000000005
+Philippines,Catarman,Rice (paddy),0.3228989,2008-5,KG,-0.010036950000000044
+Philippines,Catarman,Rice (paddy),0.32188547999999995,2008-6,KG,-0.0010134200000000426
+Philippines,Catarman,Rice (paddy),0.32257368000000003,2008-7,KG,0.0006882000000000832
+Philippines,Catarman,Rice (paddy),0.29272959,2008-8,KG,-0.029844090000000045
+Philippines,Catarman,Rice (paddy),0.29813856,2008-9,KG,0.005408970000000013
+Philippines,Catarman,Rice (paddy),0.2963353400000001,2008-10,KG,-0.0018032199999998832
+Philippines,Catarman,Rice (paddy),0.28411392,2008-11,KG,-0.012221420000000094
+Philippines,Catarman,Rice (paddy),0.29181984,2008-12,KG,0.007705919999999977
+Philippines,Catarman,Rice (paddy),0.2956674,2009-1,KG,0.0038475600000000276
+Philippines,Catarman,Rice (paddy),0.28248662,2009-2,KG,-0.013180780000000003
+Philippines,Catarman,Rice (paddy),0.29056396,2009-3,KG,0.008077339999999988
+Philippines,Catarman,Rice (paddy),0.26214299999999996,2009-4,KG,-0.02842096000000005
+Philippines,Catarman,Rice (paddy),0.2961738,2009-5,KG,0.03403080000000003
+Philippines,Catarman,Rice (paddy),0.29133202,2009-6,KG,-0.004841779999999962
+Philippines,Catarman,Rice (paddy),0.29506686,2009-7,KG,0.0037348399999999615
+Philippines,Catarman,Rice (paddy),0.2935276,2009-8,KG,-0.0015392599999999867
+Philippines,Catarman,Rice (paddy),0.29542161,2009-9,KG,0.0018940100000000015
+Philippines,Catarman,Rice (paddy),0.30105096,2009-10,KG,0.005629349999999977
+Philippines,Catarman,Rice (paddy),0.30853548,2009-11,KG,0.0074845199999999945
+Philippines,Catarman,Rice (paddy),0.32589248,2009-12,KG,0.01735700000000001
+Philippines,Catarman,Rice (paddy),0.31726416,2010-2,KG,-0.008628319999999967
+Philippines,Catarman,Rice (paddy),0.32222080000000003,2010-3,KG,0.004956640000000012
+Philippines,Catarman,Rice (paddy),0.31199021,2010-4,KG,-0.01023059000000004
+Philippines,Catarman,Rice (paddy),0.3125025,2010-5,KG,0.0005122900000000263
+Philippines,Catarman,Rice (paddy),0.3496014,2010-10,KG,0.03709889999999999
+Philippines,Catarman,Rice (paddy),0.35220640000000003,2010-11,KG,0.002605000000000024
+Philippines,Catarman,Rice (paddy),0.34472309999999995,2010-12,KG,-0.0074833000000000816
+Philippines,Catarman,Rice (paddy),0.29654972,2012-3,KG,-0.04817337999999993
+Philippines,Catarman,Rice (paddy),0.32779484000000003,2012-5,KG,0.031245120000000015
+Philippines,Catarman,Rice (paddy),0.3333804,2012-10,KG,0.005585559999999989
+Philippines,Catarman,Rice (paddy),0.334565,2012-11,KG,0.0011845999999999801
+Philippines,Catarman,Rice (paddy),0.33492624,2012-12,KG,0.0003612399999999849
+Philippines,Catarman,Rice (paddy),0.33501177000000004,2013-2,KG,8.553000000005584e-05
+Philippines,Catarman,Rice (paddy),0.34339854,2013-3,KG,0.008386769999999932
+Philippines,Zamboanga City,Rice (paddy),0.26658316,2008-2,KG,0.002109470000000002
+Philippines,Zamboanga City,Rice (paddy),0.31121592,2008-3,KG,0.044632759999999994
+Philippines,Zamboanga City,Rice (paddy),0.36548745,2008-4,KG,0.05427153000000001
+Philippines,Zamboanga City,Rice (paddy),0.41662118,2008-5,KG,0.05113372999999999
+Philippines,Zamboanga City,Rice (paddy),0.4188117799999999,2008-6,KG,0.0021905999999999315
+Philippines,Zamboanga City,Rice (paddy),0.42362892,2008-7,KG,0.0048171400000001086
+Philippines,Zamboanga City,Rice (paddy),0.25472142000000003,2008-8,KG,-0.1689075
+Philippines,Zamboanga City,Rice (paddy),0.2120382,2008-9,KG,-0.04268322000000002
+Philippines,Zamboanga City,Rice (paddy),0.22855984000000004,2008-10,KG,0.016521640000000032
+Philippines,Zamboanga City,Rice (paddy),0.23750784,2008-11,KG,0.008947999999999956
+Philippines,Zamboanga City,Rice (paddy),0.26004576,2008-12,KG,0.022537920000000017
+Philippines,Zamboanga City,Rice (paddy),0.2634282,2009-1,KG,0.0033824399999999866
+Philippines,Zamboanga City,Rice (paddy),0.26755248000000004,2009-2,KG,0.004124280000000036
+Philippines,Zamboanga City,Rice (paddy),0.26783136,2009-3,KG,0.00027887999999998137
+Philippines,Zamboanga City,Rice (paddy),0.2941827,2009-4,KG,0.02635134
+Philippines,Zamboanga City,Rice (paddy),0.29216575,2009-5,KG,-0.0020169500000000173
+Philippines,Zamboanga City,Rice (paddy),0.2886132,2009-6,KG,-0.0035525499999999877
+Philippines,Zamboanga City,Rice (paddy),0.291116,2009-7,KG,0.0025027999999999717
+Philippines,Zamboanga City,Rice (paddy),0.27548031999999995,2009-8,KG,-0.01563568000000004
+Philippines,Zamboanga City,Rice (paddy),0.24712153,2009-9,KG,-0.02835878999999994
+Philippines,Zamboanga City,Rice (paddy),0.25389839999999997,2009-10,KG,0.006776869999999963
+Philippines,Zamboanga City,Rice (paddy),0.24308856,2009-11,KG,-0.01080983999999996
+Philippines,Zamboanga City,Rice (paddy),0.28189376,2009-12,KG,0.038805199999999984
+Philippines,Zamboanga City,Rice (paddy),0.30524260000000003,2010-1,KG,0.023348840000000037
+Philippines,Zamboanga City,Rice (paddy),0.28290108,2010-2,KG,-0.022341520000000004
+Philippines,Zamboanga City,Rice (paddy),0.2904803,2010-3,KG,0.007579219999999998
+Philippines,Zamboanga City,Rice (paddy),0.29810407,2010-4,KG,0.007623769999999974
+Philippines,Zamboanga City,Rice (paddy),0.30701999999999996,2010-5,KG,0.00891592999999996
+Philippines,Zamboanga City,Rice (paddy),0.29486476,2010-6,KG,-0.012155239999999956
+Philippines,Zamboanga City,Rice (paddy),0.2915189,2010-7,KG,-0.0033458599999999783
+Philippines,Zamboanga City,Rice (paddy),0.29339475,2010-8,KG,0.0018758499999999567
+Philippines,Zamboanga City,Rice (paddy),0.30077928,2010-9,KG,0.00738453
+Philippines,Zamboanga City,Rice (paddy),0.26029728,2010-10,KG,-0.04048199999999996
+Philippines,Zamboanga City,Rice (paddy),0.2968728,2010-11,KG,0.03657551999999997
+Philippines,Zamboanga City,Rice (paddy),0.32083140000000004,2010-12,KG,0.023958600000000052
+Philippines,Zamboanga City,Rice (paddy),0.3319726800000001,2012-1,KG,0.011141280000000031
+Philippines,Zamboanga City,Rice (paddy),0.33495168,2012-2,KG,0.0029789999999998984
+Philippines,Zamboanga City,Rice (paddy),0.32734795999999994,2012-3,KG,-0.007603720000000036
+Philippines,Zamboanga City,Rice (paddy),0.34947686,2012-5,KG,0.022128900000000062
+Philippines,Zamboanga City,Rice (paddy),0.40933596,2012-6,KG,0.0598591
+Philippines,Zamboanga City,Rice (paddy),0.35548420000000003,2012-7,KG,-0.05385175999999997
+Philippines,Zamboanga City,Rice (paddy),0.34740044,2012-8,KG,-0.008083760000000051
+Philippines,Zamboanga City,Rice (paddy),0.39700944,2012-9,KG,0.049609000000000014
+Philippines,Zamboanga City,Rice (paddy),0.37179162,2012-10,KG,-0.025217820000000002
+Philippines,Zamboanga City,Rice (paddy),0.37471279999999996,2012-11,KG,0.0029211799999999677
+Philippines,Zamboanga City,Rice (paddy),0.34297032,2012-12,KG,-0.03174247999999996
+Philippines,Zamboanga City,Rice (paddy),0.34920054,2013-1,KG,0.0062302200000000085
+Philippines,Zamboanga City,Rice (paddy),0.37753344,2013-2,KG,0.028332899999999994
+Philippines,Zamboanga City,Rice (paddy),0.37359012,2013-3,KG,-0.003943319999999972
+Philippines,Tubod,Rice (paddy),0.31536640000000005,2008-2,KG,0.02319528000000004
+Philippines,Tubod,Rice (paddy),0.30879212,2008-3,KG,-0.006574280000000043
+Philippines,Tubod,Rice (paddy),0.43011195,2008-4,KG,0.12131983000000002
+Philippines,Tubod,Rice (paddy),0.3741897,2008-5,KG,-0.05592225000000001
+Philippines,Tubod,Rice (paddy),0.36133223,2008-6,KG,-0.012857470000000037
+Philippines,Tubod,Rice (paddy),0.35982804,2008-7,KG,-0.0015041899999999608
+Philippines,Tubod,Rice (paddy),0.31740156,2008-8,KG,-0.04242647999999999
+Philippines,Tubod,Rice (paddy),0.27650638,2008-9,KG,-0.04089518000000003
+Philippines,Tubod,Rice (paddy),0.2627604,2008-10,KG,-0.013745979999999991
+Philippines,Tubod,Rice (paddy),0.26193024,2008-11,KG,-0.0008301600000000242
+Philippines,Tubod,Rice (paddy),0.25670111999999995,2008-12,KG,-0.0052291200000000315
+Philippines,Tubod,Rice (paddy),0.2753058,2009-1,KG,0.01860468000000004
+Philippines,Tubod,Rice (paddy),0.3670433,2009-2,KG,0.09173750000000003
+Philippines,Tubod,Rice (paddy),0.36868144,2009-3,KG,0.0016381400000000101
+Philippines,Tubod,Rice (paddy),0.34869180000000005,2009-4,KG,-0.019989639999999975
+Philippines,Tubod,Rice (paddy),0.34110615,2009-5,KG,-0.007585650000000055
+Philippines,Tubod,Rice (paddy),0.34027078,2009-6,KG,-0.0008353700000000019
+Philippines,Tubod,Rice (paddy),0.33998190000000006,2009-7,KG,-0.00028887999999993585
+Philippines,Tubod,Rice (paddy),0.35327032,2009-8,KG,0.013288419999999967
+Philippines,Tubod,Rice (paddy),0.3143669,2009-9,KG,-0.03890342000000002
+Philippines,Tubod,Rice (paddy),0.30062424,2009-10,KG,-0.013742660000000018
+Philippines,Tubod,Rice (paddy),0.30152331,2009-11,KG,0.0008990700000000018
+Philippines,Tubod,Rice (paddy),0.31144192,2009-12,KG,0.009918609999999994
+Philippines,Tubod,Rice (paddy),0.3441035,2010-1,KG,0.03266158000000002
+Philippines,Tubod,Rice (paddy),0.35551740000000004,2010-2,KG,0.011413900000000032
+Philippines,Tubod,Rice (paddy),0.3692843,2010-3,KG,0.01376689999999997
+Philippines,Tubod,Rice (paddy),0.3247565,2010-4,KG,-0.044527800000000006
+Philippines,Tubod,Rice (paddy),0.3276342,2010-5,KG,0.002877699999999983
+Philippines,Tubod,Rice (paddy),0.32249484,2010-6,KG,-0.005139359999999982
+Philippines,Tubod,Rice (paddy),0.35570060000000003,2010-7,KG,0.03320576000000003
+Philippines,Tubod,Rice (paddy),0.35915946,2010-8,KG,0.0034588599999999525
+Philippines,Tubod,Rice (paddy),0.36958056,2010-9,KG,0.010421100000000016
+Philippines,Tubod,Rice (paddy),0.3449862,2010-10,KG,-0.024594359999999982
+Philippines,Tubod,Rice (paddy),0.35840559999999994,2010-11,KG,0.013419399999999915
+Philippines,Tubod,Rice (paddy),0.364064,2010-12,KG,0.005658400000000063
+Philippines,Tubod,Rice (paddy),0.3898268400000001,2012-1,KG,0.02576284000000012
+Philippines,Tubod,Rice (paddy),0.39452992,2012-2,KG,0.00470307999999986
+Philippines,Tubod,Rice (paddy),0.39384416,2012-3,KG,-0.0006857599999999797
+Philippines,Tubod,Rice (paddy),0.39563858,2012-5,KG,0.0017944200000000188
+Philippines,Tubod,Rice (paddy),0.3943574000000001,2012-6,KG,-0.0012811799999999374
+Philippines,Tubod,Rice (paddy),0.38983972,2012-7,KG,-0.004517680000000079
+Philippines,Tubod,Rice (paddy),0.37947914,2012-8,KG,-0.010360580000000008
+Philippines,Tubod,Rice (paddy),0.40180424,2012-9,KG,0.022325099999999987
+Philippines,Tubod,Rice (paddy),0.35560576,2012-10,KG,-0.046198479999999986
+Philippines,Tubod,Rice (paddy),0.3698464,2012-11,KG,0.014240640000000027
+Philippines,Tubod,Rice (paddy),0.39074728,2012-12,KG,0.020900879999999955
+Philippines,Tubod,Rice (paddy),0.42066141,2013-1,KG,0.02991413000000004
+Philippines,Tubod,Rice (paddy),0.42152985,2013-2,KG,0.0008684399999999703
+Philippines,Tubod,Rice (paddy),0.43961886,2013-3,KG,0.018089010000000016
+Philippines,Davao City,Rice (paddy),0.25401778,2008-2,KG,0.005476239999999966
+Philippines,Davao City,Rice (paddy),0.31582114,2008-3,KG,0.061803359999999974
+Philippines,Davao City,Rice (paddy),0.35711020000000004,2008-4,KG,0.041289060000000044
+Philippines,Davao City,Rice (paddy),0.38631298,2008-5,KG,0.029202779999999928
+Philippines,Davao City,Rice (paddy),0.38387323,2008-6,KG,-0.0024397499999999628
+Philippines,Davao City,Rice (paddy),0.29580408,2008-7,KG,-0.08806914999999998
+Philippines,Davao City,Rice (paddy),0.27761523,2008-8,KG,-0.018188850000000034
+Philippines,Davao City,Rice (paddy),0.24138086,2008-9,KG,-0.03623436999999999
+Philippines,Davao City,Rice (paddy),0.23961246000000005,2008-10,KG,-0.0017683999999999478
+Philippines,Davao City,Rice (paddy),0.22651776,2008-11,KG,-0.013094700000000042
+Philippines,Davao City,Rice (paddy),0.23642424,2008-12,KG,0.009906479999999995
+Philippines,Davao City,Rice (paddy),0.2700033,2009-1,KG,0.033579059999999994
+Philippines,Davao City,Rice (paddy),0.28353832,2009-2,KG,0.013535020000000009
+Philippines,Davao City,Rice (paddy),0.30110362,2009-3,KG,0.017565300000000006
+Philippines,Davao City,Rice (paddy),0.32643045,2009-4,KG,0.025326829999999967
+Philippines,Davao City,Rice (paddy),0.3134717,2009-5,KG,-0.012958749999999963
+Philippines,Davao City,Rice (paddy),0.282339,2009-6,KG,-0.031132700000000013
+Philippines,Davao City,Rice (paddy),0.26242028,2009-7,KG,-0.01991872
+Philippines,Davao City,Rice (paddy),0.24332712,2009-8,KG,-0.019093159999999998
+Philippines,Davao City,Rice (paddy),0.26648320000000003,2009-9,KG,0.023156080000000023
+Philippines,Davao City,Rice (paddy),0.27715464,2009-10,KG,0.010671439999999977
+Philippines,Davao City,Rice (paddy),0.27538704,2009-11,KG,-0.0017675999999999803
+Philippines,Davao City,Rice (paddy),0.2782272,2009-12,KG,0.0028401599999999805
+Philippines,Davao City,Rice (paddy),0.28223000000000004,2010-1,KG,0.0040028000000000286
+Philippines,Davao City,Rice (paddy),0.313374,2010-2,KG,0.03114399999999995
+Philippines,Davao City,Rice (paddy),0.3097435,2010-3,KG,-0.003630499999999981
+Philippines,Davao City,Rice (paddy),0.31176624000000003,2010-4,KG,0.002022740000000023
+Philippines,Davao City,Rice (paddy),0.2883795,2010-5,KG,-0.023386740000000017
+Philippines,Davao City,Rice (paddy),0.27997042000000005,2010-6,KG,-0.008409079999999958
+Philippines,Davao City,Rice (paddy),0.2776885,2010-7,KG,-0.0022819200000000484
+Philippines,Davao City,Rice (paddy),0.29538762,2010-8,KG,0.017699120000000013
+Philippines,Davao City,Rice (paddy),0.30711624,2010-9,KG,0.011728619999999967
+Philippines,Davao City,Rice (paddy),0.30437244,2010-10,KG,-0.002743799999999963
+Philippines,Davao City,Rice (paddy),0.308812,2010-11,KG,0.0044395599999999535
+Philippines,Davao City,Rice (paddy),0.30513114,2010-12,KG,-0.0036808599999999525
+Philippines,Davao City,Rice (paddy),0.32944730000000005,2012-1,KG,0.02431616000000003
+Philippines,Davao City,Rice (paddy),0.36286432,2012-2,KG,0.033417019999999964
+Philippines,Davao City,Rice (paddy),0.36304592,2012-3,KG,0.00018160000000000398
+Philippines,Davao City,Rice (paddy),0.35856932,2012-5,KG,-0.004476599999999997
+Philippines,Davao City,Rice (paddy),0.35808120000000004,2012-6,KG,-0.0004881199999999808
+Philippines,Davao City,Rice (paddy),0.37528634,2012-7,KG,0.017205139999999952
+Philippines,Davao City,Rice (paddy),0.38541964,2012-8,KG,0.010133300000000012
+Philippines,Davao City,Rice (paddy),0.35265754,2012-9,KG,-0.032762100000000016
+Philippines,Davao City,Rice (paddy),0.35174048,2012-10,KG,-0.0009170599999999696
+Philippines,Davao City,Rice (paddy),0.34989416,2012-11,KG,-0.0018463200000000124
+Philippines,Davao City,Rice (paddy),0.34662672,2012-12,KG,-0.0032674400000000103
+Philippines,Davao City,Rice (paddy),0.34207901,2013-1,KG,-0.004547709999999983
+Philippines,Davao City,Rice (paddy),0.33820704,2013-2,KG,-0.0038719700000000024
+Philippines,Davao City,Rice (paddy),0.34879866,2013-3,KG,0.010591619999999968
+Philippines,Koronadal,Rice (paddy),0.31191708,2008-2,KG,0.020481289999999985
+Philippines,Koronadal,Rice (paddy),0.34005914,2008-3,KG,0.02814205999999997
+Philippines,Koronadal,Rice (paddy),0.3762582,2008-4,KG,0.036199060000000005
+Philippines,Koronadal,Rice (paddy),0.4049641800000001,2008-5,KG,0.02870598000000013
+Philippines,Koronadal,Rice (paddy),0.41745932,2008-6,KG,0.012495139999999905
+Philippines,Koronadal,Rice (paddy),0.33707388,2008-7,KG,-0.08038544000000003
+Philippines,Koronadal,Rice (paddy),0.29384094,2008-8,KG,-0.04323294
+Philippines,Koronadal,Rice (paddy),0.2655832,2008-9,KG,-0.028257739999999976
+Philippines,Koronadal,Rice (paddy),0.28319732000000003,2008-10,KG,0.01761412000000001
+Philippines,Koronadal,Rice (paddy),0.27597312,2008-11,KG,-0.007224200000000014
+Philippines,Koronadal,Rice (paddy),0.28304016,2008-12,KG,0.007067039999999969
+Philippines,Koronadal,Rice (paddy),0.311787,2009-1,KG,0.028746839999999996
+Philippines,Koronadal,Rice (paddy),0.34958508000000005,2009-2,KG,0.03779808000000007
+Philippines,Koronadal,Rice (paddy),0.34119566,2009-3,KG,-0.008389420000000036
+Philippines,Koronadal,Rice (paddy),0.34245030000000004,2009-4,KG,0.001254640000000029
+Philippines,Koronadal,Rice (paddy),0.35123174999999995,2009-5,KG,0.008781449999999913
+Philippines,Koronadal,Rice (paddy),0.33525142,2009-6,KG,-0.01598032999999993
+Philippines,Koronadal,Rice (paddy),0.32459434,2009-7,KG,-0.010657080000000041
+Philippines,Koronadal,Rice (paddy),0.28564488,2009-8,KG,-0.03894945999999999
+Philippines,Koronadal,Rice (paddy),0.28043193,2009-9,KG,-0.005212949999999994
+Philippines,Koronadal,Rice (paddy),0.30233112,2009-10,KG,0.021899190000000013
+Philippines,Koronadal,Rice (paddy),0.30683556,2009-11,KG,0.0045044399999999984
+Philippines,Koronadal,Rice (paddy),0.32222592,2009-12,KG,0.015390359999999992
+Philippines,Koronadal,Rice (paddy),0.3345511,2010-1,KG,0.012325179999999991
+Philippines,Koronadal,Rice (paddy),0.34644036,2010-2,KG,0.011889260000000013
+Philippines,Koronadal,Rice (paddy),0.361185,2010-3,KG,0.014744639999999976
+Philippines,Koronadal,Rice (paddy),0.35320069,2010-4,KG,-0.007984309999999994
+Philippines,Koronadal,Rice (paddy),0.34364310000000003,2010-5,KG,-0.00955758999999995
+Philippines,Koronadal,Rice (paddy),0.33933192,2010-6,KG,-0.0043111800000000255
+Philippines,Koronadal,Rice (paddy),0.3446795,2010-7,KG,0.005347580000000018
+Philippines,Koronadal,Rice (paddy),0.35960232,2010-8,KG,0.014922819999999948
+Philippines,Koronadal,Rice (paddy),0.31322688,2010-9,KG,-0.04637543999999999
+Philippines,Koronadal,Rice (paddy),0.3253716,2010-10,KG,0.012144719999999998
+Philippines,Koronadal,Rice (paddy),0.33292,2010-11,KG,0.007548400000000011
+Philippines,Koronadal,Rice (paddy),0.35473486,2010-12,KG,0.02181485999999999
+Philippines,Koronadal,Rice (paddy),0.3905155800000001,2012-1,KG,0.0357807200000001
+Philippines,Koronadal,Rice (paddy),0.40391232,2012-2,KG,0.013396739999999907
+Philippines,Koronadal,Rice (paddy),0.41834276,2012-3,KG,0.014430439999999989
+Philippines,Koronadal,Rice (paddy),0.41638804,2012-5,KG,-0.0019547199999999654
+Philippines,Koronadal,Rice (paddy),0.43554844,2012-6,KG,0.019160399999999966
+Philippines,Koronadal,Rice (paddy),0.44447454,2012-7,KG,0.008926099999999992
+Philippines,Koronadal,Rice (paddy),0.41274594,2012-8,KG,-0.031728599999999996
+Philippines,Koronadal,Rice (paddy),0.37423414,2012-9,KG,-0.038511799999999985
+Philippines,Koronadal,Rice (paddy),0.39305066,2012-10,KG,0.018816520000000003
+Philippines,Koronadal,Rice (paddy),0.40853428,2012-11,KG,0.015483620000000031
+Philippines,Koronadal,Rice (paddy),0.402204,2012-12,KG,-0.0063302800000000214
+Philippines,Koronadal,Rice (paddy),0.38652718,2013-1,KG,-0.01567681999999998
+Philippines,Koronadal,Rice (paddy),0.39424716,2013-2,KG,0.00771997999999996
+Philippines,Koronadal,Rice (paddy),0.42194574,2013-3,KG,0.027698580000000028
+Philippines,Tandag,Rice (paddy),0.33724415,2008-4,KG,0.03402677000000004
+Philippines,Tandag,Rice (paddy),0.43107586,2008-5,KG,0.09383170999999996
+Philippines,Tandag,Rice (paddy),0.36336092,2008-6,KG,-0.06771494
+Philippines,Tandag,Rice (paddy),0.26301304,2008-9,KG,-0.10034788
+Philippines,Tandag,Rice (paddy),0.25316756,2008-10,KG,-0.009845479999999962
+Philippines,Tandag,Rice (paddy),0.22061568,2008-11,KG,-0.032551880000000005
+Philippines,Tandag,Rice (paddy),0.2424864,2008-12,KG,0.021870719999999982
+Philippines,Tandag,Rice (paddy),0.30069029999999997,2009-3,KG,0.058203899999999975
+Philippines,Tandag,Rice (paddy),0.32643045,2009-4,KG,0.025740150000000017
+Philippines,Tandag,Rice (paddy),0.32549585,2009-5,KG,-0.0009346000000000076
+Philippines,Tandag,Rice (paddy),0.29467826,2009-6,KG,-0.03081758999999995
+Philippines,Tandag,Rice (paddy),0.29417247,2009-9,KG,-0.000505790000000006
+Philippines,Tandag,Rice (paddy),0.3104388,2009-10,KG,0.016266329999999996
+Philippines,Tandag,Rice (paddy),0.28069929000000005,2009-11,KG,-0.02973950999999997
+Philippines,Tandag,Rice (paddy),0.2933248,2009-12,KG,0.012625509999999951
+Philippines,Tandag,Rice (paddy),0.33535479999999995,2010-3,KG,0.042029999999999956
+Philippines,Tandag,Rice (paddy),0.29922392,2010-4,KG,-0.036130879999999976
+Philippines,Tandag,Rice (paddy),0.31557270000000004,2010-5,KG,0.016348780000000063
+Philippines,Tandag,Rice (paddy),0.31925694,2010-6,KG,0.0036842399999999498
+Philippines,Tandag,Rice (paddy),0.3304272,2010-9,KG,0.011170259999999987
+Philippines,Tandag,Rice (paddy),0.32214096000000003,2010-10,KG,-0.008286239999999945
+Philippines,Tandag,Rice (paddy),0.3184552,2010-11,KG,-0.003685760000000038
+Philippines,Tandag,Rice (paddy),0.31628059999999997,2010-12,KG,-0.0021746000000000265
+Philippines,Tandag,Rice (paddy),0.38917776,2012-3,KG,0.07289716000000002
+Philippines,Tandag,Rice (paddy),0.3788525,2012-5,KG,-0.010325260000000003
+Philippines,Tandag,Rice (paddy),0.3964637600000001,2012-6,KG,0.01761126000000013
+Philippines,Tandag,Rice (paddy),0.40587982,2012-9,KG,0.009416059999999893
+Philippines,Tandag,Rice (paddy),0.38338746,2012-10,KG,-0.02249235999999999
+Philippines,Tandag,Rice (paddy),0.37933588,2012-11,KG,-0.004051579999999999
+Philippines,Tandag,Rice (paddy),0.37465912,2012-12,KG,-0.004676760000000002
+Philippines,Tandag,Rice (paddy),0.34855319999999995,2013-3,KG,-0.02610592000000006
+Philippines,Shariff Aguak,Rice (paddy),0.28111958,2008-2,KG,0.025960069999999946
+Philippines,Shariff Aguak,Rice (paddy),0.2847965,2008-3,KG,0.003676920000000028
+Philippines,Shariff Aguak,Rice (paddy),0.4250856000000001,2008-4,KG,0.1402891000000001
+Philippines,Shariff Aguak,Rice (paddy),0.41382349999999996,2008-5,KG,-0.011262100000000164
+Philippines,Shariff Aguak,Rice (paddy),0.57952911,2008-6,KG,0.16570561
+Philippines,Shariff Aguak,Rice (paddy),0.24717264000000005,2008-7,KG,-0.3323564699999999
+Philippines,Shariff Aguak,Rice (paddy),0.25805547,2008-8,KG,0.010882829999999954
+Philippines,Shariff Aguak,Rice (paddy),0.22553154,2008-9,KG,-0.032523930000000006
+Philippines,Shariff Aguak,Rice (paddy),0.24732844,2008-10,KG,0.021796900000000008
+Philippines,Shariff Aguak,Rice (paddy),0.2676288,2008-11,KG,0.02030035999999999
+Philippines,Shariff Aguak,Rice (paddy),0.28178592,2008-12,KG,0.014157120000000023
+Philippines,Shariff Aguak,Rice (paddy),0.28206594,2009-2,KG,0.00028001999999999194
+Philippines,Shariff Aguak,Rice (paddy),0.27713106,2009-3,KG,-0.00493488000000003
+Philippines,Shariff Aguak,Rice (paddy),0.35992650000000004,2009-4,KG,0.08279544000000005
+Philippines,Shariff Aguak,Rice (paddy),0.3100965,2009-5,KG,-0.04983000000000004
+Philippines,Shariff Aguak,Rice (paddy),0.3074358,2009-6,KG,-0.002660700000000016
+Philippines,Shariff Aguak,Rice (paddy),0.16676787999999998,2009-7,KG,-0.14066792
+Philippines,Shariff Aguak,Rice (paddy),0.17300496,2009-8,KG,0.006237080000000034
+Philippines,Shariff Aguak,Rice (paddy),0.17363046,2009-9,KG,0.0006254999999999733
+Philippines,Shariff Aguak,Rice (paddy),0.21250656000000004,2009-10,KG,0.03887610000000005
+Philippines,Shariff Aguak,Rice (paddy),0.23076414,2009-11,KG,0.018257579999999968
+Philippines,Shariff Aguak,Rice (paddy),0.23401279999999997,2009-12,KG,0.003248659999999959
+Philippines,Shariff Aguak,Rice (paddy),0.26377649999999997,2010-1,KG,0.029763700000000004
+Philippines,Shariff Aguak,Rice (paddy),0.30127128,2010-2,KG,0.037494780000000005
+Philippines,Shariff Aguak,Rice (paddy),0.3160916,2010-3,KG,0.014820319999999998
+Philippines,Shariff Aguak,Rice (paddy),0.34245013,2010-4,KG,0.026358530000000047
+Philippines,Shariff Aguak,Rice (paddy),0.3236868,2010-5,KG,-0.018763330000000022
+Philippines,Shariff Aguak,Rice (paddy),0.30328330000000003,2010-6,KG,-0.020403499999999963
+Philippines,Shariff Aguak,Rice (paddy),0.3105357,2010-7,KG,0.007252399999999992
+Philippines,Shariff Aguak,Rice (paddy),0.3210735,2010-8,KG,0.010537799999999986
+Philippines,Shariff Aguak,Rice (paddy),0.328164,2010-9,KG,0.0070905
+Philippines,Shariff Aguak,Rice (paddy),0.28891152,2010-10,KG,-0.039252480000000034
+Philippines,Shariff Aguak,Rice (paddy),0.2874592,2010-11,KG,-0.0014523199999999514
+Philippines,Shariff Aguak,Rice (paddy),0.25347956,2010-12,KG,-0.03397964000000003
+Philippines,Shariff Aguak,Rice (paddy),0.23256454000000004,2012-1,KG,-0.02091501999999995
+Philippines,Shariff Aguak,Rice (paddy),0.3565312,2012-2,KG,0.12396665999999995
+Philippines,Shariff Aguak,Rice (paddy),0.3721454,2012-3,KG,0.015614200000000023
+Philippines,Shariff Aguak,Rice (paddy),0.38654612,2012-5,KG,0.014400719999999978
+Philippines,Shariff Aguak,Rice (paddy),0.36018756,2012-6,KG,-0.026358559999999975
+Philippines,Shariff Aguak,Rice (paddy),0.38268232,2012-7,KG,0.022494760000000003
+Philippines,Shariff Aguak,Rice (paddy),0.3820929599999999,2012-8,KG,-0.0005893600000000943
+Philippines,Shariff Aguak,Rice (paddy),0.3536165,2012-9,KG,-0.028476459999999926
+Philippines,Shariff Aguak,Rice (paddy),0.32951512,2012-10,KG,-0.024101380000000006
+Philippines,Shariff Aguak,Rice (paddy),0.35184072,2012-11,KG,0.0223256
+Philippines,Shariff Aguak,Rice (paddy),0.36271488,2012-12,KG,0.010874160000000022
+Philippines,Shariff Aguak,Rice (paddy),0.32709924,2013-1,KG,-0.035615640000000004
+Philippines,Shariff Aguak,Rice (paddy),0.33869862,2013-2,KG,0.011599379999999992
+Philippines,Shariff Aguak,Rice (paddy),0.33529836,2013-3,KG,-0.0034002599999999883
