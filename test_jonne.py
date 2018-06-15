@@ -174,7 +174,7 @@ def change_duplicate_city(df):
     Dit veranderd de naam van steden met de zelfde naam naar stad plus afkorting van het land.
     """
     a = [(city, L) for (L, city),_ in df.groupby([COUNTRY, CITY])]
-    City, Land = zip(*a)
+    City, _ = zip(*a)
     for (c, L) in sorted(a):
         if City.count(c) > 1 and c != 'National Average':
             if L == 'United Republic of Tanzania':
@@ -375,14 +375,19 @@ def previous_month(date):
         date[0] -= 1
     return "-".join(list(map(str, date)))
 
-def norm_gap(df, gap = 2, min_length = 3):
+def norm_gap(df, gap = 2, min_length = 6):
     """
     Normalize gaps in de dataset en verwijder losse punten plus adds de diff van de prijzen.
     """
+    t = time.clock()
+    print(time.clock() - t)
     # add year and month.
     df_date = df[DATE].str.split('-', expand = True).rename(columns = {0: YEAR, 1: MONTH})
     df_date = df_date.astype(int)
     df = pd.DataFrame.merge(df, df_date, how='left', left_index=True, right_index=True)
+    df['Year'] = df[YEAR]
+    df['Month'] = df[MONTH]
+    df = df.sort_values(by=[COUNTRY, CITY, PROD, 'Year', 'Month']).reset_index(drop=True)
 
     # calc gap
     df[YEAR] = df.groupby([CITY, PROD])[YEAR].transform(pd.Series.diff)
@@ -395,6 +400,7 @@ def norm_gap(df, gap = 2, min_length = 3):
     df['Gradient'] = df['Price_diff'].divide(df['GAP'] + 1)
 
     print('preprocessing done')
+    print(time.clock() - t)
     n = 0
     df2 = df.copy()
     for index, row in df.iterrows():
@@ -406,53 +412,31 @@ def norm_gap(df, gap = 2, min_length = 3):
             n = 0
 
     print('removing data done')
+    print(time.clock() - t)
 
     df2 = df[:0]
     for index, row in df[(df['GAP'] != 0) & (df['GAP'].notnull()) & (df['GAP'] <= gap)].iterrows():
         month = row[DATE]
         price = row[PRICE]
-        for x in range(int(row['GAP'])):
+        for _ in range(int(row['GAP'])):
             month = previous_month(month)
             row[DATE] = month
+            row['Year'], row['Month'] = list(map(int, month.split('-')))
             price -= row['Gradient']
             row[PRICE] = price
             df2 = df2.append(row)
 
     df.dropna(inplace = True)
     df = pd.concat([df, df2])
-    df = df.sort_values(by=[COUNTRY, CITY, PROD, YEAR, MONTH]).reset_index(drop=True)
-    return df.drop([YEAR, MONTH, 'GAP', 'Price_diff'], axis = 1)
+    df = df.sort_values(by=[COUNTRY, CITY, PROD, 'Year', 'Month']).reset_index(drop=True)
+    print(time.clock() - t)
+    return df.drop([YEAR, MONTH, 'GAP', 'Price_diff', 'Year', 'Month'], axis = 1)
 
-def norm_gap2(df, gap = 2, min_length = 3):
-    """
-    Normalize gaps in de dataset en verwijder losse punten.
-    """
-    # add year and month.
-    df_date = df[DATE].str.split('-', expand = True).rename(columns = {0: YEAR, 1: MONTH})
-    df_date = df_date.astype(int)
-    df = pd.DataFrame.merge(df, df_date, how='left', left_index=True, right_index=True)
-
-    # calc gap
-    df[YEAR] = df.groupby([CITY, PROD])[YEAR].transform(pd.Series.diff)
-    df[MONTH] = df[MONTH].diff()
-    df[YEAR] = df[YEAR] * 12
-    df['GAP'] = df[YEAR].add(df[MONTH]) - 1
-
-    # price diff
-    df['Price_diff'] = df[PRICE].diff()
-    df['Gradient'] = df['Price_diff'].divide(df['GAP'] + 1)
-
-    print(df)
-    for index, row in df[(df['GAP'] != 0) & (df['GAP'].notnull())].iterrows():
-        print(index)
-
+import time
 if __name__ == "__main__":
     df = pd.read_csv('WFPVAM_FoodPrices_version3_Retail.csv')
     df = norm_gap(df)
-    print(df)
-    df = norm_gap2(df)
-
-
+    save_to_csv(df, 'WFPVAM_FoodPrices_version5_Retail.csv')
 
 
 
