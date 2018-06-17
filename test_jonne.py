@@ -2,9 +2,11 @@
 import numpy as np
 import pandas as pd
 import pickle
+import time
 import matplotlib.pyplot as plt
 from matplotlib.dates import drange
 from datetime import datetime
+import cluster as clus
 
 COUNTRY = 'adm0_name'
 REGION = 'adm1_name'
@@ -103,8 +105,6 @@ def show_city(df, city_name):
             dates = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in df_tmp[DATE].tolist()]
             plt.plot(dates, values, label=prod)
             print(slice_columns(get_values_column(df2, PROD, prod).sort_values(by=[DATE]),[PROD, SELLER, PRICE, DATE]).values)
-
-
 
     plt.rcParams['legend.fontsize'] = 11
     plt.legend(fancybox=True,loc="best",framealpha=0.8)
@@ -401,6 +401,7 @@ def norm_gap(df, gap = 2, min_length = 6):
 
     print('preprocessing done')
     print(time.clock() - t)
+    # verwijder losse lijn stukken
     n = 0
     df2 = df.copy()
     for index, row in df.iterrows():
@@ -414,6 +415,7 @@ def norm_gap(df, gap = 2, min_length = 6):
     print('removing data done')
     print(time.clock() - t)
 
+    #voeg onbrekende punten toe aan de dataset
     df2 = df[:0]
     for index, row in df[(df['GAP'] != 0) & (df['GAP'].notnull()) & (df['GAP'] <= gap)].iterrows():
         month = row[DATE]
@@ -432,13 +434,94 @@ def norm_gap(df, gap = 2, min_length = 6):
     print(time.clock() - t)
     return df.drop([YEAR, MONTH, 'GAP', 'Price_diff', 'Year', 'Month'], axis = 1)
 
-import time
+
+def df_to_np_date_price(df, selectDic = {PROD : ['Millet']}, value = PRICE):
+    """
+    Dit maakt van een df een numpy array waar de rows datums zijn, 
+    de columns de geselecteerd column combinaties en
+    de values zijn de value (PRICE/Gradient)
+
+    De functie returned de row names, column names en een numpy array met de values.
+    """
+    condition = (df[PROD] != 'tmp')
+    df['Info'] = ""
+    for col, selection in selectDic.items():
+        if selection:
+            condition &= (df[col].isin(selection))
+        df['Info'] +=  df[col] + ' - '
+
+    df = df.loc[condition]
+    make_sortable_date(df)
+    df = df.pivot_table(index = DATE, columns = 'Info', values = value, aggfunc = np.mean)
+    return df.index.values, list(df), df.values.T
+
+def make_sortable_date(df):
+    """
+    Deze functie zorgt ervoor dat de dataframe gesoteerd kan worden op date.
+    """  
+    pd.set_option('mode.chained_assignment', None)
+    df.loc[:, DATE] = [x if len(x) == 7 else x[:5] + '0' + x[5:] for x in df[DATE].values]
+    pd.set_option('mode.chained_assignment', 'warn')
+    return df
+
+def cluster(df):
+
+    dates, categories, data = df_to_np_date_price(df, {PROD: ['Rice'], COUNTRY: []}, value = PRICE)
+
+    print(categories)
+    NGroups = 3
+    MaxL = 0.1
+    MinGroupSize = 1.0
+    xStd = 1.0
+
+    datagroup = clus.clustering(data, NGroups, MaxL, MinGroupSize, xStd)
+
+    # clustering, als het verschil tussen de het nieuwe en oude gemiddelde convergeert is is het clusteren klaar.
+    i = 0
+    while np.max(np.sqrt(np.nansum((datagroup.GroupAvg - datagroup.NewGroupAvg)**2, axis=1))) > 0.01: 
+        datagroup.Clustering()
+        i += 1
+        if i > 20:
+            break
+        print(datagroup.data[:,-1])
+        # if Option in [1,3]:
+        #     ClusterUndefined() #calculating standaard deviation and storing points outside the std in a new cluster plus removing clusters smaller then the image devided by the number of custer times ten
+        # ClusterCheck()
+        # if Option in [2,3]:
+        #     ClusterCompare() #Checking if clusters are the same and should be combined
+
+    dic = {}
+    for cat, group in zip(categories, datagroup.data[:,-1]):
+        if group in dic:
+            dic[group].append(cat)
+        else:
+            dic[group] = [cat]
+    print(dic)
+
+    df2 = df
+    plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
+    for prod, df_tmp in df2.groupby([PROD, COUNTRY]):
+        if prod[0] in ['Rice']:
+            values = df_tmp[PRICE].tolist()
+            D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in df_tmp[DATE].tolist()]
+            plt.plot(D, values, label=prod)
+    
+    for i in range(NGroups):
+        D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
+        plt.plot(D, datagroup.NewGroupAvg[i, :], label=i)     
+
+    plt.rcParams['legend.fontsize'] = 11
+    plt.legend(fancybox=True,loc="best",framealpha=0.8)
+    plt.show()
+
 if __name__ == "__main__":
-    df = pd.read_csv('WFPVAM_FoodPrices_version3_Retail.csv')
-    df = norm_gap(df)
-    save_to_csv(df, 'WFPVAM_FoodPrices_version5_Retail.csv')
-
-
+    df = pd.read_csv('WFPVAM_FoodPrices_version4_Nat_Retail.csv')
+    # df = without_non_food(df)
+    # print(df[PROD].unique())
+    # dates, categories, data = df_to_np_date_price(df, {PROD: ['Rice', 'Cheese', 'Eggs'], COUNTRY: []})
+    df = make_sortable_date(df)
+    cluster(df)
+    
 
 
     # maak de version2 dataframes
