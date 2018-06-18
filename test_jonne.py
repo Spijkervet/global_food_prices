@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from matplotlib.dates import drange
 from datetime import datetime
 import cluster as clus
+import copy
 
 COUNTRY = 'adm0_name'
 REGION = 'adm1_name'
@@ -464,21 +465,28 @@ def make_sortable_date(df):
     pd.set_option('mode.chained_assignment', 'warn')
     return df
 
-def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, mode = 0, Alg = 0, init_mode = 0):
+def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, mode = 0, Alg = 0, init_mode = 0, norm = False, PCA = False, dim = 10):
     """
     cluster de dataframe aan de hand van de category_dic en mode.
 
     category_dic is waar je op categoriseerd. Een lege lijst betekend alles.
     mode:
         - 0 pakt de PRICE als value
-        - 1 palt de Gradient als value
-
+        - 1 pakt de Gradient als value
+        - 2 pakt de PRICE en Gradient als value
     Alg:
         - 0 pakt de distance als clustering method
         - 1 pakt de cosine als clustering method
     init_mode:
         - 0 zorgt ervoor dat de category cluster toegewezen krijgen door de range(NGroups) te herhalen en daarna opvullen met 0. bijv 0 1 2 0 1 2 0 0
         - 1 zorgt ervoor dat de category cluster toegewezen krijgen door de eerste n categorieen cluster 0 te geven dan 1 etc. bijv. 0 0 0 1 1 1 2 2
+        - 2 zorgt ervoor dat de category random cluster toegewezen krijgen.
+    norm:
+        - False is niet genormaliseerde data
+        - True is genormaliseerde data
+    PCA:
+        - False pas PCA niet toe
+        - True pas PCA wel toe. (plotten kan dan niet meer, tenzij je niet dim gebruikt)
     """
     value = PRICE
     if mode == 1:
@@ -487,18 +495,39 @@ def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, m
     # creeer de dataset voor k-means
     dates, categories, data = df_to_np_date_price(df, category_dic, value = value)
     print(categories) #print de catogorien die worden geclusterd
-    datagroup = clus.clustering(data, NGroups)
+    print(len(categories))
+
+    if norm:
+        data = (data - np.nanmin(data, axis = 1)[:, None]) / (np.nanmax(data, axis = 1) - np.nanmin(data, axis = 1))[:, None]
+
+    if mode == 2:
+        _, _, data2 = df_to_np_date_price(df, category_dic, value = 'Gradient')
+        tmp_data = data
+
+        if norm:
+            data2 = (data2 - np.nanmin(data2, axis = 1)[:, None]) / (np.nanmax(data2, axis = 1) - np.nanmin(data2, axis = 1))[:, None]
+
+        data = np.concatenate((data, data2), axis = 1)
 
     # clustering, als het verschil tussen de het nieuwe en oude gemiddelde convergeert is is het clusteren klaar.
     i = 0
+    if PCA and norm:
+        data = clus.PCA(data, dim)
+    datagroup = clus.clustering(data, NGroups, init_mode)
     while np.max(np.sqrt(np.nansum((datagroup.GroupAvg - datagroup.NewGroupAvg)**2, axis = 1))) > 0.01 and i < 100:
         print(datagroup.data[:,-1]) #print de tussen stappen van k-means
         if Alg == 0:
             datagroup.Clustering()
-        elif Alf == 1:
+        elif Alg == 1:
             datagroup.Clustering2()
         i += 1
 
+    # maak de data weer met alleen PRICE
+    if mode == 2:
+        data = tmp_data
+
+
+    print(len(set(datagroup.data[:,-1])))
     # maak een dictionary met de cluster groepen.
     dic = {}
     for cat, group in zip(categories, datagroup.data[:,-1]):
@@ -506,30 +535,42 @@ def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, m
             dic[group].append(cat)
         else:
             dic[group] = [cat]
-    print(dic)
+
+    # print de dictionary
+    for group, catLst in dic.items():
+        print(group, len(catLst))
+        print(catLst)
 
     # plot de geselecteerde data
-    plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
-    for i, row in enumerate(data):
-        D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
-        plt.plot(D, row, label=categories[i])
-
-    # plot de cluster gemiddelde
-    for i in range(NGroups):
-        D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
-        plt.plot(D, datagroup.NewGroupAvg[i, :], label=i)
-
-    # plot
-    plt.rcParams['legend.fontsize'] = 11
-    plt.legend(fancybox=True,loc="best",framealpha=0.8)
-    plt.show()
+    # plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
+    # for i, row in enumerate(data):
+    #     # if i == 0:
+    #     #     continue
+    #     # if i > 3:
+    #     #     break
+    #     D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
+    #     plt.plot(D, row, label=categories[i])
+    #
+    # # plot de cluster gemiddelde
+    # # for i in range(NGroups):
+    # #     D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
+    # #     if mode == 2:
+    # #         plt.plot(D, datagroup.NewGroupAvg[i, :data.shape[1]], label=i)
+    # #     else:
+    # #         plt.plot(D, datagroup.NewGroupAvg[i, :], label=i)
+    #
+    # # plot
+    # plt.rcParams['legend.fontsize'] = 11
+    # plt.legend(fancybox=True,loc="best",framealpha=0.8)
+    # plt.show(True)
     return dic, data
 
 if __name__ == "__main__":
     df = pd.read_csv('WFPVAM_FoodPrices_version4_Retail.csv')
     # df = without_non_food(df)
     # print(df[PROD].unique())
-    cluster(df, NGroups = 2, category_dic = {PROD: ['Apples'], COUNTRY: [], CITY: []}, mode = 0)
+    df = without_non_food(df)
+    cluster(df, NGroups = 100, category_dic = {PROD: [], COUNTRY: [], CITY: []}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True, dim = 20)
 
 
 

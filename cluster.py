@@ -1,9 +1,11 @@
 import numpy as np
 import copy
 import warnings
+from random import shuffle
+import scipy.linalg as linalg
 
 class clustering():
-    def __init__(self, data, NGroups):
+    def __init__(self, data, NGroups, init_mode):
         self.data = data
         self.NGroups = NGroups
         self.shape = data.shape
@@ -11,10 +13,14 @@ class clustering():
         self.data_len = np.sqrt(np.nansum(self.data ** 2, axis = 1))
 
         # Geef elk categorie een random cluster groep
-        if self.shape[0] < self.NGroups:
-            groupLst = list(range(self.shape[1]))
-        else:
-            groupLst = list(range(self.NGroups)) * (self.shape[0]//self.NGroups) + [0] * (self.shape[0] % self.NGroups)
+        if init_mode == 0:
+            groupLst = (list(range(self.NGroups)) * int(np.ceil(self.shape[0] / self.NGroups)))[:self.shape[0]]
+        elif init_mode == 1:
+            groupLst = sorted(list(range(self.NGroups)) * int(np.ceil(self.shape[0] / self.NGroups)))[:self.shape[0]]
+        elif init_mode == 2:
+            groupLst = (list(range(self.NGroups)) * int(np.ceil(self.shape[0] / self.NGroups)))[:self.shape[0]]
+            shuffle(groupLst)
+
         groupLst = np.array(groupLst).reshape(self.shape[0], 1)
         self.data = np.concatenate((self.data, groupLst), axis = 1)
 
@@ -75,3 +81,17 @@ class clustering():
             DataCube[:,cluster,:] = np.stack((Cos, np.full(self.shape[0], cluster, dtype=np.float32))).T
         groupLst = np.argmax(DataCube[:, :, 0], axis = 1)
         self.data[:,-1] = groupLst
+
+def PCA(data, dim = 10):
+    """
+    past PCA op de dataset toe, missing values worden opgevuld met 0.5
+    Dit kan alleen op een genormaliseerde dataset toe worden gepast, zodat alle values binnen 0 en 1 vallen.
+    Met dim selecteer je hoeveel dimensies je wilt gebruiken, dim = 0 zijn alle dimensies.
+    """
+    data = data - np.nanmean(data, axis = 0)
+    data[np.isnan(data)] = 0
+    TransformationMatrix = np.dot(data.T, data)
+    TransformationMatrix = np.real(linalg.eig(TransformationMatrix)[1])
+    if dim:
+        TransformationMatrix = TransformationMatrix[:,:dim]
+    return np.dot(data, TransformationMatrix)
