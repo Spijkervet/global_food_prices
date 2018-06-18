@@ -437,7 +437,7 @@ def norm_gap(df, gap = 2, min_length = 6):
 
 def df_to_np_date_price(df, selectDic = {PROD : ['Millet']}, value = PRICE):
     """
-    Dit maakt van een df een numpy array waar de rows datums zijn, 
+    Dit maakt van een df een numpy array waar de rows datums zijn,
     de columns de geselecteerd column combinaties en
     de values zijn de value (PRICE/Gradient)
 
@@ -458,35 +458,48 @@ def df_to_np_date_price(df, selectDic = {PROD : ['Millet']}, value = PRICE):
 def make_sortable_date(df):
     """
     Deze functie zorgt ervoor dat de dataframe gesoteerd kan worden op date.
-    """  
+    """
     pd.set_option('mode.chained_assignment', None)
     df.loc[:, DATE] = [x if len(x) == 7 else x[:5] + '0' + x[5:] for x in df[DATE].values]
     pd.set_option('mode.chained_assignment', 'warn')
     return df
 
-def cluster(df):
+def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, mode = 0, Alg = 0, init_mode = 0):
+    """
+    cluster de dataframe aan de hand van de category_dic en mode.
 
-    dates, categories, data = df_to_np_date_price(df, {PROD: [], COUNTRY: ['Ethiopia']}, value = 'Gradient')
-    
-    print(categories)
-    NGroups = 5
-    MaxL = 0.1
-    MinGroupSize = 1.0
-    xStd = 1.0
+    category_dic is waar je op categoriseerd. Een lege lijst betekend alles.
+    mode:
+        - 0 pakt de PRICE als value
+        - 1 palt de Gradient als value
 
-    datagroup = clus.clustering(data, NGroups, MaxL, MinGroupSize, xStd)
+    Alg:
+        - 0 pakt de distance als clustering method
+        - 1 pakt de cosine als clustering method
+    init_mode:
+        - 0 zorgt ervoor dat de category cluster toegewezen krijgen door de range(NGroups) te herhalen en daarna opvullen met 0. bijv 0 1 2 0 1 2 0 0
+        - 1 zorgt ervoor dat de category cluster toegewezen krijgen door de eerste n categorieen cluster 0 te geven dan 1 etc. bijv. 0 0 0 1 1 1 2 2
+    """
+    value = PRICE
+    if mode == 1:
+        value = 'Gradient'
+
+    # creeer de dataset voor k-means
+    dates, categories, data = df_to_np_date_price(df, category_dic, value = value)
+    print(categories) #print de catogorien die worden geclusterd
+    datagroup = clus.clustering(data, NGroups)
 
     # clustering, als het verschil tussen de het nieuwe en oude gemiddelde convergeert is is het clusteren klaar.
-    while np.max(np.sqrt(np.nansum((datagroup.GroupAvg - datagroup.NewGroupAvg)**2, axis=1))) > 0.01: 
-        datagroup.Clustering()
-        print(datagroup.data[:,-1])
-        # if Option in [1,3]:
-        #     ClusterUndefined() #calculating standaard deviation and storing points outside the std in a new cluster plus removing clusters smaller then the image devided by the number of custer times ten
-        # ClusterCheck()
-        # if Option in [2,3]:
-        datagroup.ClusterCompare() #Checking if clusters are the same and should be combined
-        return
+    i = 0
+    while np.max(np.sqrt(np.nansum((datagroup.GroupAvg - datagroup.NewGroupAvg)**2, axis = 1))) > 0.01 and i < 100:
+        print(datagroup.data[:,-1]) #print de tussen stappen van k-means
+        if Alg == 0:
+            datagroup.Clustering()
+        elif Alf == 1:
+            datagroup.Clustering2()
+        i += 1
 
+    # maak een dictionary met de cluster groepen.
     dic = {}
     for cat, group in zip(categories, datagroup.data[:,-1]):
         if group in dic:
@@ -495,27 +508,29 @@ def cluster(df):
             dic[group] = [cat]
     print(dic)
 
-    plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines    
+    # plot de geselecteerde data
+    plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
     for i, row in enumerate(data):
         D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
         plt.plot(D, row, label=categories[i])
 
-    # for i in range(NGroups):
-    #     D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
-    #     plt.plot(D, datagroup.NewGroupAvg[i, :], label=i)     
+    # plot de cluster gemiddelde
+    for i in range(NGroups):
+        D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
+        plt.plot(D, datagroup.NewGroupAvg[i, :], label=i)
 
+    # plot
     plt.rcParams['legend.fontsize'] = 11
     plt.legend(fancybox=True,loc="best",framealpha=0.8)
     plt.show()
+    return dic, data
 
 if __name__ == "__main__":
     df = pd.read_csv('WFPVAM_FoodPrices_version4_Retail.csv')
     # df = without_non_food(df)
     # print(df[PROD].unique())
-    # dates, categories, data = df_to_np_date_price(df, {PROD: ['Rice', 'Cheese', 'Eggs'], COUNTRY: []})
-    df = make_sortable_date(df)
-    cluster(df)
-    
+    cluster(df, NGroups = 2, category_dic = {PROD: ['Apples'], COUNTRY: [], CITY: []}, mode = 0)
+
 
 
     # maak de version2 dataframes
