@@ -465,7 +465,7 @@ def make_sortable_date(df):
     pd.set_option('mode.chained_assignment', 'warn')
     return df
 
-def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, mode = 0, Alg = 0, init_mode = 0, norm = False, PCA = False, dim = 10):
+def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: []}, mode = 0, Alg = 0, init_mode = 0, norm = False, PCA = False, dim = 10):
     """
     cluster de dataframe aan de hand van de category_dic en mode.
 
@@ -540,27 +540,27 @@ def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, m
         print(catLst)
 
     # plot de geselecteerde data
-    plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
-    for i, row in enumerate(data):
-        # if i == 0:
-        #     continue
-        # if i > 3:
-        #     break
-        D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
-        plt.plot(D, row, label=categories[i])
-
-    # plot de cluster gemiddelde
-    # for i in range(NGroups):
+    # plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
+    # for i, row in enumerate(data):
+    #     # if i == 0:
+    #     #     continue
+    #     # if i > 3:
+    #     #     break
     #     D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
-    #     if mode == 2:
-    #         plt.plot(D, datagroup.NewGroupAvg[i, :data.shape[1]], label=i)
-    #     else:
-    #         plt.plot(D, datagroup.NewGroupAvg[i, :], label=i)
+    #     plt.plot(D, row, label=categories[i])
 
-    # plot
-    plt.rcParams['legend.fontsize'] = 11
-    plt.legend(fancybox=True,loc="best",framealpha=0.8)
-    plt.show(True)
+    # # plot de cluster gemiddelde
+    # # for i in range(NGroups):
+    # #     D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
+    # #     if mode == 2:
+    # #         plt.plot(D, datagroup.NewGroupAvg[i, :data.shape[1]], label=i)
+    # #     else:
+    # #         plt.plot(D, datagroup.NewGroupAvg[i, :], label=i)
+
+    # # plot
+    # plt.rcParams['legend.fontsize'] = 11
+    # plt.legend(fancybox=True,loc="best",framealpha=0.8)
+    # plt.show(True)
     return dic, data
 
 def selecton_date(df, low, high):
@@ -575,7 +575,7 @@ if __name__ == "__main__":
     df = pd.read_csv('WFPVAM_FoodPrices_version4_Retail.csv')
     # df = without_non_food(df)
     # print(df[PROD].unique())
-    cluster(df, NGroups = 3, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, mode = 2, Alg = 0, init_mode = 2, norm = False, PCA = False, dim = 20)
+    cluster(df, NGroups = 7, category_dic = {PROD: [], COUNTRY: ['Somalia']}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = False, dim = 20)
 
 
 
