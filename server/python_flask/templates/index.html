@@ -1,60 +1,103 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Dimensional Charting</title>
+  <meta charset="utf-8">
+  <title>WFP</title>
 
-      <link rel="stylesheet" type="text/css" href="http://dc-js.github.io/dc.js/css/dc.css"/>
-        <script type="text/javascript" src="http://dc-js.github.io/dc.js/js/d3.js"></script>
-        <script type="text/javascript" src="http://dc-js.github.io/dc.js/js/crossfilter.js"></script>
-        <script type="text/javascript" src="http://dc-js.github.io/dc.js/js/dc.js"></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="http://dc-js.github.io/dc.js/css/dc.css"/>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/app.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/map.css')}}"/>
 </head>
 
 <body>
 
-<div id="chart-ring-year"></div>
-<div id="chart-row-spenders"></div>
 
-<script type="text/javascript">
+  <div class="country-info"></div>
 
-    var yearRingChart   = dc.pieChart("#chart-ring-year"),
-        spenderRowChart = dc.rowChart("#chart-row-spenders");
+  <main class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <h1 class="site-title">World Food Security</h1>
+      </div>
+      <div class="col-md-1 offset-md-1">
+        <img class="site-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Emblem_of_the_United_Nations.svg/240px-Emblem_of_the_United_Nations.svg.png"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div id="years" class="row col-12">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <div class="country-container">
+          <div class="country-title">Countries</div>
+          <div id="country_select"> </div>
+        </div>
+      </div>
+    </div>
 
-    var data1 = [
-        {Name: 'Ben', Spent: 330, Year: 2014, 'total':1},
-        {Name: 'Aziz', Spent: 1350, Year: 2012, 'total':2},
-        {Name: 'Vijay', Spent: 440, Year: 2014, 'total':2},
-        {Name: 'Jarrod', Spent: 555, Year: 2015, 'total':1},
+    <div class="row">
+      <div class="col-12">
+        <div id="map-container"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div id="test" class="data-panel data-table" style="max-height: 15vh; overflow: scroll;"></div>
+      </div>
+      <div class="col-6">
+        <div id="test_2" class="data-panel"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div id="test_3" class="data-panel"></div>
+      </div>
+    </div>
+    <footer class="row">
+      <div class="col">
+        <p class="footer-text">Data provided by: WHO</p>
+      </div>
+    </footer>
+  </main>
+  <!--
+  <div class="col">
+  <div id="city_select"> </div>
+</div>
+<div class="col">
+<div id="select1"> </div>
+</div>
+<div class="col">
+<div id="pieChart"> </div>
+</div>
+<div class="col">
+</div> -->
 
-    ];
 
-    // set crossfilter with first dataset
-    var xfilter = crossfilter(data1),
-        yearDim  = xfilter.dimension(function(d) {return +d.Year;}),
-        spendDim = xfilter.dimension(function(d) {return Math.floor(d.Spent/10);}),
-        nameDim  = xfilter.dimension(function(d) {return d.Name;}),
 
-        spendPerYear = yearDim.group().reduceSum(function(d) {return +d.Spent;}),
-        spendPerName = nameDim.group().reduceSum(function(d) {return +d.Spent;});
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    function render_plots(){
-        yearRingChart
-            .width(200).height(200)
-            .dimension(yearDim)
-            .group(spendPerYear)
-            .innerRadius(50);
 
-        spenderRowChart
-            .width(250).height(200)
-            .dimension(nameDim)
-            .group(spendPerName)
-            .elasticX(true);
+<script type="text/javascript" src="http://dc-js.github.io/dc.js/js/d3.js"></script>
+<script type="text/javascript" src="http://dc-js.github.io/dc.js/js/crossfilter.js"></script>
+<script type="text/javascript" src="http://dc-js.github.io/dc.js/js/dc.js"></script>
 
-        dc.renderAll();
-    }
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+<script src="{{ url_for('static', filename='datamaps.world.min.js') }}"></script>
 
-    render_plots();
+<script src="{{ url_for('static', filename='js/map.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='js/jc.js') }}" type="text/javascript"></script>
 
-</script>
+
 </body>
 </html>

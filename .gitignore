@@ -1,3 +1,5 @@
 .*
 !/.gitignore
 __*
+*.csv
+Morticd10*

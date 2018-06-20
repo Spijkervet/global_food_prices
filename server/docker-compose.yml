@@ -8,6 +8,8 @@ services:
     build: python_flask
     ports:
     - "5000:5000"
+    command: ["/wait_for_it.sh", "mysql:3306", "--", "python3", "/app/app.py"]
+    # command: sh -c '/app/wait_for db:5432 -- npm start'
   mysql:
     container_name: mysql
     restart: always
