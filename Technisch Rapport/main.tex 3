@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Technisch Verslag DAV}
+\author{Jardenna, Janne, Jonne, Julius }
+\date{June 2018}
+
+\begin{document}
+
+\maketitle
+
+\section*{Inleiding}
+- Brede context en maatschappelijke relevantie\\
+- Eerdere bevindingen (leidend tot de onderzoeksvraag)\\
+- Definities van belangrijke concepten \\
+- Onderzoeksvraag\\
+- hypothese \\
+- verwachtingen \\
+
+
+\section*{Methode}
+
+Je beschrijft hoe het onderzoek is uitgevoerd. Dit moet gedetailleerd genoeg zijn om de resultaten juist te kunnen interpreteren en het onderzoek te kunnen repliceren.  \newline
+
+- Beschrijf het algoritme dat je gebruikt. Neem niet de echte code op, maar illustreer waar nodig met behulp van pseudo-code. Hierin beschrijf je stap voor stap wat de code doet op een abstract niveau, zonder dat je de taal zelf gebruikt.\newline
+
+- Beschrijf hier de specifieke handelingen van het onderzoek die zijn gedaan in een logische volgorde. Dit hoeft niet per se de chronologische volgorde te zijn waarin je het onderzoek hebt uitgevoerd. \newline
+
+- Wanneer je data hebt verzameld, beschrijf de methoden die zijn gebruikt om de data vervolgens te analyseren. Vermeld, indien van toepassing, hoe de data zijn samengevat (gemiddelden, percentages, mediaan), welke maten van variabiliteit zijn gebruikt (zoals standaardafwijking, standaardfout), hoe de data zijn genormaliseerd (bijvoorbeeld log-transformatie), welke statistische toets(en) zijn toegepast (bijvoorbeeld chikwadraattoets voor passendheid), welke significantiegrens aangehouden wordt (bijvoorbeeld p < 0,05), en alle andere numerieke of grafische methoden die zijn toegepast om de data te analyseren. Vermeld daarnaast wat je met elkaar vergelijkt. \newline
+
+
+
+\section*{Resultaten}
+
+Je beschrijft de belangrijkste bevindingen van het onderzoek. Zorgt dat je nog niet gaat interpreteren of verklaren, daar is de discussie voor. Vermeld ook resultaten die je niet verwacht had, maar die wel relevant voor je onderzoeksvraag zijn. Je geeft hierbij zowel de meetresultaten (bijvoorbeeld een gemiddelde en standaardafwijking) als toetsingsresultaten (bijvoorbeeld de t- en p-waarde). \newline
+
+In deze sectie is het vaak zinnig om gebruik te maken van figuren en tabellen om je resultaten visueel weer te geven. Let er dan op dat zowel je lopende tekst als je figuren en tabellen zelfstandig leesbaar zijn met een duidelijk bijschrift, en dat je in de lopende tekst minimaal één keer verwijst naar ieder figuur en iedere tabel. Een figuur of tabel dient zo dicht mogelijk bij de tekst te staan waar die het eerst genoemd wordt.\newline
+
+\section*{Discussie}
+
+\section*{Conclussie?}
+
+\section*{Referenties}
+
+
+\end{document}

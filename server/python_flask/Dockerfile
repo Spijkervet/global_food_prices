@@ -6,5 +6,5 @@ RUN apt-get install -y python3-pip python3-dev build-essential libmysqlclient-de
 ADD . /app
 WORKDIR /app
 RUN pip3 install -r requirements.txt
-ENTRYPOINT ["python3"]
-CMD ["app.py"]
+COPY wait_for_it.sh /wait_for_it.sh
+RUN chmod +x /wait_for_it.sh
