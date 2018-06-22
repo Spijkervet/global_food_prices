@@ -563,7 +563,7 @@ def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: []}, mode = 0, A
     # plt.show(True)
     return dic, data
 
-def selecton_date(df, low, high):
+def selection_date(df, low, high):
     """
     select rows based on dates between low and high.
     low and high must be 7 char long. bijv. 2012-01 and not 2012-1.
@@ -571,12 +571,32 @@ def selecton_date(df, low, high):
     df = make_sortable_date(df)
     return df.loc[(df[DATE] >= low) & (df[DATE] <= high)]
 
+def linear_regression(df):
+    dates, categories, data = df_to_np_date_price(df, selectDic = {PROD: ['Pasta','Sugar'], COUNTRY: ['Ethiopia']}, value = PRICE)
+    data = data.T[~np.isnan(data.T).any(axis = 1)].T
+    print(categories)
+    print(data)
+    A = np.vstack([data[0], np.ones(len(data[0]))]).T
+    [a, b], [r] = np.linalg.lstsq(A, data[1])[:2]
+    print(a,b,r)
+    X = np.arange(0.9, 1.4, 0.1)
+    Y = np.array(X) * a + b
+
+    plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
+    plt.plot(data[0], data[1], label='1')
+    plt.plot(X, Y, label = '2')
+
+    # plot
+    plt.rcParams['legend.fontsize'] = 11
+    plt.legend(fancybox=True,loc="best",framealpha=0.8)
+    plt.show(True)
+
 if __name__ == "__main__":
     df = pd.read_csv('WFPVAM_FoodPrices_version4_Retail.csv')
     # df = without_non_food(df)
     # print(df[PROD].unique())
-    cluster(df, NGroups = 7, category_dic = {PROD: [], COUNTRY: ['Somalia']}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = False, dim = 20)
-
+    cluster(df, NGroups = 3, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True, dim = 20)
+    linear_regression(df)
 
 
 
