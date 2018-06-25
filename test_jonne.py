@@ -582,7 +582,7 @@ def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: []}, mode = 0, A
     # plt.show(True)
     return dic, data
 
-def selection_date(df, low, high):
+def selecton_date(df, low, high):
     """
     select rows based on dates between low and high.
     low and high must be 7 char long. bijv. 2012-01 and not 2012-1.
@@ -590,6 +590,7 @@ def selection_date(df, low, high):
     df = make_sortable_date(df)
     return df.loc[(df[DATE] >= low) & (df[DATE] <= high)]
 
+<<<<<<< HEAD
 def linear_regression(df, data):
     """
     Van
@@ -635,15 +636,21 @@ def linear_regression(df, data):
 
 from scipy import stats
 
+=======
+>>>>>>> b30d48e5a984d8483ff79202613bfa69ce599006
 if __name__ == "__main__":
     df = pd.read_csv('WFPVAM_FoodPrices_version4_Retail.csv')
     # df = without_non_food(df)
     # print(df[PROD].unique())
+<<<<<<< HEAD
     # cluster(df, NGroups = 3, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True, dim = 20)
     # print(df.loc[df[COUNTRY] == 'Ethiopia'].eval(PROD).unique())
     dates, categories, data = df_to_np_date_price(df, selectDic = {PROD: [], COUNTRY: ['Ethiopia']}, value = PRICE)
     # print(categories)
     print(linear_regression(df, data))
+=======
+    cluster(df, NGroups = 7, category_dic = {PROD: [], COUNTRY: ['Somalia']}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = False, dim = 20)
+>>>>>>> b30d48e5a984d8483ff79202613bfa69ce599006
 
 
 

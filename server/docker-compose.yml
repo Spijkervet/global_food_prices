@@ -5,6 +5,7 @@ services:
     restart: always
     volumes:
     - ./python_flask/:/app
+    - ../:/global_food_prices
     build: python_flask
     ports:
     - "5000:5000"
