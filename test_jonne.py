@@ -438,7 +438,6 @@ def norm_gap(df, gap = 2, min_length = 6):
     print(time.clock() - t)
     return df.drop([YEAR, MONTH, 'GAP', 'Price_diff', 'Year', 'Month'], axis = 1)
 
-
 def df_to_np_date_price(df, selectDic = {PROD : ['Millet']}, value = PRICE):
     """
     Dit maakt van een df een numpy array waar de rows datums zijn,
@@ -458,6 +457,26 @@ def df_to_np_date_price(df, selectDic = {PROD : ['Millet']}, value = PRICE):
     make_sortable_date(df)
     df = df.pivot_table(index = DATE, columns = 'Info', values = value, aggfunc = np.mean)
     return df.index.values, list(df), df.values.T
+
+def df_pivot(df, selectDic = {PROD : ['Millet']}, value = PRICE):
+    """
+    Dit maakt van een df een numpy array waar de rows datums zijn,
+    de columns de geselecteerd column combinaties en
+    de values zijn de value (PRICE/Gradient)
+
+    De functie returned de row names, column names en een numpy array met de values.
+    """
+    condition = (df[PROD] != 'tmp')
+    df['Info'] = ""
+    for col, selection in selectDic.items():
+        if selection:
+            condition &= (df[col].isin(selection))
+        df['Info'] +=  df[col] + ' - '
+
+    df = df.loc[condition]
+    make_sortable_date(df)
+    df = df.pivot_table(index = DATE, columns = 'Info', values = value, aggfunc = np.mean)
+    return df
 
 def make_sortable_date(df):
     """
@@ -574,6 +593,54 @@ def selecton_date(df, low, high):
     df = make_sortable_date(df)
     return df.loc[(df[DATE] >= low) & (df[DATE] <= high)]
 
+<<<<<<< HEAD
+def linear_regression(df, data):
+    """
+    Van
+    """
+    # df = df_pivot(df, selectDic = {PROD: [], COUNTRY: ['Ethiopia']}, value = PRICE)
+    # print(df)
+    # print(df.corr())
+
+    data = data.T[~np.isnan(data.T).any(axis = 1)].T
+    print((np.corrcoef(data)*100).astype(int))
+
+
+
+
+    # data = data[:,(data[0].argsort())]
+    # # data.sort()
+    # print(data)
+    # A = np.vstack([data[0], np.ones(len(data[0]))]).T
+    # a, r = np.linalg.lstsq(A, data[1:].T)[:2]
+    # # print(a[:,0], a[:,1], r[0], r[1])
+    # print(a[:,0], a[:,1], a[:,2], r[0], r[1], r[2])
+    # X = np.arange(0, 1.5, 0.1)
+    # Y1 = np.array(X) * a[0,0] + a[1,0]
+    # Y2 = np.array(X) * a[0,1] + a[1,1]
+    # Y3 = np.array(X) * a[0,2] + a[1,2]
+    #
+    # plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
+    # plt.plot(data[0], data[1], label='1')
+    # plt.plot(data[0], data[2], label='1.1')
+    # plt.plot(data[0], data[3], label='1.2')
+    # plt.plot(X, Y1, label = '2')
+    # plt.plot(X, Y2, label = '2.1')
+    # plt.plot(X, Y3, label = '2.2')
+    #
+    # # plot
+    # plt.rcParams['legend.fontsize'] = 11
+    # plt.legend(fancybox=True,loc="best",framealpha=0.8)
+    # plt.show(True)
+    #
+    #
+    #
+    # return a, b, r
+
+from scipy import stats
+
+=======
+>>>>>>> b30d48e5a984d8483ff79202613bfa69ce599006
 if __name__ == "__main__":
     df = pd.read_csv('WFPVAM_FoodPrices_version4_Retail.csv')
 
@@ -586,7 +653,15 @@ if __name__ == "__main__":
 
     # df = without_non_food(df)
     # print(df[PROD].unique())
+<<<<<<< HEAD
+    # cluster(df, NGroups = 3, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True, dim = 20)
+    # print(df.loc[df[COUNTRY] == 'Ethiopia'].eval(PROD).unique())
+    dates, categories, data = df_to_np_date_price(df, selectDic = {PROD: [], COUNTRY: ['Ethiopia']}, value = PRICE)
+    # print(categories)
+    print(linear_regression(df, data))
+=======
     cluster(df, NGroups = 7, category_dic = {PROD: [], COUNTRY: ['Somalia']}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = False, dim = 20)
+>>>>>>> b30d48e5a984d8483ff79202613bfa69ce599006
 
 
 
