@@ -15,7 +15,10 @@ if who_countries is None:
     who_countries = pd.merge(who_all, countries, how='left', left_on='Country', right_on='country')
     who.save_df(who_countries, 'who_all_countries.csv')
 
-print(type(who_countries['country']))
 
-afg = who_countries.loc[who_countries['country'] == 'Afghanistan']
-print(afg.head(50))
+from sqlalchemy import create_engine
+import pandas as pd
+
+engine = create_engine('mysql://root:root@mysql:3306/uva', echo=True)
+
+who_countries.to_sql('who', engine, index=False)

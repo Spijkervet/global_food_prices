@@ -84,6 +84,30 @@ var country_ndx = crossfilter();
 var selected_years = new Set();
 var year_buttons = {};
 
+var year_array = Array();
+
+function deSelectAllYears() {
+
+  for (var i = 0; i < year_array.length; i++) {
+    selected_years.delete(year_array[i]);
+    year_buttons[year_array[i]].removeClass('active');
+  }
+
+  var countries = country_select.filters();
+}
+
+function selectAllYears() {
+
+  for (var i = 0; i < year_array.length; i++) {
+    selected_years.add(year_array[i]);
+    year_buttons[year_array[i]].addClass('active');
+  }
+
+  var countries = country_select.filters();
+  get_country_data(countries);
+  // cluster_countries(countries);
+}
+
 function selectYear() {
   var year = $(this).html();
   // dimensions.yearDimension.filter(year);
@@ -97,10 +121,10 @@ function selectYear() {
     selected_years.delete(year);
   }
 
-  var countries = country_select.filters()
+  var countries = country_select.filters();
   get_country_data(countries);
 
-  cluster_countries(countries);
+  // cluster_countries(countries);
 
 }
 
@@ -121,6 +145,16 @@ $.getJSON("/years", function(data) {
     year_buttons[year] = el;
     year_el.append(el);
   }
+
+  var el = $('<button type="button" class="year-btn">' + 'All' + '</button>');
+  el.click(selectAllYears);
+  year_buttons['all'] = el;
+  year_el.append(el);
+
+  var el = $('<button type="button" class="year-btn">' + 'None' + '</button>');
+  el.click(deSelectAllYears);
+  year_buttons['none'] = el;
+  year_el.append(el);
 });
 
 
@@ -151,9 +185,9 @@ $("#country_select").change(function() {
   setMapColor(defaultMapColor);
   select_countries(countries);
 
-  if (selected_years.size) {
-    cluster_countries(countries);
-  }
+  // if (selected_years.size) {
+  //   cluster_countries(countries);
+  // }
 })
 
 function select_countries(countries) {
@@ -185,29 +219,38 @@ $("#select1").change(function() {
 
 function get_country_data(countries) {
 
+
   $('.year-btn').removeClass('accessible');
 
   var url = create_url("/country?", countries);
 
-  // test_graph(url);
-
-
   d3.json(url, function(data) {
 
     if (selected_years.size) {
+
+      console.log("GETTING COUNTRY DATA", url, data);
+
       var chart = dc.dataTable("#test");
       var lineChart = dc.compositeChart("#test_2");
       var barChart = dc.barChart("#test_3");
 
       var country_data = data['data'];
+
+      var unique_products = [];
+      country_data.filter(function(item){
+        var i = unique_products.indexOf(item.cm_name);
+        if(i <= -1) {
+          unique_products.push(item.cm_name);
+        }
+        return null;
+      });
+
       var ndx = crossfilter(country_data);
       let dimensionCategory = ndx.dimension(item => item.adm0_name);
 
       for (var i = 0; i < country_data.length; i++) {
         setMapColor(selectedMapColor, country_data[i].adm0_name);
       }
-
-      console.log(country_data);
 
       chart.width(768)
       .height(480)
@@ -241,7 +284,6 @@ function get_country_data(countries) {
       ]);
 
       let timeCategory = ndx.dimension(item => item.datetime);
-      // let productCategory = ndx.dimension(item => item.cm_name);
 
       var productGroups = new Set;
       for (var i = 0; i < country_data.length; i++) {
@@ -252,23 +294,13 @@ function get_country_data(countries) {
       productGroups = Array.from(productGroups);
 
       var productGroup = timeCategory.group().reduceSum(dc.pluck('cm_name'));
-      // tmpProductGroup = timeCategory.group().reduceSum(function (d, g) {
-      //   if (d.cm_name == productGroups[0]) {
-      //     return d.mp_price;
-      //   }
-      //   return 0;
-      // });
-
-      // var subLineChart = dc.lineChart(lineChart).group(productGroup, productGroups[0]).colors(['#248221']);
-      // lines.push(subLineChart);
-
-      //Create array of objects with finishing positions for both teams by year
 
 
       var names = country_data.map(function(row) { return row.cm_name; });
       names = names.filter(function(item, pos, self) {
         return self.indexOf(item) == pos;
       })
+
 
       var g_colors = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
       var positions = timeCategory.group().reduce(
@@ -284,6 +316,8 @@ function get_country_data(countries) {
           return {};
         });
 
+
+        console.log("COMPOSING FOR", url);
         lineChart.height(400)
         .legend(dc.legend().x(60).y(10).itemHeight(13).gap(2))
         .transitionDuration(500)
@@ -307,7 +341,6 @@ function get_country_data(countries) {
             .xUnits(d3.time.months)
             .renderHorizontalGridLines(true)
             .valueAccessor(function(kv) {
-              console.log("KV", name);
               return kv.value[name];
             });
           })
@@ -341,15 +374,15 @@ function get_country_data(countries) {
         .barPadding(0.1)
         .outerPadding(0.05)
         .group(productSum);
-
-        dc.renderAll();
-
       }
       for (var i = 0; i < data['years'].length; i++) {
         var year = data['years'][i];
         year_buttons[year].addClass('accessible');
         year_buttons[year].prop('disabled', false);
+        year_array.push(year);
       }
+
+      dc.renderAll();
     });
   }
 
