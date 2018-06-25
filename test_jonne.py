@@ -646,12 +646,16 @@ if __name__ == "__main__":
     df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
     df = df_regions.copy()
     # df = without_non_food(df)
-    for name, group in df.groupby('sub-region'):
-        print(name, group[COUNTRY].unique())
+    # print(df[df['sub-region'].isnull()][COUNTRY].unique())
+    # for name, group in df.groupby('sub-region'):
+    #     print(name, group[COUNTRY].unique())
     # print(df['sub-region'].unique())
-    # dic = {PROD: [], COUNTRY: [], 'sub-region': ['South-eastern Asia']}
-    # v = PRICE
-    # cluster(df, NGroups = 8, category_dic = dic, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True, dim = 20)
+    # tmp = df.loc[df['sub-region'] == 'Sub-Saharan Africa']
+    # for g, n in tmp.groupby(PROD):
+    #     print(g, len(n[COUNTRY].unique()))
+    dic = {PROD: ['Sorghum'], COUNTRY: [], 'sub-region': ['Sub-Saharan Africa']}
+    v = PRICE
+    cluster(df, NGroups = 3, category_dic = dic, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True, dim = 20)
     # dates, categories, data = df_to_np_date_price(df, selectDic = dic, value = v)
     # # print(categories)
     # linear_regression(df, data)
