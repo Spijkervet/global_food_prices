@@ -1,5 +1,13 @@
+import sys
+
+sys.path.append("/global_food_prices")
+
+import test_jonne as tj
+
+
 import json
 import pandas as pd
+from datetime import datetime
 
 from flask import Flask, request, jsonify, render_template
 from sqlalchemy import create_engine
@@ -21,7 +29,7 @@ Base = declarative_base()
 class WFP(Base):
     __tablename__ = 'wfp_v5_retail'
     id = Column(Integer, primary_key=True)
-    Iadm0_name = Column(String)
+    adm0_name = Column(String)
     cm_name = Column(String)
     mp_price = Column(Float)
 
@@ -66,7 +74,7 @@ def get_all_products():
 
 def get_all_countries():
     l = []
-    countries = set(df['Iadm0_name'])
+    countries = set(df[tj.COUNTRY])
     for c in countries:
         d = {}
         d['country'] = c
@@ -75,8 +83,8 @@ def get_all_countries():
 
 def get_prod_avg(prod_name):
     d = []
-    for country, avg in session.query(WFP.Iadm0_name, func.avg(WFP.mp_price)).\
-        filter_by(cm_name=prod_name).group_by(WFP.Iadm0_name):
+    for country, avg in session.query(WFP.adm0_name, func.avg(WFP.mp_price)).\
+        filter_by(cm_name=prod_name).group_by(WFP.adm0_name):
         location = geolocator.geocode(country)
         add_d = {}
         add_d['country'] = country
@@ -91,18 +99,35 @@ def get_country_data(countries, years, average=True):
 
     js = {}
     year_d = {}
-    send_df = df.loc[df['Iadm0_name'].isin(countries)]
+    send_df = df.loc[df[tj.COUNTRY].isin(countries)]
     years_set = set(send_df['datetime'].dt.year)
     year_d['years'] = [y for y in years_set]
 
     if years:
         send_df = send_df[send_df['datetime'].dt.year.isin(years)]
         if average:
-            send_df = send_df.groupby(['Iadm0_name', 'cm_name', 'datetime']).mean()['mp_price'].reset_index()
+            send_df = send_df.groupby([tj.COUNTRY, 'cm_name', 'datetime']).mean()['mp_price'].reset_index()
             js = json.loads(send_df.to_json(orient='records'))
             year_d['data'] = js
     # js.append(year_d)
     return year_d
+
+def get_cluster_data(countries, years):
+    year_min = str(min(years))
+    year_max = str(max(years))
+
+    date_selection = tj.selection_date(df, year_min + '-01', year_max + '-12')
+
+    dic, data = tj.cluster(date_selection, NGroups = 4, category_dic = {tj.PROD: [], tj.COUNTRY: countries}, \
+        mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True, dim = 20)
+
+    l = []
+    for key, value in dic.items():
+        d = {}
+        d['cluster_group'] = value
+        l.append(d)
+    return l
+
 
 products = {}
 
@@ -138,8 +163,15 @@ class CountryData(Resource):
         years = args['year']
 
         country_data = get_country_data(countries, years)
-        # countries = get_all_countries()
         return jsonify(country_data)
+
+class Cluster(Resource):
+    def get(self):
+        args = parser.parse_args()
+        countries = args['country']
+        years = args['year']
+        cluster_data = get_cluster_data(countries, years)
+        return jsonify(cluster_data)
 
 parser = reqparse.RequestParser()
 parser.add_argument('country', type=str, action='append')
@@ -151,6 +183,7 @@ api.add_resource(Years, '/years')
 api.add_resource(Products, '/all_products')
 api.add_resource(Countries, '/all_countries')
 api.add_resource(CountryData, '/country')
+api.add_resource(Cluster, '/cluster')
 
 
 @app.route("/")

@@ -7,3 +7,4 @@ pandas
 mysqlclient
 geopy
 flask-cors
+scipy
