@@ -9,6 +9,8 @@ from datetime import datetime
 import cluster as clus
 import copy
 
+REGIONAL_FILE_NAME = "regions.csv"
+
 COUNTRY = 'adm0_name'
 REGION = 'adm1_name'
 CITY = 'mkt_name'
@@ -78,6 +80,7 @@ UNIT_PROD_PRICE_CONVERTER = {
     "Oil (soybean)": ('KG', 'L', 0.921), "Oil (vegetable)": ('KG', 'L', 0.921),
     "Eggs": ('KG', 'Unit', 16.66667)
     }
+
 
 def unique_per_cat(df):
     """
@@ -573,6 +576,14 @@ def selecton_date(df, low, high):
 
 if __name__ == "__main__":
     df = pd.read_csv('WFPVAM_FoodPrices_version4_Retail.csv')
+
+
+    region_df = pd.read_csv(REGIONAL_FILE_NAME)
+    region_df.rename(columns={'name': 'adm0_name'}, inplace=True)
+    new_regions = region_df.loc[:, ['adm0_name', 'sub-region']]
+    df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
+    df = df_regions.copy()
+
     # df = without_non_food(df)
     # print(df[PROD].unique())
     cluster(df, NGroups = 7, category_dic = {PROD: [], COUNTRY: ['Somalia']}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = False, dim = 20)
