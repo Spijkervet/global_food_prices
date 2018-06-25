@@ -637,7 +637,7 @@ def linear_regression(df, data):
     # return a, b, r
 
 if __name__ == "__main__":
-    df = pd.read_csv('WFPVAM_FoodPrices_version4_Retail.csv')
+    df = pd.read_csv('WFPVAM_FoodPrices_version5_Retail.csv')
 
 
     region_df = pd.read_csv(REGIONAL_FILE_NAME)
@@ -645,15 +645,16 @@ if __name__ == "__main__":
     new_regions = region_df.loc[:, ['adm0_name', 'sub-region']]
     df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
     df = df_regions.copy()
-
     # df = without_non_food(df)
-    # print(df[PROD].unique())
-    dic = {PROD: [], COUNTRY: ['Ethiopia']}
-    v = PRICE
-    cluster(df, NGroups = 3, category_dic = dic, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True, dim = 20)
-    dates, categories, data = df_to_np_date_price(df, selectDic = dic, value = v)
-    # print(categories)
-    print(linear_regression(df, data))
+    for name, group in df.groupby('sub-region'):
+        print(name, group[COUNTRY].unique())
+    # print(df['sub-region'].unique())
+    # dic = {PROD: [], COUNTRY: [], 'sub-region': ['South-eastern Asia']}
+    # v = PRICE
+    # cluster(df, NGroups = 8, category_dic = dic, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True, dim = 20)
+    # dates, categories, data = df_to_np_date_price(df, selectDic = dic, value = v)
+    # # print(categories)
+    # linear_regression(df, data)
 
 
 
