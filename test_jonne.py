@@ -268,8 +268,24 @@ def norm_curr(df):
 
     # Only join things from the main dataframe (WFPVAM_FoodPrices_version1.csv with a LEFT join)
     df = pd.DataFrame.merge(df, curr_df, on=[CURR, DATE], how='left')
+    # df[PRICE] = df[PRICE].multiply(df['rate'], axis = 'index')
+    return df.drop([CURR], axis = 1)
+
+def norm_curr_copy(df):
+    """
+    normalize data prijzen door alles naar USD te zetten.
+    Data waar geen currency rate van is wordt verwijderd.
+    CURR kolom wordt ook verwijderd.
+    source: https://www.oanda.com/fx-for-business/historical-rates
+    """
+    df = remove_unvalid_curr_dates(df)
+    curr_df = pd.read_csv('all_currencies.csv')
+    curr_df.columns = [CURR, DATE, 'rate']
+
+    # Only join things from the main dataframe (WFPVAM_FoodPrices_version1.csv with a LEFT join)
+    df = pd.DataFrame.merge(df, curr_df, on=[CURR, DATE], how='left')
     df[PRICE] = df[PRICE].multiply(df['rate'], axis = 'index')
-    return df.drop(['rate', CURR], axis = 1)
+    return df.drop([CURR, 'rate'], axis = 1)
 
 def norm_unit(df):
     """
@@ -339,6 +355,27 @@ def split_sellers(df):
     return [(seller, df.loc[df['pt_name'] == seller].drop([SELLER], axis = 1)) for seller in df.eval(SELLER).unique()]
 
 def norm_GDP(df):
+    """
+    normaliseer de dataframe op basis van GDP.
+    Alle data waar geen GDP voor is wordt verwijderd.
+    source: http://www.imf.org/external/datamapper/PPPPC@WEO/OEMDC/ADVEC/WEOWORLD
+    """
+
+    GDP_df = pd.read_csv('GDP_per_capita.csv')
+    GDP_df = GDP_df.melt(id_vars=['country'])
+    GDP_df.columns = [COUNTRY, YEAR, 'GDP']
+
+    df_date = df[DATE].str.split('-', expand = True).rename(columns = {0: YEAR, 1: MONTH})
+
+    df = pd.DataFrame.merge(df, df_date, how='left', left_index=True, right_index=True)
+    df = pd.DataFrame.merge(df, GDP_df, on=[COUNTRY, YEAR], how='left')
+
+    df['GDP'] = df['GDP'].astype(float)
+    # df[PRICE] = df['GDP'].divide(df[PRICE], axis = 'index')
+    df.dropna(inplace = True)
+    return df
+
+def norm_GDP_copy(df):
     """
     normaliseer de dataframe op basis van GDP.
     Alle data waar geen GDP voor is wordt verwijderd.
@@ -450,7 +487,9 @@ def df_to_np_date_price(df, selectDic = {PROD : ['Millet']}, value = PRICE):
     df['Info'] = ""
     for col, selection in selectDic.items():
         if selection:
-            condition &= (df[col].isin(selection))
+            # condition &= (df[col].isin(selection))
+            for s in selection:
+                condition &= (df[col].str.contains(s) == True)
         df['Info'] +=  df[col] + ' - '
 
     df = df.loc[condition]
@@ -487,7 +526,7 @@ def make_sortable_date(df):
     pd.set_option('mode.chained_assignment', 'warn')
     return df
 
-def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: []}, mode = 0, Alg = 0, init_mode = 0, norm = False, PCA = False, dim = 10):
+def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, mode = 0, Alg = 0, init_mode = 0, norm = False, PCA = False, dim = 10):
     """
     cluster de dataframe aan de hand van de category_dic en mode.
 
@@ -557,11 +596,14 @@ def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: []}, mode = 0, A
             dic[group] = [cat]
 
     # print de dictionary
+    i = 0
     for group, catLst in dic.items():
         print(group, len(catLst))
         print(catLst)
+        print(np.nanmean(datagroup.NewGroupAvg[i]))
+        i += 1
 
-    # plot de geselecteerde data
+    # # plot de geselecteerde data
     # plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
     # for i, row in enumerate(data):
     #     # if i == 0:
@@ -570,15 +612,15 @@ def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: []}, mode = 0, A
     #     #     break
     #     D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
     #     plt.plot(D, row, label=categories[i])
-
-    # # plot de cluster gemiddelde
+    #
+    # # # plot de cluster gemiddelde
     # # for i in range(NGroups):
     # #     D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
     # #     if mode == 2:
     # #         plt.plot(D, datagroup.NewGroupAvg[i, :data.shape[1]], label=i)
     # #     else:
     # #         plt.plot(D, datagroup.NewGroupAvg[i, :], label=i)
-
+    #
     # # plot
     # plt.rcParams['legend.fontsize'] = 11
     # plt.legend(fancybox=True,loc="best",framealpha=0.8)
@@ -637,14 +679,138 @@ def linear_regression(df, data):
     # return a, b, r
 
 if __name__ == "__main__":
-    df = pd.read_csv('WFPVAM_FoodPrices_version5_Retail.csv')
-
+    df = pd.read_csv('WFPVAM_FoodPrices_version4_Retail.csv')
 
     region_df = pd.read_csv(REGIONAL_FILE_NAME)
     region_df.rename(columns={'name': 'adm0_name'}, inplace=True)
     new_regions = region_df.loc[:, ['adm0_name', 'sub-region']]
     df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
     df = df_regions.copy()
+
+    cluster(df, NGroups = 5, category_dic = {COUNTRY: ['Ukraine'], PROD : []}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True)
+
+
+
+
+    # version 4 vs version 5
+    # df1 = pd.read_csv('WFPVAM_FoodPrices_version4_Retail.csv')
+    # df2 = pd.read_csv('WFPVAM_FoodPrices_version5_Retail.csv')
+    #
+    # cluster(df1, NGroups = 2, category_dic = {PROD: ['Wheat'], COUNTRY: ['India', 'Pakistan', 'Nepal', 'Afghanistan']}, mode = 2, Alg = 0, init_mode = 2, norm = False, PCA = True)
+    # cluster(df2, NGroups = 2, category_dic = {PROD: ['Wheat'], COUNTRY: ['India', 'Pakistan', 'Nepal', 'Afghanistan']}, mode = 2, Alg = 0, init_mode = 2, norm = False, PCA = True)
+    # cluster(df1, NGroups = 4, category_dic = {PROD: ['Wheat'], COUNTRY: []}, mode = 2, Alg = 0, init_mode = 2, norm = False, PCA = True)
+    # cluster(df2, NGroups = 4, category_dic = {PROD: ['Wheat'], COUNTRY: []}, mode = 2, Alg = 0, init_mode = 2, norm = False, PCA = True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # GDP relation with price
+    # df = pd.read_csv('WFPVAM_FoodPrices_version4_Retail.csv')
+    # df = pd.read_csv('WFPVAM_FoodPrices_version4_Wholesale.csv')
+    # df = pd.read_csv('WFPVAM_FoodPrices_version4_Farm Gate.csv')
+    # df = pd.read_csv('WFPVAM_FoodPrices_version4_Producer.csv')
+    # df = pd.read_csv('WFPVAM_FoodPrices_version4_Nat_Wholesale.csv')
+    # df = pd.read_csv('WFPVAM_FoodPrices_version4_Nat_Retail.csv')
+
+    # try:
+    #     df.drop(['Gradient'], axis = 1, inplace = True)
+    # except:
+    #     pass
+    #
+    # df = norm_GDP(df)
+    # GDP = []
+    # GDP_high_l = []
+    # GDP_rev_l = []
+    #
+    # for a, g in df.groupby([COUNTRY, PROD, CITY]):
+    #     x = g.corr()
+    #     y = x.values
+    #     if not np.isnan(y[0,1]) and 'Fuel' in a[1]:
+    #     # if not np.isnan(y[0,1]):
+    #         GDP.append(y[1,0])
+    #         if y[1,0] > 0.5:
+    #             GDP_high_l.append(a[1])
+    #         elif y[1,0] < 0:
+    #             GDP_rev_l.append(a[1])
+    # print(np.mean(GDP), np.std(GDP))
+    # print(sorted(list(set(GDP_high_l).difference(set(GDP_rev_l)))))
+    # print(sorted(list(set(GDP_rev_l).difference(set(GDP_high_l)))))
+    # print(sorted(list(set(GDP_high_l))))
+    # print(sorted(list(set(GDP_rev_l))))
+
+
+
+
+
+
+
+
+
+
+
+    # # Currency rate versus voedsel prijzen.
+    # df = pd.read_csv('WFPVAM_FoodPrices_version1.csv')
+    # df = norm_curr(df)
+    # df.dropna(inplace = True)
+    # # print(df)
+    # curr = []
+    # low = 0
+    # high = 0
+    # rev = 0
+    # low_l = []
+    # high_l = []
+    # rev_l = []
+    # n = 0
+    # m = 0
+    # o = 0
+    # for a, g in df.groupby([COUNTRY, PROD, CITY]):
+    #     x = g.corr()
+    #     y = x.values
+    #     if not np.isnan(y[0,1]):
+    #         if
+    #             curr.append(y[1,0])
+    #             if y[0,1] < -0.5:
+    #                 high += y[0,1]
+    #                 high_l.append(a[1])
+    #                 n += 1
+    #             elif y[0,1] < 0:
+    #                 low += y[0,1]
+    #                 low_l.append(a[1])
+    #                 m += 1
+    #             else:
+    #                 rev += y[0,1]
+    #                 rev_l.append(a[1])
+    #                 o += 1
+    # print(high/n, high, n)
+    # # print(sorted(list(set(high_l).difference(set(rev_l)))))
+    # print(sorted(list(set(high_l))))
+    # print(low/m, low, m)
+    # # print(sorted(list(set(low_l).difference(set(rev_l)))))
+    # print(sorted(list(set(low_l))))
+    # print(rev/o, rev, o)
+    # # print(sorted(list(set(rev_l).difference(set(low_l + high_l)))))
+    # print(sorted(list(set(rev_l))))
+    # print(np.mean(curr), np.std(curr))
+
+
+
+
+
+
+
+    # #vraag 4 en 5.
     # df = without_non_food(df)
     # print(df[df['sub-region'].isnull()][COUNTRY].unique())
     # for name, group in df.groupby('sub-region'):
@@ -653,12 +819,17 @@ if __name__ == "__main__":
     # tmp = df.loc[df['sub-region'] == 'Sub-Saharan Africa']
     # for g, n in tmp.groupby(PROD):
     #     print(g, len(n[COUNTRY].unique()))
-    dic = {PROD: ['Sorghum'], COUNTRY: [], 'sub-region': ['Sub-Saharan Africa']}
-    v = PRICE
-    cluster(df, NGroups = 3, category_dic = dic, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True, dim = 20)
+    # df = selecton_date(df, '2003-01', '2005-01')
+    # dic = {PROD: ['Sorghum'], COUNTRY: [], 'sub-region': ['Sub-Saharan Africa']}
+    # v = PRICE
+    # cluster(df, NGroups = 2, category_dic = dic, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True, dim = 20)
     # dates, categories, data = df_to_np_date_price(df, selectDic = dic, value = v)
     # # print(categories)
     # linear_regression(df, data)
+
+
+
+
 
 
 
