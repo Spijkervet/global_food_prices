@@ -687,7 +687,7 @@ if __name__ == "__main__":
     df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
     df = df_regions.copy()
 
-    cluster(df, NGroups = 5, category_dic = {COUNTRY: ['Ukraine'], PROD : []}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True)
+    # cluster(df, NGroups = 5, category_dic = {COUNTRY: ['Ukraine'], PROD : []}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True)
 
 
 
