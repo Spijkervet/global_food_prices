@@ -1,6 +1,6 @@
 .*
 !/.gitignore
-__*
+__pycache__*
 *.csv
 Morticd10*
 !unhcr_popstats_export_persons_of_concern_all_data.csv
