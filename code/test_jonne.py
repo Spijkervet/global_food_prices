@@ -3,13 +3,13 @@ import numpy as np
 import pandas as pd
 import pickle
 import time
-# import matplotlib.pyplot as plt
-# from matplotlib.dates import drange
+import matplotlib.pyplot as plt
+from matplotlib.dates import drange
 from datetime import datetime
 import cluster as clus
 import copy
 
-REGIONAL_FILE_NAME = "regions.csv"
+REGIONAL_FILE_NAME = "../datasets/Regions/regions.csv"
 
 COUNTRY = 'adm0_name'
 REGION = 'adm1_name'
@@ -193,7 +193,7 @@ def norm_all_currencies():
     """
     transform the dataframe of all_currencies to our standards
     """
-    curr_df = pd.read_csv('all_currencies.txt')
+    curr_df = pd.read_csv('../datasets/currencies/all_currencies.txt')
     curr_df = curr_df.drop('quote_currency', axis=1)
     curr_df['base_currency'] = curr_df.apply(lambda row: 'NIS' if row.get('base_currency') == 'ILS' else row.get('base_currency'), axis=1)
     curr_df['datetime'] = curr_df.apply(lambda row: '-'.join(list(map(str,map(int, row.get('datetime').split('-')[:2])))), axis = 1)
@@ -263,7 +263,7 @@ def norm_curr(df):
     source: https://www.oanda.com/fx-for-business/historical-rates
     """
     df = remove_unvalid_curr_dates(df)
-    curr_df = pd.read_csv('all_currencies.csv')
+    curr_df = pd.read_csv('../datasets/currencies/all_currencies.csv')
     curr_df.columns = [CURR, DATE, 'rate']
 
     # Only join things from the main dataframe (WFPVAM_FoodPrices_version1.csv with a LEFT join)
@@ -279,7 +279,7 @@ def norm_curr_copy(df):
     source: https://www.oanda.com/fx-for-business/historical-rates
     """
     df = remove_unvalid_curr_dates(df)
-    curr_df = pd.read_csv('all_currencies.csv')
+    curr_df = pd.read_csv('../datasets/currencies/all_currencies.csv')
     curr_df.columns = [CURR, DATE, 'rate']
 
     # Only join things from the main dataframe (WFPVAM_FoodPrices_version1.csv with a LEFT join)
@@ -361,7 +361,7 @@ def norm_GDP(df):
     source: http://www.imf.org/external/datamapper/PPPPC@WEO/OEMDC/ADVEC/WEOWORLD
     """
 
-    GDP_df = pd.read_csv('GDP_per_capita.csv')
+    GDP_df = pd.read_csv('../datasets/GDP/GDP_per_capita.csv')
     GDP_df = GDP_df.melt(id_vars=['country'])
     GDP_df.columns = [COUNTRY, YEAR, 'GDP']
 
@@ -382,7 +382,7 @@ def norm_GDP_copy(df):
     source: http://www.imf.org/external/datamapper/PPPPC@WEO/OEMDC/ADVEC/WEOWORLD
     """
 
-    GDP_df = pd.read_csv('GDP_per_capita.csv')
+    GDP_df = pd.read_csv('../datasets/GDP/GDP_per_capita.csv')
     GDP_df = GDP_df.melt(id_vars=['country'])
     GDP_df.columns = [COUNTRY, YEAR, 'GDP']
 
@@ -644,7 +644,7 @@ def linear_regression(df, data):
     # print(df.corr())
 
     data = data.T[~np.isnan(data.T).any(axis = 1)].T
-    print((np.corrcoef(data)*100).astype(int))
+    # print((np.corrcoef(data)*100).astype(int))
 
 
 
@@ -673,33 +673,61 @@ def linear_regression(df, data):
     # plt.rcParams['legend.fontsize'] = 11
     # plt.legend(fancybox=True,loc="best",framealpha=0.8)
     # plt.show(True)
-    #
-    #
-    #
+
+
+
     # return a, b, r
 
-if __name__ == "__main__":
-    df = pd.read_csv('WFPVAM_FoodPrices_version4_Retail.csv')
+from matplotlib.gridspec import GridSpec
 
-    region_df = pd.read_csv(REGIONAL_FILE_NAME)
-    region_df.rename(columns={'name': 'adm0_name'}, inplace=True)
-    new_regions = region_df.loc[:, ['adm0_name', 'sub-region']]
-    df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
-    df = df_regions.copy()
+if __name__ == "__main__":
+    df = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
+    # df1 = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
+    # df2 = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version5_Retail.csv')
+
+    # region_df = pd.read_csv(REGIONAL_FILE_NAME)
+    # region_df.rename(columns={'name': 'adm0_name'}, inplace=True)
+    # new_regions = region_df.loc[:, ['adm0_name', 'sub-region']]
+    # df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
+    # df = df_regions.copy()
 
     # cluster(df, NGroups = 5, category_dic = {COUNTRY: ['Ukraine'], PROD : []}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True)
+    # _,_,data = df_to_np_date_price(df, selectDic = {PROD : [], COUNTRY: ['Ethiopia']}, value = PRICE)
+    # print(data)
+    # linear_regression(df, data)
+
+    dic = {}
+    for a, g in df.groupby([COUNTRY, PROD]):
+        if a[1] in dic:
+            dic[a[1]] += 1
+        else:
+            dic[a[1]] = 1
+
+    dic1 = {'overig' : 0}
+    for key, value in dic.items():
+        if value > 5:
+            dic1[key] = value
+        else:
+
+    a, b = zip(*sorted([(value, key) for key, value in dic.items() if value > 2], reverse=True))
+    print(a, b)
+
+    # the_grid = GridSpec(1,1)
+    # plt.subplot(the_grid[0, 0], aspect=1)
+    plt.pie(a, labels=b, autopct='%1.1f%%', shadow=False)
+    plt.show()
 
 
 
 
     # version 4 vs version 5
-    # df1 = pd.read_csv('WFPVAM_FoodPrices_version4_Retail.csv')
-    # df2 = pd.read_csv('WFPVAM_FoodPrices_version5_Retail.csv')
+    # df1 = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
+    # df2 = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version5_Retail.csv')
     #
     # cluster(df1, NGroups = 2, category_dic = {PROD: ['Wheat'], COUNTRY: ['India', 'Pakistan', 'Nepal', 'Afghanistan']}, mode = 2, Alg = 0, init_mode = 2, norm = False, PCA = True)
     # cluster(df2, NGroups = 2, category_dic = {PROD: ['Wheat'], COUNTRY: ['India', 'Pakistan', 'Nepal', 'Afghanistan']}, mode = 2, Alg = 0, init_mode = 2, norm = False, PCA = True)
-    # cluster(df1, NGroups = 4, category_dic = {PROD: ['Wheat'], COUNTRY: []}, mode = 2, Alg = 0, init_mode = 2, norm = False, PCA = True)
-    # cluster(df2, NGroups = 4, category_dic = {PROD: ['Wheat'], COUNTRY: []}, mode = 2, Alg = 0, init_mode = 2, norm = False, PCA = True)
+    # cluster(df1, NGroups = 4, category_dic = {PROD: ['Sugar'], COUNTRY: []}, mode = 2, Alg = 0, init_mode = 2, norm = False, PCA = True)
+    # cluster(df2, NGroups = 4, category_dic = {PROD: ['Sugar'], COUNTRY: []}, mode = 2, Alg = 0, init_mode = 2, norm = False, PCA = True)
 
 
 
@@ -717,12 +745,12 @@ if __name__ == "__main__":
 
 
     # GDP relation with price
-    # df = pd.read_csv('WFPVAM_FoodPrices_version4_Retail.csv')
-    # df = pd.read_csv('WFPVAM_FoodPrices_version4_Wholesale.csv')
-    # df = pd.read_csv('WFPVAM_FoodPrices_version4_Farm Gate.csv')
-    # df = pd.read_csv('WFPVAM_FoodPrices_version4_Producer.csv')
-    # df = pd.read_csv('WFPVAM_FoodPrices_version4_Nat_Wholesale.csv')
-    # df = pd.read_csv('WFPVAM_FoodPrices_version4_Nat_Retail.csv')
+    # df = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
+    # df = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Wholesale.csv')
+    # df = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Farm Gate.csv')
+    # df = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Producer.csv')
+    # df = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Nat_Wholesale.csv')
+    # df = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Nat_Retail.csv')
 
     # try:
     #     df.drop(['Gradient'], axis = 1, inplace = True)
@@ -761,7 +789,7 @@ if __name__ == "__main__":
 
 
     # # Currency rate versus voedsel prijzen.
-    # df = pd.read_csv('WFPVAM_FoodPrices_version1.csv')
+    # df = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version1.csv')
     # df = norm_curr(df)
     # df.dropna(inplace = True)
     # # print(df)
@@ -838,7 +866,7 @@ if __name__ == "__main__":
 
 
     # maak de version2 dataframes
-    # df = pd.read_csv('WFPVAM_FoodPrices_version1.csv')
+    # df = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version1.csv')
     # for tmp_df1 in split_national_average(norm_unit(norm_curr(without_non_food(df)))):
     #     for (seller, tmp_df2) in split_sellers(tmp_df1):
     #         if tmp_df2[CITY].iloc[0] == 'National Average':
