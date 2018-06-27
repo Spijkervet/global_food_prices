@@ -8,10 +8,12 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
 
+  <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="http://dc-js.github.io/dc.js/css/dc.css"/>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/app.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/table.css')}}"/>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/map.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/app.css')}}"/>
 </head>
 
 <body>
@@ -29,16 +31,34 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-12">
+      <div class="col-11">
         <div id="years" class="row col-12">
         </div>
+      </div>
+      <div class="col-1">
+        <button id="resetButton" type="button" class="btn btn-danger">Reset</button>
       </div>
     </div>
     <div class="row">
       <div class="col-2">
         <div class="country-container">
+          <div class="country-title">Dataset</div>
+          <select id="dataset_select" class="dc-select-menu" multiple="true" size=3>
+            <option class="dc-select-option" selected="selected" value="0">U.S. Dollar</option>
+            <option class="dc-select-option" value="1">Affordability Index</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="country-container">
           <div class="country-title">Countries</div>
           <div id="country_select"> </div>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="country-container">
+          <div class="country-title">Products</div>
+          <div id="product_select"> </div>
         </div>
       </div>
     </div>
@@ -48,20 +68,70 @@
         <div id="map-container"></div>
       </div>
     </div>
+
+    <!-- DATA -->
+
+    <div class="row">
+      <div class="col-4">
+        <h5>Prices</h5>
+        <div id="prices_chart" class="data-panel"></div>
+      </div>
+      <div class="col-4">
+        <h5>Gradient</h5>
+        <div id="gradient_chart" class="data-panel"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-8">
+        <table id="cluster_table" class="data-panel"></table>
+      </div>
+      <div class="col-4">
+        <div id="tsne_plot" class="data-panel"></div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-4">
+        <div class="data-panel">
+          <div class="jumbotron bg-dark">
+            <h1 class="display-3">Refugees</h1>
+            <p class="lead">Total refugees in <div id="refugeesCountry"></div>.</p>
+            <hr class="my-4">
+            <h1 id="totalRefugees" class="display-3"></h1>
+            <!-- <p></p> -->
+            <p class="lead">
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="data-panel">
+          <div id="refugeesChart" style="height: 400px"></div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div id="refugeesBarChart">
+        </div>
+      </div>
+    </div>
+
+
+
+
+
     <div class="row">
       <div class="col-6">
-        <div id="test" class="data-panel data-table" style="max-height: 15vh; overflow: scroll;"></div>
+        <div id="test_3" class="data-panel"></div>
       </div>
       <div class="col-6">
-        <div id="test_2" class="data-panel"></div>
+        <div id="test" class="data-panel data-table" style="max-height: 15vh; overflow: scroll;"></div>
       </div>
     </div>
     <div class="row">
       <div class="col-12">
-        <div id="cluster_table" class="data-panel"></div>
-      </div>
-      <div class="col-6">
-        <div id="test_3" class="data-panel"></div>
+        <!-- <table id="cluster_table" class="data-panel"></table> -->
       </div>
     </div>
     <footer class="row">
@@ -85,11 +155,16 @@
 
 
 
+<script src="{{ url_for('static', filename='js/countUp.js') }}" type="text/javascript"></script>
+<!-- <script src="https://code.highcharts.com/highcharts.js"></script> -->
+<script src="http://code.highcharts.com/stock/highstock.js"></script>
+<script src="{{ url_for('static', filename='js/dark-unica.js') }}" type="text/javascript"></script>
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script>
 
 
 <script type="text/javascript" src="http://dc-js.github.io/dc.js/js/d3.js"></script>

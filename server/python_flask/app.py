@@ -1,28 +1,37 @@
 import sys
 
-sys.path.append("/global_food_prices")
+sys.path.append("/global_food_prices/code")
+import os
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+
 
 import test_jonne as tj
 
 
 import json
 import pandas as pd
+import numpy as np
 from datetime import datetime
+from sklearn.manifold import TSNE
 
 from flask import Flask, request, jsonify, render_template
 from sqlalchemy import create_engine
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
 
-from utils import get_dataset
 from config import Config
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship, joinedload
+from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
+
+print("### PYTHON SERVER STARTING ###", dir_path)
 
 
-print("### PYTHON SERVER STARTING ###")
+
 
 Base = declarative_base()
 
@@ -32,6 +41,69 @@ class WFP(Base):
     adm0_name = Column(String)
     cm_name = Column(String)
     mp_price = Column(Float)
+
+class WDI_DATA(Base):
+    __tablename__ = 'wdi_data'
+    id = Column(Integer, primary_key=True)
+    Country_Name = Column(String)
+    Country_Code = Column(String)
+    Indicator_Name = Column(String)
+    Indicator_Code = Column(String)
+
+    years = {}
+    for i in range(1960, 2017):
+        years[i] = Column(str(i), Integer)
+
+class WHO(Base):
+    __tablename__ = 'who'
+    id = Column(Integer, primary_key=True)
+    # Country = Column(Integer)
+    Year = Column(Integer)
+    Sex = Column(Integer)
+    Cause = Column(String)
+    Deaths1 = Column(Float)
+    Deaths2 = Column(Float)
+    Deaths3 = Column(Float)
+    Deaths4 = Column(Float)
+    Deaths5 = Column(Float)
+    Deaths6 = Column(Float)
+    Deaths7 = Column(Float)
+    Deaths8 = Column(Float)
+    Deaths9 = Column(Float)
+    Deaths10 = Column(Float)
+    Deaths11 = Column(Float)
+    Deaths12 = Column(Float)
+    Deaths13 = Column(Float)
+    Deaths14 = Column(Float)
+    Deaths15 = Column(Float)
+    Deaths16 = Column(Float)
+    Deaths17 = Column(Float)
+    Deaths18 = Column(Float)
+    Deaths19 = Column(Float)
+    Deaths20 = Column(Float)
+    Deaths21 = Column(Float)
+    Deaths22 = Column(Float)
+    Deaths23 = Column(Float)
+    Deaths24 = Column(Float)
+    Deaths25 = Column(Float)
+    Deaths26 = Column(Float)
+
+    Country = Column(Integer, ForeignKey('who_country_codes.country'))
+    child = relationship("WHO_country_codes")
+
+    @hybrid_method
+    def total(self, fields):
+        return sum(getattr(self, field) for field in fields)
+
+    @total.expression
+    def total(cls, fields):
+        return sum(getattr(cls, field) for field in fields)
+
+class WHO_country_codes(Base):
+    __tablename__ = 'who_country_codes'
+    id = Column(Integer, primary_key=True)
+    country = Column(Integer)
+    name = Column(String)
 
 config = Config()
 
@@ -49,12 +121,30 @@ session = Session()
 from geopy.geocoders import Nominatim
 geolocator = Nominatim()
 
-df = pd.read_sql('SELECT * FROM wfp_v5_retail', engine)
-df['datetime'] = pd.to_datetime(df.date, format='%Y-%m')
+
+
+
+df_v5 = pd.read_csv('/global_food_prices/datasets/data/WFPVAM_FoodPrices_version5_Retail.csv')
+df_v4 = pd.read_csv('/global_food_prices/datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
+
+df_v5['datetime'] = pd.to_datetime(df_v5.date, format='%Y-%m')
+df_v4['datetime'] = pd.to_datetime(df_v4.date, format='%Y-%m')
+
+
+### REFUGEES ###
+from model.refugees import Refugees
+refugees = Refugees()
+
+def get_dataset(df_num):
+    global df_v5
+    global df_v4
+    if df_num == 0:
+        return df_v4
+    return df_v5
 
 # print("### DATA LOADED ###")
 
-def get_all_years():
+def get_all_years(df):
     l = []
     years = set(df['datetime'].dt.year)
     for y in years:
@@ -63,7 +153,7 @@ def get_all_years():
         l.append(d)
     return l
 
-def get_all_products():
+def get_all_products(df):
     l = []
     products = set(df['cm_name'])
     for p in products:
@@ -72,13 +162,17 @@ def get_all_products():
         l.append(d)
     return l
 
-def get_all_countries():
+def get_all_countries(df):
     l = []
     countries = set(df[tj.COUNTRY])
     for c in countries:
         d = {}
+        # d2 = {}
         d['country'] = c
+        # d2['country'] = c
+        # d2['products'] = df.loc[df[tj.COUNTRY] == c][tj.PROD].drop_duplicates().to_json(orient='records')
         l.append(d)
+        # l2.append(d)
     return l
 
 def get_prod_avg(prod_name):
@@ -94,29 +188,41 @@ def get_prod_avg(prod_name):
         d.append(add_d)
     return d
 
-def get_country_data(countries, years, average=True):
+def get_country_data(df, countries, products, years, average=True):
+
     d = []
 
     js = {}
     year_d = {}
     send_df = df.loc[df[tj.COUNTRY].isin(countries)]
+    send_df = send_df.loc[send_df[tj.PROD].isin(products)]
     years_set = set(send_df['datetime'].dt.year)
     year_d['years'] = [y for y in years_set]
 
     if years:
         send_df = send_df[send_df['datetime'].dt.year.isin(years)]
         if average:
-            send_df = send_df.groupby([tj.COUNTRY, 'cm_name', 'datetime']).mean()['mp_price'].reset_index()
+            send_df = send_df.groupby([tj.COUNTRY, 'cm_name', 'datetime']).mean()[['mp_price', 'Gradient']].reset_index()
             js = json.loads(send_df.to_json(orient='records'))
             year_d['data'] = js
     # js.append(year_d)
     return year_d
 
-def get_cluster_data(countries, years):
+def get_country_products(df, countries):
+    products = set(df.loc[df[tj.COUNTRY].isin(countries)][tj.PROD])
+    l = []
+    for p in products:
+        d = {}
+        d['product'] = p
+        l.append(d)
+    return l
+
+def get_cluster_data(df, countries, products, years):
+
     year_min = str(min(years))
     year_max = str(max(years))
 
-    date_selection = tj.selection_date(df, year_min + '-01', year_max + '-12')
+    date_selection = tj.selecton_date(df, year_min + '-01', year_max + '-12')
 
     dic, data = tj.cluster(date_selection, NGroups = 4, category_dic = {tj.PROD: [], tj.COUNTRY: countries}, \
         mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True, dim = 20)
@@ -125,21 +231,107 @@ def get_cluster_data(countries, years):
     for key, value in dic.items():
         d = {}
         d['cluster_group'] = value
+        d['label'] = key
         l.append(d)
+    return l, dic
+
+def get_tsne_data(df, countries, products, labels):
+
+    dic = {tj.PROD: [], tj.COUNTRY: countries}
+
+    df = tj.df_pivot(df, dic, value = tj.PRICE)
+    col = list(df.columns)
+    for k, v in labels.items():
+        for i in v:
+            col[col.index(i)] = k
+
+    data = df.values
+    data = data - np.nanmean(data, axis = 0)
+    data[np.isnan(data)] = 0
+
+    data = data.T
+
+    X_embedded = TSNE(n_components=2, n_iter=270).fit_transform(data)
+
+    l = {}
+    l['data'] = pd.DataFrame(X_embedded).to_json(orient='values')
+    l['labels'] = col
+    # l = []
+    # l = []
+    # for key, value in dic.items():
+    #     d = {}
+    #     d['cluster_group'] = value
+    #     l.append(d)
     return l
 
 
 products = {}
 
+class WHO_data(Resource):
+    def get(self):
+        args = parser.parse_args()
+        countries = args['country']
+        years = args['year']
+        result = self.get_deaths(countries, years)
+        return jsonify(result)
+
+    def get_deaths(self, countries, years):
+        d = []
+        fields = ['Deaths' + str(i) for i in range(1, 26)]
+        for year, country, sum in session.query(WHO.Year, WHO_country_codes, func.sum(WHO.total(fields))).\
+            join(WHO.child).\
+            group_by(WHO.Year, WHO_country_codes.id).\
+            filter_by(name='Ukraine'):
+            add_d = {}
+            add_d['country'] = country.name
+            add_d['year'] = int(year)
+            # add_d['sex'] = int(sex)
+            add_d['sum'] = float(sum)
+            d.append(add_d)
+        return d
+
+class WDI_data(Resource):
+    def get(self):
+        args = parser.parse_args()
+        countries = args['country']
+        years = args['year']
+        result = self.get_deaths(countries, years)
+        return jsonify(result)
+
+    def get_deaths(self, countries, years):
+        d = []
+        fields = ['Deaths' + str(i) for i in range(1, 26)]
+        for country, indicator in session.query(WDI_DATA.Country_Name, WDI_DATA.Indicator_Name).\
+            filter_by(Country_Name='Afghanistan').\
+            filter(WDI_DATA.Indicator_Name.like('%Mortality%')).all():
+        # for year, country, sum in session.query(WHO.Year, WHO_country_codes, func.sum(WHO.total(fields))).\
+        #     join(WHO.child).\
+        #     group_by(WHO.Year, WHO_country_codes.id).\
+        #     filter_by(name='Ukraine'):
+            add_d = {}
+            add_d['country'] = country
+            add_d['indicator'] = indicator
+            d.append(add_d)
+        return d
+
+
+# SELECT SUM(Deaths1) + SUM(Deaths2) + SUM(Deaths3) + SUM(Deaths4) + SUM(Deaths5) + SUM(Deaths6) + SUM(Deaths7) + SUM(Deaths8) + SUM(Deaths9) + SUM(Deaths10) + SUM(Deaths11) + SUM(Deaths12) + SUM(Deaths13) + SUM(Deaths14) + SUM(Deaths15) + SUM(Deaths16) + SUM(Deaths17) + SUM(Deaths18) + SUM(Deaths19) + SUM(Deaths20) + SUM(Deaths21) + SUM(Deaths22) + SUM(Deaths23) + SUM(Deaths24) + SUM(Deaths25) + SUM(Deaths26), Year, who_country_codes.name FROM `who`
+# JOIN who_country_codes ON who_country_codes.country = who.Country
+# WHERE who.`Country` = 1400
+# GROUP BY `Year`;
+#
 class Years(Resource):
     def get(self):
-        years = get_all_years()
+        args = parser.parse_args()
+        dataset = args['dataset']
+        years = get_all_years(get_dataset(dataset))
         return jsonify(years)
 
 class Products(Resource):
     def get(self):
-        products = get_all_products()
-        print(products)
+        args = parser.parse_args()
+        dataset = args['dataset']
+        products = get_all_products(get_dataset(dataset))
         return jsonify(products)
 
 class AvgProducts(Resource):
@@ -153,37 +345,94 @@ class AvgProducts(Resource):
 
 class Countries(Resource):
     def get(self):
-        countries = get_all_countries()
+        args = parser.parse_args()
+        dataset = args['dataset']
+        countries = get_all_countries(get_dataset(dataset))
         return jsonify(countries)
 
 class CountryData(Resource):
     def get(self):
         args = parser.parse_args()
         countries = args['country']
+        dataset = args['dataset']
+        products = args['product']
         years = args['year']
 
-        country_data = get_country_data(countries, years)
+        country_data = get_country_data(get_dataset(dataset), countries, products, years)
+        return jsonify(country_data)
+
+class CountryProducts(Resource):
+    def get(self):
+        args = parser.parse_args()
+        countries = args['country']
+        dataset = args['dataset']
+        # years = args['year']
+        country_data = get_country_products(get_dataset(dataset), countries)
         return jsonify(country_data)
 
 class Cluster(Resource):
     def get(self):
         args = parser.parse_args()
         countries = args['country']
+        product = args['product']
+        dataset = args['dataset']
         years = args['year']
-        cluster_data = get_cluster_data(countries, years)
-        return jsonify(cluster_data)
+        cluster_data, cluster_dic = get_cluster_data(get_dataset(dataset), countries, product, years)
+        tsne_data = get_tsne_data(get_dataset(dataset), countries, product, cluster_dic)
+
+        merged = {}
+        merged['kmeans'] = cluster_data
+        merged['tsne'] = tsne_data
+        return jsonify(merged)
+
+
+class RefugeesData(Resource):
+    def get(self):
+        args = parser.parse_args()
+        countries = args['country']
+        years = args['year']
+
+        # only single country.
+        total = refugees.get_total_refugees(countries[0], years)
+        refugees_data = {}
+        refugees_data['total'] = int(total)
+        refugees_data['time'] = refugees.get_yearly_refugees(countries[0], years)
+        return jsonify(refugees_data)
+
+
+class RefugeesDestination(Resource):
+    def get(self):
+        args = parser.parse_args()
+        countries = args['country']
+        years = args['year']
+
+        # only single country.
+        total = refugees.get_refugee_destinations(countries, years)
+        refugees_data = {}
+        refugees_data['destinations'] = total
+        return jsonify(refugees_data)
+
 
 parser = reqparse.RequestParser()
 parser.add_argument('country', type=str, action='append')
+parser.add_argument('product', type=str, action='append')
 parser.add_argument('year', type=int, action='append')
 parser.add_argument('average', type=bool)
+parser.add_argument('dataset', type=int)
 
 api.add_resource(AvgProducts, '/avg_prod/<string:product_id>')
 api.add_resource(Years, '/years')
 api.add_resource(Products, '/all_products')
 api.add_resource(Countries, '/all_countries')
 api.add_resource(CountryData, '/country')
+api.add_resource(CountryProducts, '/country_products')
 api.add_resource(Cluster, '/cluster')
+api.add_resource(WHO_data, '/who')
+api.add_resource(WDI_data, '/wdi')
+
+
+api.add_resource(RefugeesData, '/refugees')
+api.add_resource(RefugeesDestination, '/refugees_destinations')
 
 
 @app.route("/")

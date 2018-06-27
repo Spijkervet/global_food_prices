@@ -8,3 +8,4 @@ mysqlclient
 geopy
 flask-cors
 scipy
+sklearn
