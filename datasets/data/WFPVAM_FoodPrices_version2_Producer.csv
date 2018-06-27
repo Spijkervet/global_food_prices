@@ -1,0 +1,229 @@
+adm0_name,mkt_name,cm_name,mp_price,date,um_name
+Madagascar,Boeny,Rice (paddy),0.38532000000000005,2011-4,KG
+Madagascar,Boeny,Rice (paddy),0.280924,2011-5,KG
+Madagascar,Boeny,Rice (paddy),0.27601799999999993,2011-6,KG
+Madagascar,Boeny,Rice (paddy),0.25653,2011-7,KG
+Madagascar,Boeny,Rice (paddy),0.27896999999999994,2011-8,KG
+Madagascar,Boeny,Rice (paddy),0.334481,2011-9,KG
+Madagascar,Boeny,Rice (paddy),0.31892000000000004,2011-10,KG
+Madagascar,Boeny,Rice (paddy),0.310104,2011-11,KG
+Madagascar,Boeny,Rice (paddy),0.313618,2011-12,KG
+Madagascar,Boeny,Rice (paddy),0.28448000000000007,2012-1,KG
+Madagascar,Boeny,Rice (paddy),0.31602,2012-2,KG
+Madagascar,Boeny,Rice (paddy),0.332258,2012-3,KG
+Madagascar,Boeny,Rice (paddy),0.30335999999999996,2012-4,KG
+Madagascar,Boeny,Rice (paddy),0.276925,2012-5,KG
+Madagascar,Boeny,Rice (paddy),0.27258,2012-6,KG
+Madagascar,Boeny,Rice (paddy),0.25857,2012-7,KG
+Madagascar,Boeny,Rice (paddy),0.260325,2012-8,KG
+Madagascar,Boeny,Rice (paddy),0.26325,2012-9,KG
+Madagascar,Ihorombe,Rice (paddy),0.24082500000000004,2011-4,KG
+Madagascar,Ihorombe,Rice (paddy),0.21336,2011-5,KG
+Madagascar,Ihorombe,Rice (paddy),0.18503999999999998,2011-6,KG
+Madagascar,Ihorombe,Rice (paddy),0.22184999999999996,2011-7,KG
+Madagascar,Ihorombe,Rice (paddy),0.24479999999999996,2011-8,KG
+Madagascar,Ihorombe,Rice (paddy),0.29223599999999994,2011-9,KG
+Madagascar,Ihorombe,Rice (paddy),0.29988000000000004,2011-10,KG
+Madagascar,Ihorombe,Rice (paddy),0.30208,2011-11,KG
+Madagascar,Ihorombe,Rice (paddy),0.278202,2011-12,KG
+Madagascar,Ihorombe,Rice (paddy),0.3382400000000001,2012-1,KG
+Madagascar,Ihorombe,Rice (paddy),0.28396,2012-2,KG
+Madagascar,Ihorombe,Rice (paddy),0.28892,2012-3,KG
+Madagascar,Ihorombe,Rice (paddy),0.28914,2012-4,KG
+Madagascar,Ihorombe,Rice (paddy),0.206625,2012-5,KG
+Madagascar,Ihorombe,Rice (paddy),0.24024,2012-6,KG
+Madagascar,Ihorombe,Rice (paddy),0.23205,2012-7,KG
+Madagascar,Ihorombe,Rice (paddy),0.24697499999999997,2012-8,KG
+Madagascar,Ihorombe,Rice (paddy),0.2655,2012-9,KG
+Madagascar,Sava,Rice (paddy),0.39799500000000004,2011-4,KG
+Madagascar,Sava,Rice (paddy),0.39877999999999997,2011-5,KG
+Madagascar,Sava,Rice (paddy),0.40348999999999996,2011-6,KG
+Madagascar,Sava,Rice (paddy),0.29069999999999996,2011-7,KG
+Madagascar,Sava,Rice (paddy),0.21470999999999996,2011-8,KG
+Madagascar,Sava,Rice (paddy),0.28329,2011-9,KG
+Madagascar,Sava,Rice (paddy),0.339864,2011-10,KG
+Madagascar,Sava,Rice (paddy),0.4012,2011-11,KG
+Madagascar,Sava,Rice (paddy),0.416138,2011-12,KG
+Madagascar,Sava,Rice (paddy),0.3315200000000001,2012-1,KG
+Madagascar,Sava,Rice (paddy),0.42136,2012-2,KG
+Madagascar,Sava,Rice (paddy),0.46599999999999997,2012-3,KG
+Madagascar,Sava,Rice (paddy),0.439872,2012-4,KG
+Madagascar,Sava,Rice (paddy),0.33725,2012-5,KG
+Madagascar,Sava,Rice (paddy),0.2772,2012-6,KG
+Madagascar,Sava,Rice (paddy),0.2652,2012-7,KG
+Madagascar,Sava,Rice (paddy),0.2581,2012-8,KG
+Madagascar,Sava,Rice (paddy),0.261,2012-9,KG
+Madagascar,Diana,Rice (paddy),0.4208100000000001,2011-4,KG
+Madagascar,Diana,Rice (paddy),0.33527999999999997,2011-5,KG
+Madagascar,Diana,Rice (paddy),0.33923999999999993,2011-6,KG
+Madagascar,Diana,Rice (paddy),0.33659999999999995,2011-7,KG
+Madagascar,Diana,Rice (paddy),0.33659999999999995,2011-8,KG
+Madagascar,Diana,Rice (paddy),0.32802,2011-9,KG
+Madagascar,Diana,Rice (paddy),0.31416,2011-10,KG
+Madagascar,Diana,Rice (paddy),0.31151999999999996,2011-11,KG
+Madagascar,Diana,Rice (paddy),0.30756,2011-12,KG
+Madagascar,Diana,Rice (paddy),0.4480000000000001,2012-1,KG
+Madagascar,Diana,Rice (paddy),0.30228,2012-2,KG
+Madagascar,Diana,Rice (paddy),0.30756,2012-3,KG
+Madagascar,Diana,Rice (paddy),0.31284,2012-4,KG
+Madagascar,Diana,Rice (paddy),0.3135,2012-5,KG
+Madagascar,Diana,Rice (paddy),0.30492,2012-6,KG
+Madagascar,Diana,Rice (paddy),0.29172,2012-7,KG
+Madagascar,Diana,Rice (paddy),0.29369999999999996,2012-8,KG
+Madagascar,Diana,Rice (paddy),0.297,2012-9,KG
+Madagascar,Sofia,Rice (paddy),0.30724200000000007,2011-4,KG
+Madagascar,Sofia,Rice (paddy),0.283464,2011-5,KG
+Madagascar,Sofia,Rice (paddy),0.21073999999999996,2011-6,KG
+Madagascar,Sofia,Rice (paddy),0.21113999999999997,2011-7,KG
+Madagascar,Sofia,Rice (paddy),0.27335,2011-9,KG
+Madagascar,Sofia,Rice (paddy),0.29083600000000004,2011-10,KG
+Madagascar,Sofia,Rice (paddy),0.297832,2011-11,KG
+Madagascar,Sofia,Rice (paddy),0.319676,2011-12,KG
+Madagascar,Sofia,Rice (paddy),0.23475200000000004,2012-1,KG
+Madagascar,Sofia,Rice (paddy),0.29541,2012-2,KG
+Madagascar,Sofia,Rice (paddy),0.31222,2012-3,KG
+Madagascar,Sofia,Rice (paddy),0.29151,2012-4,KG
+Madagascar,Sofia,Rice (paddy),0.276925,2012-5,KG
+Madagascar,Sofia,Rice (paddy),0.231,2012-6,KG
+Madagascar,Sofia,Rice (paddy),0.20995,2012-7,KG
+Madagascar,Sofia,Rice (paddy),0.201585,2012-8,KG
+Madagascar,Sofia,Rice (paddy),0.2061,2012-9,KG
+Madagascar,Atsinanana,Rice (paddy),0.4816500000000001,2011-4,KG
+Madagascar,Atsinanana,Rice (paddy),0.4826,2011-5,KG
+Madagascar,Atsinanana,Rice (paddy),0.4882999999999999,2011-6,KG
+Madagascar,Atsinanana,Rice (paddy),0.48449999999999993,2011-7,KG
+Madagascar,Atsinanana,Rice (paddy),0.48449999999999993,2011-8,KG
+Madagascar,Atsinanana,Rice (paddy),0.36032499999999995,2011-9,KG
+Madagascar,Atsinanana,Rice (paddy),0.339388,2011-10,KG
+Madagascar,Atsinanana,Rice (paddy),0.332258,2011-12,KG
+Madagascar,Atsinanana,Rice (paddy),0.34048000000000006,2012-1,KG
+Madagascar,Atsinanana,Rice (paddy),0.338004,2012-2,KG
+Madagascar,Atsinanana,Rice (paddy),0.343908,2012-3,KG
+Madagascar,Atsinanana,Rice (paddy),0.34981199999999996,2012-4,KG
+Madagascar,Atsinanana,Rice (paddy),0.35055,2012-5,KG
+Madagascar,Atsinanana,Rice (paddy),0.340956,2012-6,KG
+Madagascar,Atsinanana,Rice (paddy),0.27625,2012-7,KG
+Madagascar,Atsinanana,Rice (paddy),0.28925,2012-8,KG
+Madagascar,Atsinanana,Rice (paddy),0.2925,2012-9,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.33360600000000007,2011-4,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.283972,2011-5,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.30634399999999995,2011-6,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.31109999999999993,2011-7,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.3432299999999999,2011-8,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.35237299999999994,2011-9,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.346052,2011-10,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.354944,2011-11,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.37979,2011-12,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.32032000000000005,2012-1,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.328386,2012-2,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.31688,2012-3,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.30335999999999996,2012-4,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.29165,2012-5,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.298452,2012-6,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.301002,2012-7,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.32217999999999997,2012-8,KG
+Madagascar,Vakinakaratra,Rice (paddy),0.3204,2012-9,KG
+Madagascar,Analamanga,Rice (paddy),0.32955000000000007,2011-4,KG
+Madagascar,Analamanga,Rice (paddy),0.29209999999999997,2011-5,KG
+Madagascar,Analamanga,Rice (paddy),0.317138,2011-6,KG
+Madagascar,Analamanga,Rice (paddy),0.33149999999999996,2011-7,KG
+Madagascar,Analamanga,Rice (paddy),0.37382999999999994,2011-8,KG
+Madagascar,Analamanga,Rice (paddy),0.35933099999999996,2011-9,KG
+Madagascar,Analamanga,Rice (paddy),0.34986,2011-10,KG
+Madagascar,Analamanga,Rice (paddy),0.35872,2011-11,KG
+Madagascar,Analamanga,Rice (paddy),0.353228,2011-12,KG
+Madagascar,Analamanga,Rice (paddy),0.28806400000000004,2012-1,KG
+Madagascar,Analamanga,Rice (paddy),0.31144,2012-2,KG
+Madagascar,Analamanga,Rice (paddy),0.3495,2012-3,KG
+Madagascar,Analamanga,Rice (paddy),0.339858,2012-4,KG
+Madagascar,Analamanga,Rice (paddy),0.3135,2012-5,KG
+Madagascar,Analamanga,Rice (paddy),0.2541,2012-6,KG
+Madagascar,Analamanga,Rice (paddy),0.2652,2012-7,KG
+Madagascar,Analamanga,Rice (paddy),0.26699999999999996,2012-8,KG
+Madagascar,Analamanga,Rice (paddy),0.2925,2012-9,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.40560000000000007,2011-4,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.36220399999999997,2011-5,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.30839999999999995,2011-6,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.3595499999999999,2011-7,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.35699999999999993,2011-8,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.36280999999999997,2011-9,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.379848,2011-10,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.407808,2011-11,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.41474,2011-12,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.33286400000000005,2012-1,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.390216,2012-2,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.38678,2012-3,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.399582,2012-4,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.2565,2012-5,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.213444,2012-6,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.221,2012-7,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.24208,2012-8,KG
+Madagascar,Alaotra Mangoro,Rice (paddy),0.261,2012-9,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.29152500000000003,2011-4,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.270764,2011-5,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.273962,2011-6,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.27182999999999996,2011-7,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.27182999999999996,2011-8,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.31957099999999994,2011-9,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.30464,2011-10,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.3728,2011-12,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.32256000000000007,2012-1,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.33892,2012-2,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.34018,2012-3,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.306204,2012-4,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.2698,2012-5,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.26334,2012-6,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.2652,2012-7,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.28302,2012-8,KG
+Madagascar,Haute Matsiatra,Rice (paddy),0.2898,2012-9,KG
+Madagascar,Itasy,Rice (paddy),0.32802900000000007,2011-4,KG
+Madagascar,Itasy,Rice (paddy),0.270764,2011-5,KG
+Madagascar,Itasy,Rice (paddy),0.30839999999999995,2011-6,KG
+Madagascar,Itasy,Rice (paddy),0.29834999999999995,2011-7,KG
+Madagascar,Itasy,Rice (paddy),0.33812999999999993,2011-8,KG
+Madagascar,Itasy,Rice (paddy),0.35038499999999995,2011-9,KG
+Madagascar,Itasy,Rice (paddy),0.35366800000000004,2011-10,KG
+Madagascar,Itasy,Rice (paddy),0.37146399999999996,2011-11,KG
+Madagascar,Itasy,Rice (paddy),0.380722,2011-12,KG
+Madagascar,Itasy,Rice (paddy),0.3884160000000001,2012-1,KG
+Madagascar,Itasy,Rice (paddy),0.33892,2012-2,KG
+Madagascar,Itasy,Rice (paddy),0.350898,2012-3,KG
+Madagascar,Itasy,Rice (paddy),0.290562,2012-4,KG
+Madagascar,Itasy,Rice (paddy),0.253175,2012-5,KG
+Madagascar,Itasy,Rice (paddy),0.266574,2012-6,KG
+Madagascar,Itasy,Rice (paddy),0.27846,2012-7,KG
+Madagascar,Itasy,Rice (paddy),0.295035,2012-8,KG
+Madagascar,Itasy,Rice (paddy),0.297,2012-9,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.369316,2011-5,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.32381999999999994,2011-6,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.42329999999999995,2011-7,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.38249999999999995,2011-8,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.41499499999999995,2011-9,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.39746000000000004,2011-10,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.507872,2011-11,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.513998,2011-12,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.3584000000000001,2012-1,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.38243,2012-2,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.45202,2012-3,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.3792,2012-4,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.38,2012-5,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.33726,2012-6,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.38012,2012-7,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.44499999999999995,2012-8,KG
+Madagascar,Amoron'I Mania,Rice (paddy),0.4815,2012-9,KG
+Madagascar,Menabe,Rice (paddy),0.22815000000000002,2011-4,KG
+Madagascar,Menabe,Rice (paddy),0.313436,2011-5,KG
+Madagascar,Menabe,Rice (paddy),0.37007999999999996,2011-6,KG
+Madagascar,Menabe,Rice (paddy),0.23816999999999997,2011-7,KG
+Madagascar,Menabe,Rice (paddy),0.27583499999999994,2011-9,KG
+Madagascar,Menabe,Rice (paddy),0.3094,2011-10,KG
+Madagascar,Menabe,Rice (paddy),0.22135,2011-12,KG
+Madagascar,Menabe,Rice (paddy),0.2800000000000001,2012-1,KG
+Madagascar,Menabe,Rice (paddy),0.2977,2012-2,KG
+Madagascar,Menabe,Rice (paddy),0.2563,2012-3,KG
+Madagascar,Menabe,Rice (paddy),0.2607,2012-4,KG
+Madagascar,Menabe,Rice (paddy),0.231325,2012-5,KG
+Madagascar,Menabe,Rice (paddy),0.224994,2012-6,KG
+Madagascar,Menabe,Rice (paddy),0.228514,2012-7,KG
+Madagascar,Menabe,Rice (paddy),0.22249999999999998,2012-8,KG
+Madagascar,Menabe,Rice (paddy),0.225,2012-9,KG

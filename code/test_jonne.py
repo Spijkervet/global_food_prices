@@ -685,11 +685,11 @@ if __name__ == "__main__":
     # df1 = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
     # df2 = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version5_Retail.csv')
 
-    # region_df = pd.read_csv(REGIONAL_FILE_NAME)
-    # region_df.rename(columns={'name': 'adm0_name'}, inplace=True)
-    # new_regions = region_df.loc[:, ['adm0_name', 'sub-region']]
-    # df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
-    # df = df_regions.copy()
+    region_df = pd.read_csv(REGIONAL_FILE_NAME)
+    region_df.rename(columns={'name': 'adm0_name'}, inplace=True)
+    new_regions = region_df.loc[:, ['adm0_name', 'sub-region']]
+    df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
+    df = df_regions.copy()
 
     # cluster(df, NGroups = 5, category_dic = {COUNTRY: ['Ukraine'], PROD : []}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True)
     # _,_,data = df_to_np_date_price(df, selectDic = {PROD : [], COUNTRY: ['Ethiopia']}, value = PRICE)
@@ -697,25 +697,11 @@ if __name__ == "__main__":
     # linear_regression(df, data)
 
     dic = {}
-    for a, g in df.groupby([COUNTRY, PROD]):
-        if a[1] in dic:
-            dic[a[1]] += 1
-        else:
-            dic[a[1]] = 1
+    for a, g in df.groupby(['sub-region'])[COUNTRY]:
+        print(a,',' ,len(g.unique()))
 
-    dic1 = {'overig' : 0}
-    for key, value in dic.items():
-        if value > 5:
-            dic1[key] = value
-        else:
-
-    a, b = zip(*sorted([(value, key) for key, value in dic.items() if value > 2], reverse=True))
-    print(a, b)
-
-    # the_grid = GridSpec(1,1)
-    # plt.subplot(the_grid[0, 0], aspect=1)
-    plt.pie(a, labels=b, autopct='%1.1f%%', shadow=False)
-    plt.show()
+    # a = sorted([(value, key) for key, value in dic.items()], reverse=True)
+    # print(a)
 
 
 
