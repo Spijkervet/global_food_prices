@@ -1,4 +1,6 @@
 
+var arcs = Array();
+
 var defaultMapColor = 'rgb(66, 66, 66)';
 var highlightMapColor = 'rgb(180, 180, 180)';
 var selectedMapColor = 'rgb(221, 167, 67)';
@@ -79,4 +81,30 @@ function setMapColor(color, country = '') {
       catch (e) {}
     }
   }
+}
+
+function clearArcs() {
+  arcs = Array();
+}
+
+function drawArc(frequency, origin_lat, origin_lon, dest_lat, dest_lon) {
+
+  var new_arc = {
+    origin: {
+      latitude: origin_lat,
+      longitude: origin_lon
+    },
+    destination: {
+      latitude: dest_lat,
+      longitude: dest_lon
+    },
+    options: {
+      strokeWidth: frequency / 10000,
+      strokeColor: 'rgba(100, 10, 200, 0.4)',
+      greatArc: true
+    }
+  };
+
+  arcs.push(new_arc);
+  map.arc(arcs, {strokeWidth: 2});
 }

@@ -33,6 +33,10 @@ body {
   font-size: 0.75em;
 }
 
+#region_select {
+  max-width: 100%;
+  font-size: 0.75rem;
+}
 #country_select {
   max-width: 100%;
   font-size: 0.75rem;

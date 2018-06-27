@@ -122,7 +122,7 @@ from geopy.geocoders import Nominatim
 geolocator = Nominatim()
 
 
-
+REGIONAL_FILE_NAME = '/global_food_prices/datasets/Regions/regions.csv'
 
 df_v5 = pd.read_csv('/global_food_prices/datasets/data/WFPVAM_FoodPrices_version5_Retail.csv')
 df_v4 = pd.read_csv('/global_food_prices/datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
@@ -130,6 +130,15 @@ df_v4 = pd.read_csv('/global_food_prices/datasets/data/WFPVAM_FoodPrices_version
 df_v5['datetime'] = pd.to_datetime(df_v5.date, format='%Y-%m')
 df_v4['datetime'] = pd.to_datetime(df_v4.date, format='%Y-%m')
 
+def merge_regions(df):
+    region_df = pd.read_csv(REGIONAL_FILE_NAME)
+    region_df.rename(columns={'name': 'adm0_name'}, inplace=True)
+    new_regions = region_df.loc[:, ['adm0_name', 'sub-region']]
+    df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
+    return df_regions.copy()
+
+df_v5 = merge_regions(df_v5)
+df_v4 = merge_regions(df_v4)
 
 ### REFUGEES ###
 from model.refugees import Refugees
@@ -154,26 +163,34 @@ def get_all_years(df):
     return l
 
 def get_all_products(df):
-    l = []
+    # l = []
     products = set(df['cm_name'])
-    for p in products:
-        d = {}
-        d['product'] = p
-        l.append(d)
-    return l
+    # for p in products:
+    #     d = {}
+    #     d['product'] = p
+    #     l.append(d)
+    return list(products)
 
-def get_all_countries(df):
-    l = []
+def get_all_countries(df, regions=[]):
+    # l = []
+    if regions:
+        df = df.loc[df['sub-region'].isin(regions)]
+
     countries = set(df[tj.COUNTRY])
-    for c in countries:
-        d = {}
-        # d2 = {}
-        d['country'] = c
-        # d2['country'] = c
-        # d2['products'] = df.loc[df[tj.COUNTRY] == c][tj.PROD].drop_duplicates().to_json(orient='records')
-        l.append(d)
-        # l2.append(d)
-    return l
+    # for c in countries:
+    #     d = {}
+    #     d['country'] = c
+    #     l.append(d)
+    return list(countries)
+
+def get_all_regions(df):
+    l = []
+    regions = set(df['sub-region'])
+    # for r in regions:
+    #     d = {}
+    #     d['region'] = r
+    #     l.append(d)
+    return list(regions)
 
 def get_prod_avg(prod_name):
     d = []
@@ -188,40 +205,60 @@ def get_prod_avg(prod_name):
         d.append(add_d)
     return d
 
-def get_country_data(df, countries, products, years, average=True):
+def get_country_data(df, regions, countries, products, years, average=True):
 
     d = []
 
     js = {}
     year_d = {}
-    send_df = df.loc[df[tj.COUNTRY].isin(countries)]
-    send_df = send_df.loc[send_df[tj.PROD].isin(products)]
-    years_set = set(send_df['datetime'].dt.year)
+
+    selector = ''
+
+    if products:
+        df = df.loc[df[tj.PROD].isin(products)]
+
+    if countries:
+        selector = tj.COUNTRY
+        df = df.loc[df[selector].isin(countries)]
+    elif regions:
+        selector = 'sub-region'
+        df = df.loc[df[selector].isin(regions)]
+
+    years_set = set(df['datetime'].dt.year)
     year_d['years'] = [y for y in years_set]
 
     if years:
-        send_df = send_df[send_df['datetime'].dt.year.isin(years)]
-        if average:
-            send_df = send_df.groupby([tj.COUNTRY, 'cm_name', 'datetime']).mean()[['mp_price', 'Gradient']].reset_index()
-            js = json.loads(send_df.to_json(orient='records'))
-            year_d['data'] = js
+        df = df[df['datetime'].dt.year.isin(years)]
+        df = df.groupby([selector, 'cm_name', 'datetime']).mean()[['mp_price', 'Gradient']].reset_index()
+    else:
+        df = df.groupby([df[selector], df['cm_name'], df['datetime'].dt.year]).mean()[['mp_price', 'Gradient']].reset_index()
+
+    if average:
+        js = json.loads(df.to_json(orient='records'))
+        year_d['data'] = js
     # js.append(year_d)
     return year_d
 
-def get_country_products(df, countries):
-    products = set(df.loc[df[tj.COUNTRY].isin(countries)][tj.PROD])
-    l = []
-    for p in products:
-        d = {}
-        d['product'] = p
-        l.append(d)
-    return l
+def get_country_products(df, regions, countries):
+
+    if regions:
+        df = df.loc[df['sub-region'].isin(regions)]
+
+    if countries:
+        df = df.loc[df[tj.COUNTRY].isin(countries)]
+
+    products = set(df[tj.PROD])
+    return list(products)
 
 def get_cluster_data(df, countries, products, years):
 
-    year_min = str(min(years))
-    year_max = str(max(years))
-
+    if years:
+        year_min = str(min(years))
+        year_max = str(max(years))
+    else:
+        year_min = '1992'
+        year_max = '2017'
+        
     date_selection = tj.selecton_date(df, year_min + '-01', year_max + '-12')
 
     dic, data = tj.cluster(date_selection, NGroups = 4, category_dic = {tj.PROD: [], tj.COUNTRY: countries}, \
@@ -343,11 +380,19 @@ class AvgProducts(Resource):
         products[product_id] = request.form['data']
         return {product_id: products[product_id]}
 
+class Regions(Resource):
+    def get(self):
+        args = parser.parse_args()
+        dataset = args['dataset']
+        regions = get_all_regions(get_dataset(dataset))
+        return jsonify(regions)
+
 class Countries(Resource):
     def get(self):
         args = parser.parse_args()
         dataset = args['dataset']
-        countries = get_all_countries(get_dataset(dataset))
+        regions = args['region']
+        countries = get_all_countries(get_dataset(dataset), regions)
         return jsonify(countries)
 
 class CountryData(Resource):
@@ -355,10 +400,11 @@ class CountryData(Resource):
         args = parser.parse_args()
         countries = args['country']
         dataset = args['dataset']
+        regions = args['region']
         products = args['product']
         years = args['year']
 
-        country_data = get_country_data(get_dataset(dataset), countries, products, years)
+        country_data = get_country_data(get_dataset(dataset), regions, countries, products, years)
         return jsonify(country_data)
 
 class CountryProducts(Resource):
@@ -366,8 +412,9 @@ class CountryProducts(Resource):
         args = parser.parse_args()
         countries = args['country']
         dataset = args['dataset']
+        regions = args['region']
         # years = args['year']
-        country_data = get_country_products(get_dataset(dataset), countries)
+        country_data = get_country_products(get_dataset(dataset), regions, countries)
         return jsonify(country_data)
 
 class Cluster(Resource):
@@ -414,6 +461,7 @@ class RefugeesDestination(Resource):
 
 
 parser = reqparse.RequestParser()
+parser.add_argument('region', type=str, action='append')
 parser.add_argument('country', type=str, action='append')
 parser.add_argument('product', type=str, action='append')
 parser.add_argument('year', type=int, action='append')
@@ -424,6 +472,7 @@ api.add_resource(AvgProducts, '/avg_prod/<string:product_id>')
 api.add_resource(Years, '/years')
 api.add_resource(Products, '/all_products')
 api.add_resource(Countries, '/all_countries')
+api.add_resource(Regions, '/all_regions')
 api.add_resource(CountryData, '/country')
 api.add_resource(CountryProducts, '/country_products')
 api.add_resource(Cluster, '/cluster')

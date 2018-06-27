@@ -3,8 +3,8 @@ import numpy as np
 import pandas as pd
 import pickle
 import time
-import matplotlib.pyplot as plt
-from matplotlib.dates import drange
+# import matplotlib.pyplot as plt
+# from matplotlib.dates import drange
 from datetime import datetime
 import cluster as clus
 import copy
@@ -678,7 +678,6 @@ def linear_regression(df, data):
 
     # return a, b, r
 
-from matplotlib.gridspec import GridSpec
 
 if __name__ == "__main__":
     df = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
