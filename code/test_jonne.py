@@ -556,8 +556,8 @@ def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, m
 
     # creeer de dataset voor k-means
     dates, categories, data = df_to_np_date_price(df, category_dic, value = value)
-    print(categories) #print de catogorien die worden geclusterd
-    print(len(categories))
+    # print(categories) #print de catogorien die worden geclusterd
+    # print(len(categories))
 
     if norm:
         data = (data - np.nanmin(data, axis = 1)[:, None]) / (np.nanmax(data, axis = 1) - np.nanmin(data, axis = 1))[:, None]
@@ -577,7 +577,7 @@ def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, m
         data = clus.PCA(data, dim)
     datagroup = clus.clustering(data, NGroups, init_mode)
     while np.max(np.sqrt(np.nansum((datagroup.GroupAvg - datagroup.NewGroupAvg)**2, axis = 1))) > 0.01 and i < 100:
-        print(datagroup.data[:,-1]) #print de tussen stappen van k-means
+        # print(datagroup.data[:,-1]) #print de tussen stappen van k-means
         if Alg == 0:
             datagroup.Clustering()
         elif Alg == 1:
@@ -597,12 +597,12 @@ def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, m
             dic[group] = [cat]
 
     # print de dictionary
-    i = 0
-    for group, catLst in dic.items():
-        print(group, len(catLst))
-        print(catLst)
-        print(np.nanmean(datagroup.NewGroupAvg[i]))
-        i += 1
+    # i = 0
+    # for group, catLst in dic.items():
+    #     print(group, len(catLst))
+    #     print(catLst)
+    #     print(np.nanmean(datagroup.NewGroupAvg[i]))
+    #     i += 1
 
     # # plot de geselecteerde data
     # plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
