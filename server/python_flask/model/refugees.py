@@ -41,4 +41,4 @@ class Refugees():
 
     def merge_refugees(self, other_df):
         refugees_sum = self.df.groupby(['origin', 'datetime']).sum().reset_index()
-        return pd.merge(other_df, refugees_sum, left_on=['adm0_name', 'datetime'], right_on=['origin', 'datetime'])
+        return pd.merge(other_df, refugees_sum, left_on=['adm0_name', 'datetime'], right_on=['origin', 'datetime'], how='left')

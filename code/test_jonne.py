@@ -3,8 +3,8 @@ import numpy as np
 import pandas as pd
 import pickle
 import time
-# import matplotlib.pyplot as plt
-# from matplotlib.dates import drange
+import matplotlib.pyplot as plt
+from matplotlib.dates import drange
 from datetime import datetime
 import cluster as clus
 import copy
@@ -486,11 +486,15 @@ def df_to_np_date_price(df, selectDic = {PROD : ['Millet']}, value = PRICE):
     condition = (df[PROD] != 'tmp')
     df['Info'] = ""
     for col, selection in selectDic.items():
+        # if df['Info'].ix[0] != "":
+        #     df['Info'] += ' - '
+
         if selection:
             condition &= (df[col].isin(selection))
             # for s in selection:
             #     condition &= (df[col].str.contains(s) == True)
-        df['Info'] += df[col] + ' - '
+        df['Info'] +=  df[col] + ' - '
+        # df['Info'] += df[col]
 
 
     df = df.loc[condition]
@@ -604,7 +608,7 @@ def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, m
     #     print(np.nanmean(datagroup.NewGroupAvg[i]))
     #     i += 1
 
-    # # plot de geselecteerde data
+
     # plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
     # for i, row in enumerate(data):
     #     # if i == 0:

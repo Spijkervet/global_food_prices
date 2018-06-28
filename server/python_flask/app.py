@@ -154,13 +154,13 @@ mortality['Year'] = mortality['Year'].astype(int)
 
 df_v5['Year'] = df_v5['datetime'].dt.year
 df_v5['Year'] = df_v5['Year'].astype(int)
-df_v5 = pd.merge(df_v5, mortality, left_on=['adm0_name', 'Year'], right_on=['Country', 'Year'])
+df_v5 = pd.merge(df_v5, mortality, left_on=['adm0_name', 'Year'], right_on=['Country', 'Year'], how='left')
 df_v5.drop(columns=['Country', 'Year'], inplace=True)
 df_v5 = df_v5.rename(columns={' Both sexes': 'mortality_sum', ' Male': 'mortality_male', ' Female': 'mortality_female'})
 
 df_v4['Year'] = df_v4['datetime'].dt.year
 df_v4['Year'] = df_v4['Year'].astype(int)
-df_v4 = pd.merge(df_v4, mortality, left_on=['adm0_name', 'Year'], right_on=['Country', 'Year'])
+df_v4 = pd.merge(df_v4, mortality, left_on=['adm0_name', 'Year'], right_on=['Country', 'Year'], how='left')
 df_v4.drop(columns=['Country', 'Year'], inplace=True)
 df_v4 = df_v5.rename(columns={' Both sexes': 'mortality_sum', ' Male': 'mortality_male', ' Female': 'mortality_female'})
 
@@ -325,7 +325,7 @@ def get_country_data(df, regions, countries, products, years, average=True):
     year_d = {}
 
     selector = ''
-    print(df['datetime'], years)
+    print(set(df['datetime']), years)
 
     if products:
         df = df.loc[df[tj.PROD].isin(products)]
@@ -337,7 +337,7 @@ def get_country_data(df, regions, countries, products, years, average=True):
         selector = 'sub-region'
         df = df.loc[df[selector].isin(regions)]
 
-    years_set = set(df['datetime'].dt.year)
+    years_set = sorted(set(df['datetime'].dt.year))
     year_d['years'] = [y for y in years_set]
 
     if years:
@@ -374,7 +374,7 @@ def get_cluster_data(df, countries, products, years):
 
     date_selection = tj.selecton_date(df, year_min + '-01', year_max + '-12')
 
-    dic, data = tj.cluster(date_selection, NGroups = 4, category_dic = {tj.PROD: [], tj.COUNTRY: countries}, \
+    dic, data = tj.cluster(date_selection, NGroups = 4, category_dic = {tj.PROD: products, tj.COUNTRY: countries}, \
         mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True, dim = 20)
 
     l = []
@@ -387,10 +387,11 @@ def get_cluster_data(df, countries, products, years):
 
 def get_tsne_data(df, countries, products, labels):
 
-    dic = {tj.PROD: [], tj.COUNTRY: countries}
+    dic = {tj.PROD: products, tj.COUNTRY: countries}
 
     df = tj.df_pivot(df, dic, value = tj.PRICE)
     col = list(df.columns)
+
     for k, v in labels.items():
         for i in v:
             col[col.index(i)] = k
