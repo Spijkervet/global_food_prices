@@ -3,8 +3,8 @@ import numpy as np
 import pandas as pd
 import pickle
 import time
-# import matplotlib.pyplot as plt
-# from matplotlib.dates import drange
+import matplotlib.pyplot as plt
+from matplotlib.dates import drange
 from datetime import datetime
 import cluster as clus
 import copy
@@ -486,14 +486,15 @@ def df_to_np_date_price(df, selectDic = {PROD : ['Millet']}, value = PRICE):
     condition = (df[PROD] != 'tmp')
     df['Info'] = ""
     for col, selection in selectDic.items():
-        if df['Info'].ix[0] != "":
-            df['Info'] += ' - '
+        # if df['Info'].ix[0] != "":
+        #     df['Info'] += ' - '
 
         if selection:
             condition &= (df[col].isin(selection))
             # for s in selection:
             #     condition &= (df[col].str.contains(s) == True)
-        df['Info'] += df[col]
+        df['Info'] +=  df[col] + ' - '
+        # df['Info'] += df[col]
 
 
     df = df.loc[condition]
@@ -608,30 +609,30 @@ def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, m
         i += 1
 
     # plot de geselecteerde data
-    plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
-    for i, row in enumerate(data):
-        # if i == 0:
-        #     continue
-        # if i > 3:
-        #     break
-        D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
-        plt.plot(D, row, label=categories[i])
-
-    # # plot de cluster gemiddelde
-    # for i in range(NGroups):
+    # plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
+    # for i, row in enumerate(data):
+    #     # if i == 0:
+    #     #     continue
+    #     # if i > 3:
+    #     #     break
     #     D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
-    #     if mode == 2:
-    #         plt.plot(D, datagroup.NewGroupAvg[i, :data.shape[1]], label=i)
-    #     else:
-    #         plt.plot(D, datagroup.NewGroupAvg[i, :], label=i)
-
-    # plot
-    plt.rcParams.update({'font.size': 16})
-    plt.rcParams['legend.fontsize'] = 16
-    plt.legend(fancybox=True,loc="best",framealpha=0.8)
-    plt.ylabel('USD ($)', fontsize=16)
-    plt.xlabel('Datum (jaren)', fontsize=16)
-    plt.show(True)
+    #     plt.plot(D, row, label=categories[i])
+    #
+    # # # plot de cluster gemiddelde
+    # # for i in range(NGroups):
+    # #     D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
+    # #     if mode == 2:
+    # #         plt.plot(D, datagroup.NewGroupAvg[i, :data.shape[1]], label=i)
+    # #     else:
+    # #         plt.plot(D, datagroup.NewGroupAvg[i, :], label=i)
+    #
+    # # plot
+    # plt.rcParams.update({'font.size': 16})
+    # plt.rcParams['legend.fontsize'] = 16
+    # plt.legend(fancybox=True,loc="best",framealpha=0.8)
+    # plt.ylabel('USD ($)', fontsize=16)
+    # plt.xlabel('Datum (jaren)', fontsize=16)
+    # plt.show(True)
     return dic, data
 
 def selecton_date(df, low, high):
