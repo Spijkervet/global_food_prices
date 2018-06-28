@@ -72,8 +72,6 @@ $("#resetButton").on('click', function() {
   setMapColor(defaultMapColor);
 
   resetZoom();
-
-  dc.renderAll();
 });
 
 
@@ -909,11 +907,12 @@ function get_country_data() {
         year_array.push(year);
       }
     }
-    dc.renderAll();
   });
 }
 
 
 $(document).ready(function() {
-  $("#country_select").select2({ width: 'resolve' });    
+  $("#region_select").select2({ width: 'resolve' });
+  $("#country_select").select2({ width: 'resolve' });
+  $("#product_select").select2({ width: 'resolve' });
 });
