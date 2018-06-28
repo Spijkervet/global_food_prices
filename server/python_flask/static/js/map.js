@@ -1,4 +1,6 @@
 
+var arcs = Array();
+
 var defaultMapColor = 'rgb(66, 66, 66)';
 var highlightMapColor = 'rgb(180, 180, 180)';
 var selectedMapColor = 'rgb(221, 167, 67)';
@@ -52,8 +54,16 @@ var map = new Datamap({
   }
 });
 
-function setMapColor(color, country = '') {
+function getCountryCode(country) {
+  var countries = Datamap.prototype.worldTopo.objects.world.geometries;
+  for (var j = 0; j < countries.length - 1; j++) {
+    if (countries[j].properties.name.indexOf(country) >= 0) {
+      return countries[j].id;
+    }
+  }
+}
 
+function setMapColor(color, country = '') {
   var countries = Datamap.prototype.worldTopo.objects.world.geometries;
   if (country) {
     for (var j = 0; j < countries.length - 1; j++) {
@@ -79,4 +89,41 @@ function setMapColor(color, country = '') {
       catch (e) {}
     }
   }
+}
+
+function clearArcs() {
+  arcs = Array();
+}
+
+function drawArc(frequency, origin_lat, origin_lon, dest_lat, dest_lon) {
+
+  var new_arc = {
+    origin: {
+      latitude: origin_lat,
+      longitude: origin_lon
+    },
+    destination: {
+      latitude: dest_lat,
+      longitude: dest_lon
+    },
+    options: {
+      strokeWidth: frequency / 10000,
+      strokeColor: 'rgba(100, 200, 200, 0.8)',
+      greatArc: true
+    }
+  };
+
+  arcs.push(new_arc);
+  map.arc(arcs, {strokeWidth: 2});
+}
+
+var colors = d3.scale.category10();
+
+function setMortality(country, mortality_rate) {
+
+  var code = getCountryCode(country);
+  console.log('color', code, country, mortality_rate);
+  var obj = {};
+  obj[code] = 'rgb(150, 10, 10)';
+  map.updateChoropleth(obj);
 }

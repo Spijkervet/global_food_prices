@@ -6,55 +6,101 @@
 var dimensions = {};
 var ndx = crossfilter();
 
+var dataset = 0;
+var region_ndx = crossfilter();
+var country_ndx = crossfilter();
+var product_ndx = crossfilter();
 
+var correlationChart;
 
-var country_select = dc.selectMenu('#country_select');
-// var city_select = dc.selectMenu('#city_select');
-// var select1 = dc.selectMenu('#select1');
-
-function cluster_countries(countries) {
-  console.log(countries);
-
-  var url = create_url("/cluster?", countries);
-
-  d3.json(url, function(data) {
-
-    console.log("GOT DATA", data);
-
-    var clusterTable = dc.dataTable("#cluster_table");
-
-    var ndx = crossfilter(data);
-    let dimensionCategory = ndx.dimension(item => item.cluster_group);
-
-    // for (var i = 0; i < country_data.length; i++) {
-    //   setMapColor(selectedMapColor, country_data[i].Iadm0_name);
-    // }
-
-    clusterTable.width(768)
-    .height(480)
-    .dimension(dimensionCategory)
-    .group(function(d) { return ''; })
-    .columns([
-      {
-        label: "Cluster",
-        format: function (d) {
-          return d.cluster_group;
-        }
-      }
-    ]);
-
-    clusterTable.render();
-  });
+function getFilteredDimension(dimension) {
+  var a = Array();
+  for (var i in dimension) {
+    if (dimension[i]) {
+      a.push(i);
+    }
+  }
+  return a;
 }
+
+function filterDimension(dimension, filter) {
+  for (var i in dimension) {
+    if (filter.indexOf(i) > -1) {
+      dimension[i] = true;
+    }
+    else {
+      dimension[i] = false;
+    }
+  }
+  return dimension;
+}
+
+function createSelectMenu(id, array) {
+  $("#" + id).html('');
+  $("#" + id).append('<option value=""></option>');
+  var d = {}
+  for (var i = 0; i < array.length; i++) {
+    d[array[i]] = false;
+    $("#" + id).append('<option value="' + array[i] + '">' + array[i] + '</option>');
+  }
+  return d;
+}
+
+var selected_regions = '';
+var selected_countries = '';
+var selected_products = '';
+
+var correlation = '';
+var correlator = '';
+
+var selected_years = new Set();
+var year_buttons = {};
+
+var year_array = Array();
+
+
+getYears();
+
+
+$("#resetButton").on('click', function() {
+  country_ndx.remove();
+  product_ndx.remove();
+  dimensions = {};
+  deSelectAllYears();
+  setMapColor(defaultMapColor);
+
+  resetZoom();
+
+  dc.renderAll();
+});
+
 
 function numberFormat(number, decimals=2) {
   return "$" + number.toFixed(decimals);
 }
 
-function create_url(endpoint, countries) {
-  var url = endpoint;
-  for (var i = 0; i < countries.length; i++) {
-    url += "&country=" + countries[i];
+function create_url(endpoint) {
+
+
+  var url = endpoint + "&dataset=" + dataset;
+  url += '&correlation=' + correlation +'&correlator=' + correlator;
+
+  for (var i in selected_regions) {
+    if (selected_regions[i]) {
+      url += "&region=" + i;
+    }
+  }
+
+  for (var i in selected_countries) {
+    if (selected_countries[i]) {
+      url += "&country=" + i;
+    }
+  }
+
+  for (var i in selected_products) {
+    if (selected_products[i]) {
+      url += "&product=" + i;
+    }
   }
 
   for (var it = selected_years.values(), val=null; val=it.next().value; ) {
@@ -63,28 +109,7 @@ function create_url(endpoint, countries) {
   return url;
 }
 
-//
-// $.getJSON("/all_products", function(data) {
-//
-//   var ndx = crossfilter(data);
-//   productDimension = ndx.dimension(function (d) {
-//     return d.product;
-//   });
-//
-//   product_select.dimension(productDimension)
-//   .group(productDimension.group())
-//   .multiple(true)
-//   .numberVisible(10)
-//   .controlsUseVisibility(true);
-//
-//   product_select.render();
-// });
 
-var country_ndx = crossfilter();
-var selected_years = new Set();
-var year_buttons = {};
-
-var year_array = Array();
 
 function deSelectAllYears() {
 
@@ -92,8 +117,14 @@ function deSelectAllYears() {
     selected_years.delete(year_array[i]);
     year_buttons[year_array[i]].removeClass('active');
   }
+}
 
-  var countries = country_select.filters();
+function getSelectedYears() {
+  var years = Array();
+  for (var it = selected_years.values(), val=null; val=it.next().value; ) {
+    years.push(val);
+  }
+  return years;
 }
 
 function selectAllYears() {
@@ -103,9 +134,7 @@ function selectAllYears() {
     year_buttons[year_array[i]].addClass('active');
   }
 
-  var countries = country_select.filters();
-  get_country_data(countries);
-  // cluster_countries(countries);
+  get_country_data();
 }
 
 function selectYear() {
@@ -121,538 +150,758 @@ function selectYear() {
     selected_years.delete(year);
   }
 
-  var countries = country_select.filters();
-  get_country_data(countries);
+  get_country_data();
+}
 
-  // cluster_countries(countries);
+function getYears() {
+
+  $.getJSON(create_url("/years?"), function(data) {
+
+    country_ndx.add(data);
+
+    dimensions.yearDimension = country_ndx.dimension(function (d) {
+      return d.year;
+    });
+
+    var year_el = $("#years");
+    year_el.html('');
+
+    for (var i = 0; i < data.length; i++) {
+      var year = data[i].year;
+      var el = $('<button type="button" class="year-btn" disabled>' + year + '</button>');
+      el.click(selectYear);
+
+      year_buttons[year] = el;
+      year_el.append(el);
+    }
+
+    var el = $('<button type="button" class="year-btn">' + 'All' + '</button>');
+    el.click(selectAllYears);
+    year_buttons['all'] = el;
+    year_el.append(el);
+
+    var el = $('<button type="button" class="year-btn">' + 'None' + '</button>');
+    el.click(deSelectAllYears);
+    year_buttons['none'] = el;
+    year_el.append(el);
+    year_el.fadeIn();
+  });
 
 }
 
-$.getJSON("/years", function(data) {
-  country_ndx.add(data);
+var country_products = {};
 
-  dimensions.yearDimension = country_ndx.dimension(function (d) {
-    return d.year;
-  });
-
-  var year_el = $("#years");
-
-  for (var i = 0; i < data.length; i++) {
-    var year = data[i].year;
-    var el = $('<button type="button" class="year-btn" disabled>' + year + '</button>');
-    el.click(selectYear);
-
-    year_buttons[year] = el;
-    year_el.append(el);
-  }
-
-  var el = $('<button type="button" class="year-btn">' + 'All' + '</button>');
-  el.click(selectAllYears);
-  year_buttons['all'] = el;
-  year_el.append(el);
-
-  var el = $('<button type="button" class="year-btn">' + 'None' + '</button>');
-  el.click(deSelectAllYears);
-  year_buttons['none'] = el;
-  year_el.append(el);
+$.getJSON("/all_regions", function(data) {
+  selected_regions = createSelectMenu('region_select', data);
 });
 
+getAllCountries();
+function getAllCountries() {
+  $.getJSON("/all_countries", function(data) {
+    selected_countries = createSelectMenu('country_select', data);
+  });
+}
 
+$("#correlation_select").change(function() {
+  correlation = $(this).val()[0];
+  get_country_data();
+  correlationChart.setTitle({text: "Correlation between " + correlation + " and " + correlator});
+});
 
-$.getJSON("/all_countries", function(data) {
-  country_ndx.add(data);
-  dimensions.countryDimension = country_ndx.dimension(function (d) {
-    return d.country;
+$("#correlator_select").change(function() {
+  correlator = $(this).val()[0];
+  get_country_data();
+  correlationChart.setTitle({text: "Correlation between " + correlation + " and " + correlator})
+});
+
+$("#dataset_select").change(function() {
+  dataset = $(this).val()[0];
+  select_countries();
+});
+
+$("#region_select").change(function(e) {
+
+  var regions = $(this).val();
+  filterDimension(selected_regions, regions);
+  select_products();
+
+  setMapColor(defaultMapColor);
+
+  var url = create_url("/all_countries?");
+  $.getJSON(url, function(data) {
+
+    if (data) {
+      selected_countries = createSelectMenu('country_select', data);
+    }
+    else {
+      getAllCountries();
+    }
+
+    select_countries();
   });
 
-  country_select.dimension(dimensions.countryDimension)
-  .group(dimensions.countryDimension.group())
-  .multiple(true)
-  .numberVisible(3)
-  .controlsUseVisibility(true);
+  // getRefugees(countries);
+})
 
-  country_select.render();
-});
+$("#country_select").change(function(e) {
+
+  var countries = $(this).val();
+  filterDimension(selected_countries, countries);
+
+  setMapColor(defaultMapColor);
+  select_products();
+  select_countries(true);
+})
 
 $("#product_select").change(function() {
-  var product = $(this).find(':selected').val();
-  setMapColor(defaultMapColor);
-  average_product(product);
+  var products = $(this).val();
+  filterDimension(selected_products, products);
+  select_countries();
 })
 
-$("#country_select").change(function() {
-  var countries = country_select.filters();
-  setMapColor(defaultMapColor);
-  select_countries(countries);
 
-  // if (selected_years.size) {
-  //   cluster_countries(countries);
-  // }
-})
 
-function select_countries(countries) {
+function getRefugeeDestinations() {
+  var url = create_url("refugees_destinations?");
+  $.getJSON(url, function (data) {
 
-  get_country_data(countries);
-  for (var i = 0; i < countries.length; i++) {
-    setMapColor(highlightMapColor, countries[i]);
+    var destinations = JSON.parse(data['destinations']);
+
+
+    console.log(destinations, url);
+
+    var frequency = Array();
+    var lat_lon = Array();
+    clearArcs();
+    for (var d in destinations) {
+      frequency.push([destinations[d][0], destinations[d][1]]);
+      drawArc(destinations[d][1], destinations[d][2], destinations[d][3], destinations[d][4], destinations[d][5]);
+    }
+
+
+    Highcharts.chart('refugeesBarChart', {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: 'Refugees by Destination'
+      },
+      subtitle: {
+        text: '...'
+      },
+      xAxis: {
+        type: 'category'
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Population (millions)',
+          align: 'high'
+        },
+        labels: {
+          overflow: 'justify'
+        }
+      },
+      tooltip: {
+        valueSuffix: ' millions'
+      },
+      legend: {
+        enabled: false
+      },
+      plotOptions: {
+        series: {
+          borderWidth: 0,
+          dataLabels: {
+            enabled: true,
+            // format: '{point.y:.1f}'
+          }
+        }
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        name: "Test",
+        "colorByPoint": true,
+        data: frequency
+
+      }]
+    });
+  });
+}
+
+function getRefugees() {
+
+  var s_years = getSelectedYears();
+  if (!s_years.length) {
+    $("#refugeesCountry").html("1990 - 2017");
+  }
+  else {
+    var html = '';
+    for (var i = s_years.length - 1; i >= 0; i--) {
+      html += s_years[i] + ', ';
+    }
+    $("#refugeesCountry").html(html);
+  }
+
+  getRefugeeDestinations();
+
+  var seriesOptions = [],
+  seriesCounter = 0,
+  totalRefugees = 0;
+
+  var countries = getFilteredDimension(selected_countries);
+  $.each(countries, function (i, name) {
+
+    var url = create_url("refugees?country=" + name);
+    $.getJSON(url, function (data) {
+
+      console.log("REFUGEES", url);
+
+      var timeData = JSON.parse(data['time']);
+      totalRefugees += data.total;
+      seriesOptions[i] = {
+        name: name,
+        data: timeData,
+        point: {
+          events: {
+            click: function () {
+              console.log(this);
+            }
+          }
+        }
+      }
+
+      seriesCounter += 1;
+
+      if (seriesCounter === countries.length) {
+        Highcharts.setOptions(Highcharts.theme);
+        var chart = Highcharts.chart('refugeesChart', {
+          chart: {
+            events: {
+              selection: function (event) {
+                attachZoomChart(event);
+
+              }
+            },
+            zoomType: 'x'
+          },
+          title: {
+            text: 'Frequency of Refugees'
+          },
+
+          subtitle: {
+            text: 'Refugees'
+          },
+
+          xAxis: {
+            type: 'datetime',
+            labels: {
+              format: '{value:%Y-%b-%e}'
+            },
+          },
+          // rangeSelector: {
+          //   floating: true,
+          //   y: -65,
+          //   verticalAlign: 'bottom'
+          // },
+
+          // navigator: {
+          //   margin: 60
+          // },
+          series: seriesOptions
+        });
+
+        if (chart) {
+          lineCharts.push(chart);
+        }
+        var counter = new CountUp('totalRefugees', 0, Number(totalRefugees), 0, 1.0);
+        counter.start();
+      }
+    });
+  });
+
+
+
+
+
+}
+
+function select_products() {
+
+  var url = create_url("/country_products?");
+
+  $.getJSON(url, function(data) {
+    selected_products = createSelectMenu('product_select', data);
+  });
+}
+
+function select_countries() {
+
+  // var countries = country_select.filters();
+
+  for (c in selected_countries) {
+
+    var color = selected_countries[c] ? selectedMapColor : highlightMapColor;
+    setMapColor(color, c);
+  }
+  get_country_data();
+}
+
+var lineCharts = Array();
+
+function resetZoom() {
+  for (var i = 0; i < lineCharts.length; i++) {
+    if (lineCharts[i].xAxis) {
+      lineCharts[i].xAxis[0].setExtremes(null,null);
+    }
+  }
+}
+
+function attachZoomChart(event) {
+  if (event.resetSelection) {
+    resetZoom();
+  }
+  if (event.xAxis) {
+    var min = event.xAxis[0].min;
+    var max = event.xAxis[0].max;
+
+    for (var i = 0; i < lineCharts.length; i++) {
+      if (lineCharts[i].xAxis) {
+        lineCharts[i].xAxis[0].update({min: min, max: max});
+      }
+    }
   }
 }
 
 
-$("#select1").change(function() {
-  var country = $(this).find(':selected').val();
+function plotCorrelation(div, data, title='') {
 
-  var countries = Datamap.prototype.worldTopo.objects.world.geometries;
-  for (var i = 0, j = countries.length; i < j; i++) {
-    if (country == countries[i].properties.name) {
-      try {
-        var obj = {};
-        obj[countries[i].id] = highlightMapColor;
-        map.updateChoropleth(obj);
+  console.log("CORRElATION", data);
+
+  var x_categories = Array(),
+  y_categories = Array(),
+  series_data = Array(),
+  x = 0;
+
+  for (var d in data) {
+    y = 0;
+    for (var i in data[d]) {
+      series_data.push([x, y, data[d][i]]);
+      y += 1;
+    }
+    x_categories.push(d);
+    y_categories.push(d);
+    x += 1;
+  }
+
+  console.log(series_data);
+
+  correlationChart = Highcharts.chart(div, {
+
+    chart: {
+      type: 'heatmap',
+      marginTop: 40,
+      marginBottom: 80,
+      plotBorderWidth: 1,
+      height: '500px'
+    },
+
+
+    title: {
+      text: title
+    },
+
+    xAxis: {
+      categories: x_categories,
+      scrollbar: {
+        enabled: true
       }
-      catch (e) {}
-      break;
+    },
+
+    yAxis: {
+      categories: y_categories,
+      title: null,
+      scrollbar: {
+        enabled: true
+      }
+    },
+
+    colorAxis: {
+      min: 0,
+      minColor: '#FFFFFF',
+      maxColor: Highcharts.getOptions().colors[0]
+    },
+
+    legend: {
+      align: 'right',
+      layout: 'vertical',
+      margin: 0,
+      verticalAlign: 'top',
+      y: 25,
+      symbolHeight: 280
+    },
+
+    tooltip: {
+      formatter: function () {
+        return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> sold <br><b>' +
+        this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
+      }
+    },
+
+    series: [{
+      name: 'Sales per employee',
+      borderWidth: 1,
+      data: series_data,
+      dataLabels: {
+        enabled: true,
+        color: '#000000'
+      }
+    }]
+
+  });
+}
+
+function plotPrices(div, type, data, title='') {
+
+
+  var product_data = data['data'],
+  seriesOptions = [];
+
+  for (p in selected_products) {
+    var timeData = [];
+    for (var j = 0; j < product_data.length; j++) {
+      if (p == product_data[j].cm_name) {
+        timeData.push([product_data[j].datetime, product_data[j][type]]);
+      }
+    }
+    if (timeData.length) {
+      seriesOptions.push({
+        name: p,
+        data: timeData,
+        point: {
+          events: {
+            click: function () {
+              console.log(this);
+            }
+          }
+        }
+      });
     }
   }
-})
+
+  var chart = Highcharts.chart(div, {
+
+    chart: {
+      height: '500px',
+      events: {
+        selection: function (event) {
+
+          attachZoomChart(event);
+
+        }
+      },
+      zoomType: 'x'
+    },
+
+    title: {
+      text: title
+    },
+
+    subtitle: {
+      text: '...'
+    },
+
+    xAxis: {
+      type: 'datetime',
+      labels: {
+        format: '{value:%Y-%b-%e}'
+      },
+      title: {
+        text: 'Date'
+      }
+    },
+    yAxis: {
+      title: {
+        text: 'USD'
+      }
+    },
+    // rangeSelector: {
+    //   floating: true,
+    //   y: -65,
+    //   verticalAlign: 'bottom'
+    // },
+    //
+    // navigator: {
+    //   margin: 60,
+    //   enabled: true
+    // },
+    series: seriesOptions
+  });
+
+  if (chart) {
+    lineCharts.push(chart);
+  }
+}
+
+function createTSNEPlot(data) {
+
+  var tsne_data = JSON.parse(data['data']);
+  var tsne_labels = data['labels'];
+
+  Array.prototype.insert = function ( index, item ) {
+    this.splice( index, 0, item );
+  };
 
 
-function get_country_data(countries) {
+  var formatted_series = Array();
+  for (var i = 0; i < tsne_labels.length; i++) {
+
+    if (typeof(formatted_series[tsne_labels[i]]) == 'undefined') {
+      formatted_series[tsne_labels[i]] = {}
+      formatted_series[tsne_labels[i]]['data'] = []
+    }
+
+    formatted_series[tsne_labels[i]]['data'].push([tsne_data[i][0], tsne_data[i][1]]);
+    formatted_series[tsne_labels[i]]['name'] = tsne_labels[i].toString();
+
+    // formatted_series.insert(tsne_labels[i], tsne_data[i]);
+  }
 
 
+  Highcharts.chart('tsne_plot', {
+    chart: {
+      type: 'scatter',
+      zoomType: 'xy'
+    },
+    title: {
+      text: 'TSNE'
+    },
+    subtitle: {
+      text: '...'
+    },
+    xAxis: {
+      visible: false
+    },
+    yAxis: {
+      visible: false
+    },
+    legend: {
+      title: {
+        text: 'Cluster ID',
+      },
+      layout: 'vertical',
+      align: 'left',
+      verticalAlign: 'top',
+      floating: true,
+      backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+      borderWidth: 1
+    },
+    plotOptions: {
+      scatter: {
+        marker: {
+          radius: 5,
+          states: {
+            hover: {
+              enabled: true,
+              lineColor: 'rgb(100,100,100)'
+            }
+          }
+        },
+        states: {
+          hover: {
+            marker: {
+              enabled: false
+            }
+          }
+        },
+        tooltip: {
+          headerFormat: '<b>{series.name}</b><br>',
+          pointFormat: '{point.x}, {point.y}'
+        }
+      }
+    },
+    series: formatted_series
+    // , {
+    //   name: 'TEST',
+    //   color: '',
+    //   data: []
+    // }
+
+  });
+
+}
+
+
+function clusterData() {
+
+  var url = create_url("/cluster?");
+  console.log('CLUSTER', url);
+
+  $.getJSON(url, function (data) {
+
+    console.log('CLUSTER', data, url);
+
+    var kmeans = data['kmeans'];
+    var table = '<thead><tr><th>ID</th><th>Cluster</th></tr></thead>';
+    table += '<tbody>';
+
+    for (var i = 0; i < kmeans.length; i++) {
+      table += '<tr>';
+
+      table += '<td>' + Number(kmeans[i]['label']) + '</td>';
+
+      table += '<td>';
+      for (var j = 0; j < kmeans[i]['cluster_group'].length; j++) {
+        table += kmeans[i]['cluster_group'][j] + ', ';
+      }
+      table += '</td>';
+      table += '</tr>';
+    }
+
+    table += '</tbody>';
+    $("#cluster_table").html(table);
+
+    $("#cluster_table").dataTable();
+
+    var tsne = data['tsne'];
+    createTSNEPlot(tsne);
+  });
+}
+
+function getMortality() {
+  var url = create_url('/mortality?');
+  $.getJSON(url, function(data) {
+    var data = JSON.parse(data);
+    plotMortality('mortality_chart', 'mortality_sum', data, title='Mortality');
+  });
+}
+
+
+function plotMortality(div, type, data, title='') {
+
+
+  var seriesOptions = [];
+  for (p in selected_countries) {
+    var timeData = [],
+    name = p;
+    for (var j = 0; j < data.length; j++) {
+      if (p == data[j].adm0_name || data[j]['sub-region']) {
+
+        setMortality(p, data[j]['mortality_sum']);
+        // if (data[j]['sub-region']) {
+        //   name = data[j]['sub-region'];
+        // }
+        var d = [data[j].datetime, data[j]['mortality_sum']];
+        timeData.push(d);
+      }
+    }
+
+
+
+
+    if (timeData.length) {
+      seriesOptions.push({
+        name: name,
+        data: timeData,
+        point: {
+          events: {
+            click: function () {
+              console.log(this);
+            }
+          }
+        }
+      });
+    }
+  }
+
+  console.log("DEATH", data, seriesOptions);
+
+  var chart = Highcharts.chart(div, {
+
+    chart: {
+      height: '500px',
+      events: {
+        selection: function (event) {
+
+          attachZoomChart(event);
+
+        }
+      },
+      zoomType: 'x'
+    },
+
+    title: {
+      text: title
+    },
+
+    subtitle: {
+      text: '...'
+    },
+
+    xAxis: {
+      type: 'datetime',
+      labels: {
+        format: '{value:%Y-%b-%e}'
+      },
+    },
+    // rangeSelector: {
+    //   floating: true,
+    //   y: -65,
+    //   verticalAlign: 'bottom'
+    // },
+    //
+    // navigator: {
+    //   margin: 60,
+    //   enabled: true
+    // },
+    series: seriesOptions
+  });
+
+  if (chart) {
+    lineCharts.push(chart);
+  }
+}
+
+function getCorrelation() {
+
+  console.log("CORRELATION");
+
+  var url = create_url('/correlation?');
+  console.log(url);
+  $.getJSON(url, function(data) {
+
+
+    var data = JSON.parse(data);
+    plotCorrelation('correlation_chart', data, title='Correlation');
+  });
+}
+
+function get_country_data() {
+
+
+  getRefugees();
+  getCorrelation();
+  getMortality();
   $('.year-btn').removeClass('accessible');
 
-  var url = create_url("/country?", countries);
+  var url = create_url("/country?");
 
   d3.json(url, function(data) {
 
-    if (selected_years.size) {
+    clusterData();
 
-      console.log("GETTING COUNTRY DATA", url, data);
+    plotPrices('gradient_chart', 'Gradient', data, title='Gradient');
+    plotPrices('prices_chart', 'mp_price', data, title='Prices');
 
-      var chart = dc.dataTable("#test");
-      var lineChart = dc.compositeChart("#test_2");
-      var barChart = dc.barChart("#test_3");
-
-      var country_data = data['data'];
-
-      var unique_products = [];
-      country_data.filter(function(item){
-        var i = unique_products.indexOf(item.cm_name);
-        if(i <= -1) {
-          unique_products.push(item.cm_name);
-        }
-        return null;
-      });
-
-      var ndx = crossfilter(country_data);
-      let dimensionCategory = ndx.dimension(item => item.adm0_name);
-
-      for (var i = 0; i < country_data.length; i++) {
-        setMapColor(selectedMapColor, country_data[i].adm0_name);
-      }
-
-      chart.width(768)
-      .height(480)
-      .dimension(dimensionCategory)
-      .group(function(d) { return ''; })
-      .columns([
-        {
-          label: "Country",
-          format: function (d) {
-            return d.adm0_name;
-          }
-        },
-        {
-          label: "Product",
-          format: function (d) {
-            return d.cm_name;
-          }
-        },
-        {
-          label: "USD",
-          format: function (d) {
-            return numberFormat(d.mp_price);
-          }
-        },
-        {
-          label: "Date",
-          format: function (d) {
-            return new Date(d.datetime).toISOString().split('T')[0];
-          }
-        },
-      ]);
-
-      let timeCategory = ndx.dimension(item => item.datetime);
-
-      var productGroups = new Set;
-      for (var i = 0; i < country_data.length; i++) {
-        productGroups.add(country_data[i]['cm_name']);
-      }
-
-      var lines = []
-      productGroups = Array.from(productGroups);
-
-      var productGroup = timeCategory.group().reduceSum(dc.pluck('cm_name'));
-
-
-      var names = country_data.map(function(row) { return row.cm_name; });
-      names = names.filter(function(item, pos, self) {
-        return self.indexOf(item) == pos;
-      })
-
-
-      var g_colors = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
-      var positions = timeCategory.group().reduce(
-        function(p, v) { // add
-          p[v["cm_name"]] = (p[v["mp_price"]] || 0) + v["mp_price"];
-          return p;
-        },
-        function(p, v) { // remove
-          p[v["cm_name"]] -= v["mp_price"];
-          return p;
-        },
-        function() { // initial
-          return {};
-        });
-
-
-        console.log("COMPOSING FOR", url);
-        lineChart.height(400)
-        .legend(dc.legend().x(60).y(10).itemHeight(13).gap(2))
-        .transitionDuration(500)
-        .mouseZoomable(true)
-        .margins({top: 10, right: 10, bottom: 20, left: 40})
-        // .dimension(timeCategory)
-        // .group(productGroup)
-        .compose(
-
-          names.map(function(name, idx) {
-            return dc.lineChart(lineChart)
-            // .renderArea(true)
-            .mouseZoomable(true)
-            .dimension(timeCategory)
-            // .colors()
-            .colors(function() {
-              return g_colors[idx];
-            })
-            .group(positions, name)
-            .round(d3.time.month.round)
-            .xUnits(d3.time.months)
-            .renderHorizontalGridLines(true)
-            .valueAccessor(function(kv) {
-              return kv.value[name];
-            });
-          })
-        )
-        .brushOn(true)
-        // .elasticY(true)
-        .x(d3.time.scale().domain(d3.extent(country_data, function(d) { return d.datetime; })))
-        .xAxis();
-
-        lineChart.on('pretransition.hideshow', function(chart) {
-          chart.selectAll('g.dc-legend .dc-legend-item')
-          .on('click.hideshow', function(d, i) {
-            var subchart = chart.select('g.sub._' + i);
-            var visible = subchart.style('visibility') !== 'hidden';
-            subchart.style('visibility', function() {
-              return visible ? 'hidden' : 'visible';
-            });
-            d3.select(this).style('opacity', visible ? 0.2 : 1);
-          });
-        });
-
-        var productDimension = ndx.dimension(function(d) {return d.cm_name;}),
-        productSum = productDimension.group().reduceSum(function(d) {return d.mp_price;});
-        barChart
-        .x(d3.scale.linear().domain([]))
-        .xUnits(dc.units.ordinal)
-        .brushOn(false)
-        .xAxisLabel('Product')
-        .yAxisLabel('USD')
-        .dimension(productDimension)
-        .barPadding(0.1)
-        .outerPadding(0.05)
-        .group(productSum);
-      }
+    if (data != null) {
       for (var i = 0; i < data['years'].length; i++) {
         var year = data['years'][i];
         year_buttons[year].addClass('accessible');
         year_buttons[year].prop('disabled', false);
         year_array.push(year);
       }
-
-      dc.renderAll();
-    });
-  }
-
-
-  //
-  // function average_product(prod_id) {
-  //
-  //   var pieChart = dc.pieChart("#pieChart");
-  //   var chart = dc.dataTable("#test");
-  //
-  //   d3.json("/avg_prod/" + prod_id, function(data) {
-  //     // $.getJSON("/avg_prod/" + prod_id, function(data) {
-  //
-  //     var ndx = crossfilter(data);
-  //
-  // var countries = Datamap.prototype.worldTopo.objects.world.geometries;
-  // for (var i = 0; i < data.length; i++) {
-  //   setMapColor(highlightMapColor, data[i].country);
-  // }
-  //
-  //
-  //     dimensions.cityDimension = ndx.dimension(function (d) {
-  //       return d.country;
-  //     }),
-  //     cityGroup = dimensions.cityDimension.group().reduceSum(function (d) {
-  //       return d.average;
-  //     });
-  //
-  //
-  //     // select1.dimension(dimensions.cityDimension)
-  //     // .group(dimensions.cityDimension.group())
-  //     // .multiple(true)
-  //     // .numberVisible(10)
-  //     // .controlsUseVisibility(true);
-  //
-  //
-  //     pieChart.width(200)
-  //     .height(200)
-  //     .slicesCap(4)
-  //     .dimension(dimensions.cityDimension)
-  //     .group(cityGroup);
-  //
-  //     chart.width(768)
-  //     .height(480)
-  //     .dimension(dimensions.cityDimension)
-  //     .group(function(d) { return d.country; })
-  //     .columns([
-  //       'average',
-  //       'lat',
-  //       'lon',
-  //     ]);
-  //
-  //
-  //     // dimensions.cityDimension.filter('Afghanistan');
-  //
-  //     dc.renderAll();
-  //
-  //   });
-  // }
-  //
-  //
-  // function render_plots() {
-  //
-  //
-  // }
-  //
-  // render_plots();
-
-
-  function test_graph(url) {
-    // basic SVG setup
-    var margin = { top: 20, right: 100, bottom: 40, left: 100 };
-    var height = 500 - margin.top - margin.bottom;
-    var width = 960 - margin.left - margin.right;
-
-    var svg = d3.select("body").append("svg")
-    .attr("width",width + margin.left + margin.right)
-    .attr("height",height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    // setup scales - the domain is specified inside of the function called when we load the data
-    var xScale = d3.time.scale().range([0, width]);
-    var yScale = d3.scale.linear().range([height, 0]);
-    var color = d3.scale.category10();
-
-    // setup the axes
-    var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
-    var yAxis = d3.svg.axis().scale(yScale).orient("left");
-
-    // create function to parse dates into date objects
-    var parseDate = d3.time.format("%Y-%m-%d").parse;
-    var formatDate = d3.time.format("%Y-%m-%d");
-    var bisectDate = d3.bisector(function(d) { return d.date; }).left;
-
-    // set the line attributes
-    var line = d3.svg.line()
-    .interpolate("basis")
-    .x(function(d) { return xScale(d.date); })
-    .y(function(d) { return yScale(d.close); });
-
-    var focus = svg.append("g").style("display","none");
-
-
-    // import data and create chart
-    d3.json(url, function(d) {
-
-      console.log(d);
-
-      return {
-        date: parseDate(d.data.datetime),
-        Amazon: +d.Amazon,
-        Apple: +d.Apple,
-        Facebook: +d.Facebook,
-        Google: +d.Google,
-        IBM: +d.IBM,
-        Microsoft: +d.Microsoft
-      };
-    },
-    function(error,data) {
-
-      // sort data ascending - needed to get correct bisector results
-      // data.sort(function(a,b) {
-      // 	return a.date - b.date;
-      // });
-      //
-      // // color domain
-      // color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
-      //
-      // // create stocks array with object for each company containing all data
-      // var stocks = color.domain().map(function(name) {
-      // 	return {
-      // 		name: name,
-      // 		values: data.map(function(d){
-      // 			return {date: d.date, close: d[name]};
-      // 		})
-      // 	};
-      // });
-      //
-      // // add domain ranges to the x and y scales
-      // xScale.domain([
-      // 	d3.min(stocks, function(c) { return d3.min(c.values, function(v) { return v.date; }); }),
-      // 	d3.max(stocks, function(c) { return d3.max(c.values, function(v) { return v.date; }); })
-      // ]);
-      // yScale.domain([
-      // 	0,
-      // 	// d3.min(stocks, function(c) { return d3.min(c.values, function(v) { return v.close; }); }),
-      // 	d3.max(stocks, function(c) { return d3.max(c.values, function(v) { return v.close; }); })
-      // ]);
-      //
-      // // add the x axis
-      // svg.append("g")
-      // 	.attr("class", "x axis")
-      // 	.attr("transform", "translate(0," + height + ")")
-      // 	.call(xAxis);
-      //
-      // // add the y axis
-      // svg.append("g")
-      // 		.attr("class", "y axis")
-      // 		.call(yAxis)
-      // 	.append("text")
-      // 		.attr("transform","rotate(-90)")
-      // 		.attr("y",-60)
-      // 		.attr("dy",".71em")
-      // 		.style("text-anchor","end")
-      // 		.text("Price ($)");
-      //
-      // // add circle at intersection
-      // focus.append("circle")
-      // 	.attr("class","y")
-      // 	.attr("fill","none")
-      // 	.attr("stroke","black")
-      // 	.style("opacity",0.5)
-      // 	.attr("r",8);
-      //
-      // // add horizontal line at intersection
-      // focus.append("line")
-      // 	.attr("class","x")
-      // 	.attr("stroke","black")
-      // 	.attr("stroke-dasharray","3,3")
-      // 	.style("opacity",0.5)
-      // 	.attr("x1", 0)
-      // 	.attr("x2", width);
-      //
-      // // add vertical line at intersection
-      // focus.append("line")
-      // 	.attr("class","y")
-      // 	.attr("stroke","black")
-      // 	.attr("stroke-dasharray","3,3")
-      // 	.style("opacity",0.5)
-      // 	.attr("y1", 0)
-      // 	.attr("y2", height);
-      //
-      // // append rectangle for capturing if mouse moves within area
-      // svg.append("rect")
-      // 	.attr("width",width)
-      // 	.attr("height",height)
-      // 	.style("fill","none")
-      // 	.style("pointer-events","all")
-      // 	.on("mouseover", function() { focus.style("display", null); })
-      // 	.on("mouseout", function() { focus.style("display", "none"); })
-      // 	.on("mousemove", mousemove);
-      //
-      // // add the line groups
-      // var stock = svg.selectAll(".stockXYZ")
-      // 		.data(stocks)
-      // 	.enter().append("g")
-      // 		.attr("class","stockXYZ");
-      //
-      // // add the stock price paths
-      // stock.append("path")
-      // 	.attr("class","line")
-      // 	.attr("id",function(d,i){ return "id" + i; })
-      // 	.attr("d", function(d) {
-      // 		return line(d.values);
-      // 	})
-      // 	.style("stroke", function(d) { return color(d.name); });
-      //
-      //
-      // // add the stock labels at the right edge of chart
-      // var maxLen = data.length;
-      // stock.append("text")
-      // 	.datum(function(d) {
-      // 		return {name: d.name, value: d.values[maxLen - 1]};
-      // 	})
-      // 	.attr("transform", function(d) {
-      // 		return "translate(" + xScale(d.value.date) + "," + yScale(d.value.close) + ")";
-      // 	})
-      // 	.attr("id",function(d,i){ return "text_id" + i; })
-      //   .attr("x", 3)
-      //   .attr("dy", ".35em")
-      //   .text(function(d) { return d.name; })
-      //   .on("mouseover",function(d,i) {
-      //   	for (j=0; j < 6; j++) {
-      // 			if (i !== j) {
-      // 				d3.select("#id"+j).style("opacity",0.1);
-      // 				d3.select("#text_id"+j).style("opacity",0.2);
-      // 			}
-      // 		};
-      //   })
-      //   .on("mouseout", function(d,i) {
-      //   	for (j=0; j < 6; j++) {
-      // 			d3.select("#id"+j).style("opacity",1);
-      // 			d3.select("#text_id"+j).style("opacity",1);
-      // 		};
-      //   });
-
-      // mousemove function
-      function mousemove() {
-
-        var x0 = xScale.invert(d3.mouse(this)[0]);
-        var i = bisectDate(data, x0, 1); // gives index of element which has date higher than x0
-        var d0 = data[i - 1], d1 = data[i];
-        var d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-        var close = d3.max([+d.Amazon,+d.Apple,+d.Facebook,+d.Google,+d.IBM,+d.Microsoft]);
-
-        focus.select("circle.y")
-        .attr("transform", "translate(" + xScale(d.date) + "," + yScale(close) + ")");
-
-        focus.select("line.y")
-        .attr("y2",height - yScale(close))
-        .attr("transform", "translate(" + xScale(d.date) + ","
-        + yScale(close) + ")");
-
-        focus.select("line.x")
-        .attr("x2",xScale(d.date))
-        .attr("transform", "translate(0,"
-        + (yScale(close)) + ")");
-
-      };
-
-    });
-  }
+    }
+    dc.renderAll();
+  });
+}
