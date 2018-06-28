@@ -503,7 +503,8 @@ function plotCorrelation(div, data, title='') {
       type: 'heatmap',
       marginTop: 40,
       marginBottom: 80,
-      plotBorderWidth: 1
+      plotBorderWidth: 1,
+      height: '500px'
     },
 
 
@@ -512,12 +513,18 @@ function plotCorrelation(div, data, title='') {
     },
 
     xAxis: {
-      categories: x_categories
+      categories: x_categories,
+      scrollbar: {
+        enabled: true
+      }
     },
 
     yAxis: {
       categories: y_categories,
-      title: null
+      title: null,
+      scrollbar: {
+        enabled: true
+      }
     },
 
     colorAxis: {
@@ -610,6 +617,14 @@ function plotPrices(div, type, data, title='') {
       labels: {
         format: '{value:%Y-%b-%e}'
       },
+      title: {
+        text: 'Date'
+      }
+    },
+    yAxis: {
+      title: {
+        text: 'USD'
+      }
     },
     // rangeSelector: {
     //   floating: true,

@@ -15,7 +15,7 @@ class Refugees():
     def get_total_refugees(self, origin, years):
         if years is None:
             years = list(range(1900, 2018))
-        df = self.df.loc[self.df['date'].dt.year.isin(years)]
+        df = self.df.loc[self.df['datetime'].dt.year.isin(years)]
         return df.loc[df['origin'] == origin]['frequency'].sum()
 
 
@@ -24,16 +24,16 @@ class Refugees():
         if years is None:
             years = list(range(1900, 2018))
 
-        df = df.loc[df['date'].dt.year.isin(years)]
-        df = df.loc[df['origin'] == origin].groupby(df.date).sum().reset_index()
-        return df[['date', 'frequency']].to_json(orient='values')
+        df = df.loc[df['datetime'].dt.year.isin(years)]
+        df = df.loc[df['origin'] == origin].groupby(df['datetime']).sum().reset_index()
+        return df[['datetime', 'frequency']].to_json(orient='values')
 
 
     def get_refugee_destinations(self, origin, years):
         df = self.df
         if years is None:
             years = list(range(1900, 2018))
-        df = df.loc[df['date'].dt.year.isin(years)]
+        df = df.loc[df['datetime'].dt.year.isin(years)]
 
         df = df.loc[df['origin'].isin(origin)].groupby(['destination', 'latitude_x', 'longitude_x', 'latitude_y', 'longitude_y'])['frequency'].sum().reset_index()
         return df[['destination', 'frequency', 'latitude_x', 'longitude_x', 'latitude_y', 'longitude_y']].to_json(orient='values')

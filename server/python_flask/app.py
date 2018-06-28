@@ -168,6 +168,44 @@ df_v4.drop(columns=['Country', 'Year'], inplace=True)
 df_v4 = df_v5.rename(columns={' Both sexes': 'mortality_sum', ' Male': 'mortality_male', ' Female': 'mortality_female'})
 
 
+### RATES ###
+
+old_v1 = pd.read_csv('../../datasets/data/WFPVAM_FoodPrices_version1.csv')
+all_currencies = pd.read_csv('../../datasets/currencies/all_currencies.csv')
+all_currencies.columns = ['cur_name', 'date', 'rate']
+
+old_v1 = pd.merge(old_v1, all_currencies, on=['cur_name', 'date'], how='left')
+old_v1['datetime'] = pd.to_datetime(old_v1['date'], format='%Y-%m')
+
+df_v5 = pd.merge(df_v5, old_v1[['adm0_name', 'mkt_name', 'cm_name', 'datetime', 'rate']], on=['adm0_name', 'mkt_name', 'cm_name', 'datetime'], how='left')
+df_v4 = pd.merge(df_v4, old_v1[['adm0_name', 'mkt_name', 'cm_name', 'datetime', 'rate']], on=['adm0_name', 'mkt_name', 'cm_name', 'datetime'], how='left')
+
+
+### GDP ###
+
+gdp = pd.read_csv('../../datasets/GDP/GDP_per_capita.csv')
+gdp = gdp.melt(id_vars=['country'])
+gdp.columns = [tj.COUNTRY, tj.YEAR, 'GDP']
+gdp[tj.YEAR] = gdp[tj.YEAR].astype(int)
+
+# gdp['date'] = pd.to_datetime(gdp['mp_year'], format='%Y')
+
+df_v5[tj.YEAR] = df_v5['datetime'].dt.year
+df_v5[tj.YEAR] = df_v5[tj.YEAR].astype(int)
+df_v5 = pd.merge(df_v5, gdp[['adm0_name', tj.YEAR, 'GDP']], on=['adm0_name', tj.YEAR], how='left')
+df_v5.drop(columns=['mp_year'], inplace=True)
+df_v5['GDP'] = df_v5['GDP'].astype(float)
+
+df_v4[tj.YEAR] = df_v4['datetime'].dt.year
+df_v4[tj.YEAR] = df_v4[tj.YEAR].astype(int)
+df_v4 = pd.merge(df_v4, gdp[['adm0_name', tj.YEAR, 'GDP']], on=['adm0_name', tj.YEAR], how='left')
+df_v4.drop(columns=['mp_year'], inplace=True)
+df_v4['GDP'] = df_v4['GDP'].astype(float)
+
+
+df_v4 = df_v4.rename(columns={'rate': 'Currency Rate', 'frequency': 'Refugees', 'mortality_sum': 'Mortality Rate'})
+df_v5 = df_v5.rename(columns={'rate': 'Currency Rate', 'frequency': 'Refugees', 'mortality_sum': 'Mortality Rate'})
+
 def get_dataset(df_num):
     global df_v5
     global df_v4
@@ -269,13 +307,17 @@ def get_correlation(df, regions, countries, products, years, correlation, correl
 
     if years:
         df = df[df['datetime'].dt.year.isin(years)]
-        df = df.groupby([selector, df[correlation], 'datetime'])[y_axis].mean().reset_index()
+        df = df.groupby([selector, 'cm_name', 'Mortality Rate', 'Refugees', 'Currency Rate', 'GDP', 'datetime'])[y_axis].mean().reset_index()
     else:
-        df = df.groupby([df[selector], df[correlation], df['datetime'].dt.year])[y_axis].mean().reset_index()
+        df = df.groupby([df[selector], 'cm_name', 'Mortality Rate', 'Refugees', 'Currency Rate', 'GDP', df['datetime'].dt.year])[y_axis].mean().reset_index()
         df['datetime'] = pd.to_datetime(df['datetime'], format='%Y')
 
-    df = df.pivot_table(correlator, [selector, 'datetime'], correlation)
-    result = df.corr(method='pearson')
+
+
+    prod = df.pivot_table('mp_price', ['adm0_name', 'datetime'], ['cm_name'])
+    new = prod.reset_index()
+    t = pd.merge(new, df[['adm0_name', 'datetime', 'Mortality Rate', 'Refugees', 'Currency Rate', 'GDP']], on=['adm0_name', 'datetime'])
+    result = t.corr(method='pearson')
     return result.to_json()
 
 
