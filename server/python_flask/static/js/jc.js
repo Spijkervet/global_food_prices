@@ -198,6 +198,8 @@ $.getJSON("/all_regions", function(data) {
 getAllCountries();
 function getAllCountries() {
   $.getJSON("/all_countries", function(data) {
+
+    console.log("ALL COUNTRIES", data);
     selected_countries = createSelectMenu('country_select', data);
   });
 }
@@ -556,7 +558,7 @@ function plotCorrelation(div, data, title='') {
       dataLabels: {
         enabled: true,
         color: '#000000'
-      }
+      },
     }]
 
   });
@@ -568,10 +570,18 @@ function plotPrices(div, type, data, title='') {
   var product_data = data['data'],
   seriesOptions = [];
 
-  for (p in selected_products) {
+  var selector = 'cm_name', selection = selected_products;
+
+  if (type == new String('GDP').valueOf() || type == new String('Currency Rate').valueOf()) {
+    selector = 'adm0_name';
+    selection = selected_countries;
+  }
+
+  for (p in selection) {
     var timeData = [];
     for (var j = 0; j < product_data.length; j++) {
-      if (p == product_data[j].cm_name) {
+
+      if (p == product_data[j][selector]) {
         timeData.push([product_data[j].datetime, product_data[j][type]]);
       }
     }
@@ -894,6 +904,8 @@ function get_country_data() {
 
     plotPrices('gradient_chart', 'Gradient', data, title='Gradient');
     plotPrices('prices_chart', 'mp_price', data, title='Prices');
+    plotPrices('currency_chart', 'Currency Rate', data, title='Currency Rate');
+    plotPrices('gdp_chart', 'GDP', data, title='GDP');
 
     if (data != null) {
       for (var i = 0; i < data['years'].length; i++) {
