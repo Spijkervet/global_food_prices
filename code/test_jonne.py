@@ -486,14 +486,11 @@ def df_to_np_date_price(df, selectDic = {PROD : ['Millet']}, value = PRICE):
     condition = (df[PROD] != 'tmp')
     df['Info'] = ""
     for col, selection in selectDic.items():
-        if df['Info'].ix[0] != "":
-            df['Info'] += ' - '
-
         if selection:
             condition &= (df[col].isin(selection))
             # for s in selection:
             #     condition &= (df[col].str.contains(s) == True)
-        df['Info'] += df[col]
+        df['Info'] += df[col] + ' - '
 
 
     df = df.loc[condition]
@@ -607,31 +604,31 @@ def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, m
         print(np.nanmean(datagroup.NewGroupAvg[i]))
         i += 1
 
-    # plot de geselecteerde data
-    plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
-    for i, row in enumerate(data):
-        # if i == 0:
-        #     continue
-        # if i > 3:
-        #     break
-        D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
-        plt.plot(D, row, label=categories[i])
-
-    # # plot de cluster gemiddelde
-    # for i in range(NGroups):
+    # # plot de geselecteerde data
+    # plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
+    # for i, row in enumerate(data):
+    #     # if i == 0:
+    #     #     continue
+    #     # if i > 3:
+    #     #     break
     #     D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
-    #     if mode == 2:
-    #         plt.plot(D, datagroup.NewGroupAvg[i, :data.shape[1]], label=i)
-    #     else:
-    #         plt.plot(D, datagroup.NewGroupAvg[i, :], label=i)
-
-    # plot
-    plt.rcParams.update({'font.size': 16})
-    plt.rcParams['legend.fontsize'] = 16
-    plt.legend(fancybox=True,loc="best",framealpha=0.8)
-    plt.ylabel('USD ($)', fontsize=16)
-    plt.xlabel('Datum (jaren)', fontsize=16)
-    plt.show(True)
+    #     plt.plot(D, row, label=categories[i])
+    #
+    # # # plot de cluster gemiddelde
+    # # for i in range(NGroups):
+    # #     D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
+    # #     if mode == 2:
+    # #         plt.plot(D, datagroup.NewGroupAvg[i, :data.shape[1]], label=i)
+    # #     else:
+    # #         plt.plot(D, datagroup.NewGroupAvg[i, :], label=i)
+    #
+    # # plot
+    # plt.rcParams.update({'font.size': 16})
+    # plt.rcParams['legend.fontsize'] = 16
+    # plt.legend(fancybox=True,loc="best",framealpha=0.8)
+    # plt.ylabel('USD ($)', fontsize=16)
+    # plt.xlabel('Datum (jaren)', fontsize=16)
+    # plt.show(True)
     return dic, data
 
 def selecton_date(df, low, high):
@@ -690,11 +687,11 @@ if __name__ == "__main__":
     # df1 = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
     # df2 = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version5_Retail.csv')
 
-    region_df = pd.read_csv(REGIONAL_FILE_NAME)
-    region_df.rename(columns={'name': 'adm0_name'}, inplace=True)
-    new_regions = region_df.loc[:, ['adm0_name', 'sub-region']]
-    df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
-    df = df_regions.copy()
+    # region_df = pd.read_csv(REGIONAL_FILE_NAME)
+    # region_df.rename(columns={'name': 'adm0_name'}, inplace=True)
+    # new_regions = region_df.loc[:, ['adm0_name', 'sub-region']]
+    # df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
+    # df = df_regions.copy()
 
     # # number of city's per region
     # dic = {}
@@ -709,11 +706,12 @@ if __name__ == "__main__":
 
     # cluster(df, NGroups = 5, category_dic = {COUNTRY: ['Ethiopia'], PROD : ['Wheat', 'Fuel (diesel)']}, mode = 0, Alg = 0, init_mode = 2, norm = False, PCA = True)
 
-
-    # df = selecton_date(df, '2016-01', '2018-01')
-    df2 = df_pivot(df, selectDic = {COUNTRY: ['Ukraine'], PROD : ['Meat (beef)', 'Meat (chicken, whole)', 'Meat (mixed, sausage)', 'Meat (pork)']}, value=PRICE )
-    print(df2.corr())
-    cluster(df, NGroups = 5, category_dic = {COUNTRY: ['Ukraine'], PROD : []}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True)
+    print(df.head(10))
+    df2 = selecton_date(df, '2014-01', '2015-01')
+    print(df2.head(10))
+    # df2 = df_pivot(df, selectDic = {COUNTRY: ['Ukraine'], PROD : ['Meat (beef)', 'Meat (chicken, whole)', 'Meat (mixed, sausage)', 'Meat (pork)']}, value=PRICE )
+    # print(df2.corr())
+    cluster(df2, NGroups = 5, category_dic = {COUNTRY: ['Ukraine'], PROD : []}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True)
     # _,_,data = df_to_np_date_price(df, selectDic = {PROD : [], COUNTRY: ['Ethiopia']}, value = PRICE)
     # print(data)
     # linear_regression(df, data)
