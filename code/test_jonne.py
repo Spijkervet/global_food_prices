@@ -3,8 +3,8 @@ import numpy as np
 import pandas as pd
 import pickle
 import time
-import matplotlib.pyplot as plt
-from matplotlib.dates import drange
+# import matplotlib.pyplot as plt
+# from matplotlib.dates import drange
 from datetime import datetime
 import cluster as clus
 import copy
@@ -493,8 +493,8 @@ def df_to_np_date_price(df, selectDic = {PROD : ['Millet']}, value = PRICE):
             condition &= (df[col].isin(selection))
             # for s in selection:
             #     condition &= (df[col].str.contains(s) == True)
-        df['Info'] +=  df[col] + ' - '
-        # df['Info'] += df[col]
+        # df['Info'] +=  df[col] + ' - '
+        df['Info'] += df[col] + ' '
 
 
     df = df.loc[condition]
@@ -515,7 +515,8 @@ def df_pivot(df, selectDic = {PROD : ['Millet']}, value = PRICE):
     for col, selection in selectDic.items():
         if selection:
             condition &= (df[col].isin(selection))
-        df['Info'] +=  df[col] + ' - '
+        # df['Info'] +=  df[col] + ' - '
+        df['Info'] += df[col] + ' '
 
     df = df.loc[condition]
     make_sortable_date(df)
