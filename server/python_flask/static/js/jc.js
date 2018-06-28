@@ -27,12 +27,23 @@ function filterDimension(dimension, filter) {
 }
 
 function createSelectMenu(id, array) {
-  $("#" + id).html('');
-  $("#" + id).append('<option value=""></option>');
+  // $("#" + id).html('');
+
+  // $("#" + id).append('<option value=""></option>');
   var d = {}
   for (var i = 0; i < array.length; i++) {
     d[array[i]] = false;
-    $("#" + id).append('<option value="' + array[i] + '">' + array[i] + '</option>');
+
+    var data = {
+      id: array[i],
+      text: array[i]
+    };
+
+    var newOption = new Option(data.text, data.id, false, false);
+    $('#' + id).append(newOption);
+
+
+    // $("#" + id).append('<option value="' + array[i] + '">' + array[i] + '</option>');
   }
   return d;
 }
@@ -183,8 +194,6 @@ $.getJSON("/all_regions", function(data) {
 getAllCountries();
 function getAllCountries() {
   $.getJSON("/all_countries", function(data) {
-
-    console.log("ALL COUNTRIES", data);
     selected_countries = createSelectMenu('country_select', data);
   });
 }
@@ -903,3 +912,8 @@ function get_country_data() {
     dc.renderAll();
   });
 }
+
+
+$(document).ready(function() {
+  $("#country_select").select2({ width: 'resolve' });    
+});

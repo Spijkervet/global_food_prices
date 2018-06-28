@@ -10,7 +10,7 @@
 
   <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="http://dc-js.github.io/dc.js/css/dc.css"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/table.css')}}"/>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/map.css')}}"/>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/app.css')}}"/>
@@ -52,19 +52,19 @@
       <div class="col-2">
         <div class="country-container">
           <div class="country-title">Regions</div>
-          <select id="region_select" class="dc-select-menu" multiple="true" size="10"> </select>
+          <select id="region_select" class="form-control form-control-lg js-example-basic-single" name="country" multiple="multiple"></select>
         </div>
       </div>
       <div class="col-2">
         <div class="country-container">
           <div class="country-title">Countries</div>
-          <select id="country_select" class="dc-select-menu" multiple="true" size="10"> </select>
+          <select id="country_select" class="form-control form-control-lg js-example-basic-single" name="country" multiple="multiple"></select>
         </div>
       </div>
       <div class="col-2">
         <div class="country-container">
           <div class="country-title">Products</div>
-          <select id="product_select" class="dc-select-menu" multiple="true" size="10"> </select>
+          <select id="product_select" class="form-control form-control-lg js-example-basic-single" name="country" multiple="multiple"></select>
         </div>
       </div>
     </div>
@@ -201,11 +201,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script>
-
-
-<script type="text/javascript" src="http://dc-js.github.io/dc.js/js/d3.js"></script>
-<script type="text/javascript" src="http://dc-js.github.io/dc.js/js/crossfilter.js"></script>
-<script type="text/javascript" src="http://dc-js.github.io/dc.js/js/dc.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>

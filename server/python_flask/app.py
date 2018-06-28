@@ -125,8 +125,6 @@ df_v4 = pd.read_csv('../../datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
 df_v5['datetime'] = pd.to_datetime(df_v5.date, format='%Y-%m')
 df_v4['datetime'] = pd.to_datetime(df_v4.date, format='%Y-%m')
 
-
-
 def merge_regions(df):
     region_df = pd.read_csv(REGIONAL_FILE_NAME)
     region_df.rename(columns={'name': 'adm0_name'}, inplace=True)
@@ -140,13 +138,13 @@ df_v4 = merge_regions(df_v4)
 ### REFUGEES ###
 from model.refugees import Refugees
 refugees = Refugees()
-
+#
 df_v5 = refugees.merge_refugees(df_v5)
 df_v4 = refugees.merge_refugees(df_v4)
 
 
 ### MORTALITY ###
-
+#
 WHO_MORTALITY = "../../datasets/global_mortality_who.csv"
 
 mortality = pd.read_csv(WHO_MORTALITY, skiprows=1)
@@ -154,16 +152,16 @@ mortality['Year'] = mortality['Year'].astype(int)
 
 df_v5['Year'] = df_v5['datetime'].dt.year
 df_v5['Year'] = df_v5['Year'].astype(int)
-df_v5 = pd.merge(df_v5, mortality, left_on=['adm0_name', 'Year'], right_on=['Country', 'Year'])
+df_v5 = pd.merge(df_v5, mortality, left_on=['adm0_name', 'Year'], right_on=['Country', 'Year'], how='left')
 df_v5.drop(columns=['Country', 'Year'], inplace=True)
 df_v5 = df_v5.rename(columns={' Both sexes': 'mortality_sum', ' Male': 'mortality_male', ' Female': 'mortality_female'})
 
 df_v4['Year'] = df_v4['datetime'].dt.year
 df_v4['Year'] = df_v4['Year'].astype(int)
-df_v4 = pd.merge(df_v4, mortality, left_on=['adm0_name', 'Year'], right_on=['Country', 'Year'])
+df_v4 = pd.merge(df_v4, mortality, left_on=['adm0_name', 'Year'], right_on=['Country', 'Year'], how='left')
 df_v4.drop(columns=['Country', 'Year'], inplace=True)
 df_v4 = df_v4.rename(columns={' Both sexes': 'mortality_sum', ' Male': 'mortality_male', ' Female': 'mortality_female'})
-
+#
 
 ### RATES ###
 
@@ -327,7 +325,7 @@ def get_country_data(df, regions, countries, products, years, average=True):
         selector = 'sub-region'
         df = df.loc[df[selector].isin(regions)]
 
-    years_set = set(df['datetime'].dt.year)
+    years_set = sorted(set(df['datetime'].dt.year))
     year_d['years'] = [y for y in years_set]
 
     if years:

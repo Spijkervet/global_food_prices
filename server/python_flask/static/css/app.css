@@ -33,24 +33,41 @@ body {
   font-size: 0.75em;
 }
 
+.select2-selection {
+  background-color: var(--dark-grey) !important;
+}
+.select2-search {
+  background-color: var(--dark-grey);
+}
+
+.select2-search input {
+  background-color: var(--dark-grey);
+}
+
+
+.select2-results {
+  background-color: var(--dark-grey);
+}
+
+/*
 #region_select {
-  max-width: 100%;
-  font-size: 0.75rem;
+max-width: 100%;
+font-size: 0.75rem;
 }
 #country_select {
-  max-width: 100%;
-  font-size: 0.75rem;
+max-width: 100%;
+font-size: 0.75rem;
 }
 
 #product_select {
-  max-width: 100%;
-  font-size: 0.75rem;
+max-width: 100%;
+font-size: 0.75rem;
 }
 
 #dataset_select {
-  max-width: 100%;
-  font-size: 0.75rem;
-}
+max-width: 100%;
+font-size: 0.75rem;
+} */
 
 .country-container {
   /* padding: 10px; */
