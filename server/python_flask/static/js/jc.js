@@ -1,15 +1,6 @@
-// d3.csv({"WFPVAM_FoodPrices_version4_Retail.csv"}).then(function(experiments) {
-//
-// }
-
-
 var dimensions = {};
-var ndx = crossfilter();
 
 var dataset = 0;
-var region_ndx = crossfilter();
-var country_ndx = crossfilter();
-var product_ndx = crossfilter();
 
 var correlationChart;
 
@@ -156,12 +147,6 @@ function selectYear() {
 function getYears() {
 
   $.getJSON(create_url("/years?"), function(data) {
-
-    country_ndx.add(data);
-
-    dimensions.yearDimension = country_ndx.dimension(function (d) {
-      return d.year;
-    });
 
     var year_el = $("#years");
     year_el.html('');
