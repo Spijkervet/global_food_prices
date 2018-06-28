@@ -111,12 +111,7 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
-engine = create_engine('mysql://root:root@mysql:3306/uva', echo=True)
 
-
-from sqlalchemy.orm import sessionmaker
-Session = sessionmaker(bind=engine)
-session = Session()
 
 from geopy.geocoders import Nominatim
 geolocator = Nominatim()
