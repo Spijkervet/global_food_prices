@@ -486,11 +486,15 @@ def df_to_np_date_price(df, selectDic = {PROD : ['Millet']}, value = PRICE):
     condition = (df[PROD] != 'tmp')
     df['Info'] = ""
     for col, selection in selectDic.items():
+        if df['Info'].ix[0] != "":
+            df['Info'] += ' - '
+
         if selection:
-            # condition &= (df[col].isin(selection))
-            for s in selection:
-                condition &= (df[col].str.contains(s) == True)
-        df['Info'] +=  df[col] + ' - '
+            condition &= (df[col].isin(selection))
+            # for s in selection:
+            #     condition &= (df[col].str.contains(s) == True)
+        df['Info'] += df[col]
+
 
     df = df.loc[condition]
     make_sortable_date(df)
@@ -603,28 +607,31 @@ def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, m
         print(np.nanmean(datagroup.NewGroupAvg[i]))
         i += 1
 
-    # # plot de geselecteerde data
-    # plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
-    # for i, row in enumerate(data):
-    #     # if i == 0:
-    #     #     continue
-    #     # if i > 3:
-    #     #     break
+    # plot de geselecteerde data
+    plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
+    for i, row in enumerate(data):
+        # if i == 0:
+        #     continue
+        # if i > 3:
+        #     break
+        D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
+        plt.plot(D, row, label=categories[i])
+
+    # # plot de cluster gemiddelde
+    # for i in range(NGroups):
     #     D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
-    #     plt.plot(D, row, label=categories[i])
-    #
-    # # # plot de cluster gemiddelde
-    # # for i in range(NGroups):
-    # #     D = [float(date.split("-")[0]) + (float(date.split("-")[1]) - 1) / 12 for date in dates]
-    # #     if mode == 2:
-    # #         plt.plot(D, datagroup.NewGroupAvg[i, :data.shape[1]], label=i)
-    # #     else:
-    # #         plt.plot(D, datagroup.NewGroupAvg[i, :], label=i)
-    #
-    # # plot
-    # plt.rcParams['legend.fontsize'] = 11
-    # plt.legend(fancybox=True,loc="best",framealpha=0.8)
-    # plt.show(True)
+    #     if mode == 2:
+    #         plt.plot(D, datagroup.NewGroupAvg[i, :data.shape[1]], label=i)
+    #     else:
+    #         plt.plot(D, datagroup.NewGroupAvg[i, :], label=i)
+
+    # plot
+    plt.rcParams.update({'font.size': 16})
+    plt.rcParams['legend.fontsize'] = 16
+    plt.legend(fancybox=True,loc="best",framealpha=0.8)
+    plt.ylabel('USD ($)', fontsize=16)
+    plt.xlabel('Datum (jaren)', fontsize=16)
+    plt.show(True)
     return dic, data
 
 def selecton_date(df, low, high):
@@ -678,8 +685,6 @@ def linear_regression(df, data):
 
     # return a, b, r
 
-from matplotlib.gridspec import GridSpec
-
 if __name__ == "__main__":
     df = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
     # df1 = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
@@ -691,17 +696,59 @@ if __name__ == "__main__":
     df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
     df = df_regions.copy()
 
-    # cluster(df, NGroups = 5, category_dic = {COUNTRY: ['Ukraine'], PROD : []}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True)
+    # # number of city's per region
+    # dic = {}
+    # for n in df.groupby([REGION])[CITY].unique():
+    #     if len(n) in dic:
+    #         dic[len(n)] += 1
+    #     else:
+    #         dic[len(n)] = 1
+    #
+    # for k, v in dic.items():
+    #     print(k, ";", v)
+
+    # cluster(df, NGroups = 5, category_dic = {COUNTRY: ['Ethiopia'], PROD : ['Wheat', 'Fuel (diesel)']}, mode = 0, Alg = 0, init_mode = 2, norm = False, PCA = True)
+
+
+    # df = selecton_date(df, '2016-01', '2018-01')
+    df2 = df_pivot(df, selectDic = {COUNTRY: ['Ukraine'], PROD : ['Meat (beef)', 'Meat (chicken, whole)', 'Meat (mixed, sausage)', 'Meat (pork)']}, value=PRICE )
+    print(df2.corr())
+    cluster(df, NGroups = 5, category_dic = {COUNTRY: ['Ukraine'], PROD : []}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True)
     # _,_,data = df_to_np_date_price(df, selectDic = {PROD : [], COUNTRY: ['Ethiopia']}, value = PRICE)
     # print(data)
     # linear_regression(df, data)
 
-    dic = {}
-    for a, g in df.groupby(['sub-region'])[COUNTRY]:
-        print(a,',' ,len(g.unique()))
 
-    # a = sorted([(value, key) for key, value in dic.items()], reverse=True)
-    # print(a)
+
+
+
+
+    # # milk pie chart
+    # a = [(g.shape, f) for f,g in df.loc[df[PROD] == 'Milk'].groupby([UNIT])]
+    # # Data to plot
+    # labels = [x[1] for x in a]
+    # sizes = [x[0][0] for x in a]
+    # colors = ['lightcoral', 'lightskyblue']
+    #
+    # # Plot
+    # # plt.pie(sizes, labels=labels, colors=colors,
+    # #         autopct='%1.1f%%', shadow=True, startangle=90)
+    # plt.rcParams['font.size'] = 16
+    # patches, texts, x = plt.pie(sizes, colors=colors, autopct='%1.1f%%', shadow=True, startangle=90)
+    # plt.legend(patches, labels, loc="best")
+    # plt.axis('equal')
+    # plt.tight_layout()
+    # plt.show()
+
+
+
+
+
+
+
+    # count countries per sub-regions
+    # for a, g in df.groupby(['sub-region'])[COUNTRY]:
+    #     print(a,',' ,g.unique())
 
 
 
@@ -811,7 +858,7 @@ if __name__ == "__main__":
     # # print(sorted(list(set(high_l).difference(set(rev_l)))))
     # print(sorted(list(set(high_l))))
     # print(low/m, low, m)
-    # # print(sorted(list(set(low_l).difference(set(rev_l)))))
+    # print(sorted(list(set(low_l).difference(set(rev_l)))))
     # print(sorted(list(set(low_l))))
     # print(rev/o, rev, o)
     # # print(sorted(list(set(rev_l).difference(set(low_l + high_l)))))
