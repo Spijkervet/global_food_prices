@@ -149,21 +149,23 @@ refugees = Refugees()
 df_v5 = refugees.merge_refugees(df_v5)
 df_v4 = refugees.merge_refugees(df_v4)
 
-print("COLUMNS", df_v5.columns)
-
 
 ### MORTALITY ###
 
 WHO_MORTALITY = "../../datasets/global_mortality_who.csv"
 
 mortality = pd.read_csv(WHO_MORTALITY, skiprows=1)
-mortality['datetime'] = pd.to_datetime(mortality['Year'], format='%Y')
+mortality['Year'] = mortality['Year'].astype(int)
 
-df_v5 = pd.merge(df_v5, mortality, left_on=['adm0_name', 'datetime'], right_on=['Country', 'datetime'])
+df_v5['Year'] = df_v5['datetime'].dt.year
+df_v5['Year'] = df_v5['Year'].astype(int)
+df_v5 = pd.merge(df_v5, mortality, left_on=['adm0_name', 'Year'], right_on=['Country', 'Year'])
 df_v5.drop(columns=['Country', 'Year'], inplace=True)
 df_v5 = df_v5.rename(columns={' Both sexes': 'mortality_sum', ' Male': 'mortality_male', ' Female': 'mortality_female'})
 
-df_v4 = pd.merge(df_v4, mortality, left_on=['adm0_name', 'datetime'], right_on=['Country', 'datetime'])
+df_v4['Year'] = df_v4['datetime'].dt.year
+df_v4['Year'] = df_v4['Year'].astype(int)
+df_v4 = pd.merge(df_v4, mortality, left_on=['adm0_name', 'Year'], right_on=['Country', 'Year'])
 df_v4.drop(columns=['Country', 'Year'], inplace=True)
 df_v4 = df_v5.rename(columns={' Both sexes': 'mortality_sum', ' Male': 'mortality_male', ' Female': 'mortality_female'})
 
@@ -188,7 +190,6 @@ gdp = gdp.melt(id_vars=['country'])
 gdp.columns = [tj.COUNTRY, tj.YEAR, 'GDP']
 gdp[tj.YEAR] = gdp[tj.YEAR].astype(int)
 
-# gdp['date'] = pd.to_datetime(gdp['mp_year'], format='%Y')
 
 df_v5[tj.YEAR] = df_v5['datetime'].dt.year
 df_v5[tj.YEAR] = df_v5[tj.YEAR].astype(int)
@@ -279,9 +280,9 @@ def get_mortality(df, regions, countries, years):
 
     if years:
         df = df[df['datetime'].dt.year.isin(years)]
-        df = df.groupby([selector, 'datetime']).mean()[['mortality_sum', 'mortality_male', 'mortality_female']].reset_index()
+        df = df.groupby([selector, 'datetime']).mean()[['Mortality Rate', 'mortality_male', 'mortality_female']].reset_index()
     else:
-        df = df.groupby([df[selector], df['datetime'].dt.year]).mean()[['mortality_sum', 'mortality_male', 'mortality_female']].reset_index()
+        df = df.groupby([df[selector], df['datetime'].dt.year]).mean()[['Mortality Rate', 'mortality_male', 'mortality_female']].reset_index()
         df['datetime'] = pd.to_datetime(df['datetime'], format='%Y')
     return df.to_json(orient='records')
 
@@ -329,6 +330,7 @@ def get_country_data(df, regions, countries, products, years, average=True):
     year_d = {}
 
     selector = ''
+    print(df['datetime'], years)
 
     if products:
         df = df.loc[df[tj.PROD].isin(products)]
