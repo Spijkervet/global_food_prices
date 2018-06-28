@@ -162,7 +162,7 @@ df_v4['Year'] = df_v4['datetime'].dt.year
 df_v4['Year'] = df_v4['Year'].astype(int)
 df_v4 = pd.merge(df_v4, mortality, left_on=['adm0_name', 'Year'], right_on=['Country', 'Year'], how='left')
 df_v4.drop(columns=['Country', 'Year'], inplace=True)
-df_v4 = df_v5.rename(columns={' Both sexes': 'mortality_sum', ' Male': 'mortality_male', ' Female': 'mortality_female'})
+df_v4 = df_v4.rename(columns={' Both sexes': 'mortality_sum', ' Male': 'mortality_male', ' Female': 'mortality_female'})
 
 
 ### RATES ###
@@ -203,9 +203,7 @@ df_v4 = df_v4.rename(columns={'rate': 'Currency Rate', 'frequency': 'Refugees', 
 df_v5 = df_v5.rename(columns={'rate': 'Currency Rate', 'frequency': 'Refugees', 'mortality_sum': 'Mortality Rate'})
 
 def get_dataset(df_num):
-    global df_v5
-    global df_v4
-    if df_num == 0:
+    if df_num is None or int(df_num) == 0:
         return df_v4
     return df_v5
 
@@ -222,11 +220,7 @@ def get_all_years(df):
 
 def get_all_products(df):
     # l = []
-    products = set(df['cm_name'])
-    # for p in products:
-    #     d = {}
-    #     d['product'] = p
-    #     l.append(d)
+    products = df['cm_name'].unique()
     return list(products)
 
 def get_all_countries(df, regions=[]):
@@ -234,11 +228,8 @@ def get_all_countries(df, regions=[]):
     if regions:
         df = df.loc[df['sub-region'].isin(regions)]
 
-    countries = set(df[tj.COUNTRY])
-    # for c in countries:
-    #     d = {}
-    #     d['country'] = c
-    #     l.append(d)
+    countries = df[tj.COUNTRY].unique()
+    print("COUNTRIES", countries)
     return list(countries)
 
 def get_all_regions(df):
@@ -325,7 +316,6 @@ def get_country_data(df, regions, countries, products, years, average=True):
     year_d = {}
 
     selector = ''
-    print(set(df['datetime']), years)
 
     if products:
         df = df.loc[df[tj.PROD].isin(products)]
@@ -337,14 +327,14 @@ def get_country_data(df, regions, countries, products, years, average=True):
         selector = 'sub-region'
         df = df.loc[df[selector].isin(regions)]
 
-    years_set = sorted(set(df['datetime'].dt.year))
+    years_set = set(df['datetime'].dt.year)
     year_d['years'] = [y for y in years_set]
 
     if years:
         df = df[df['datetime'].dt.year.isin(years)]
-        df = df.groupby([selector, 'cm_name', 'datetime']).mean()[['mp_price', 'Gradient']].reset_index()
+        df = df.groupby([selector, 'cm_name', 'datetime']).mean()[['mp_price', 'Gradient', 'Currency Rate', 'GDP']].reset_index()
     else:
-        df = df.groupby([df[selector], df['cm_name'], df['datetime'].dt.year]).mean()[['mp_price', 'Gradient']].reset_index()
+        df = df.groupby([df[selector], df['cm_name'], df['datetime'].dt.year]).mean()[['mp_price', 'Gradient', 'Currency Rate', 'GDP']].reset_index()
         df['datetime'] = pd.to_datetime(df['datetime'], format='%Y')
     if average:
         js = json.loads(df.to_json(orient='records'))
@@ -517,7 +507,6 @@ class CountryData(Resource):
         regions = args['region']
         products = args['product']
         years = args['year']
-
         country_data = get_country_data(get_dataset(dataset), regions, countries, products, years)
         return jsonify(country_data)
 
