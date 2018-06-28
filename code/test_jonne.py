@@ -687,15 +687,15 @@ def linear_regression(df, data):
     # return a, b, r
 
 if __name__ == "__main__":
-    df = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
+    df = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version5_Retail.csv')
     # df1 = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
     # df2 = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version5_Retail.csv')
 
-    # region_df = pd.read_csv(REGIONAL_FILE_NAME)
-    # region_df.rename(columns={'name': 'adm0_name'}, inplace=True)
-    # new_regions = region_df.loc[:, ['adm0_name', 'sub-region']]
-    # df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
-    # df = df_regions.copy()
+    region_df = pd.read_csv(REGIONAL_FILE_NAME)
+    region_df.rename(columns={'name': 'adm0_name'}, inplace=True)
+    new_regions = region_df.loc[:, ['adm0_name', 'sub-region']]
+    df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
+    df = df_regions.copy()
 
     # # number of city's per region
     # dic = {}
@@ -710,12 +710,11 @@ if __name__ == "__main__":
 
     # cluster(df, NGroups = 5, category_dic = {COUNTRY: ['Ethiopia'], PROD : ['Wheat', 'Fuel (diesel)']}, mode = 0, Alg = 0, init_mode = 2, norm = False, PCA = True)
 
-    print(df.head(10))
-    df2 = selecton_date(df, '2014-01', '2015-01')
-    print(df2.head(10))
-    # df2 = df_pivot(df, selectDic = {COUNTRY: ['Ukraine'], PROD : ['Meat (beef)', 'Meat (chicken, whole)', 'Meat (mixed, sausage)', 'Meat (pork)']}, value=PRICE )
-    # print(df2.corr())
-    cluster(df2, NGroups = 5, category_dic = {COUNTRY: ['Ukraine'], PROD : []}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True)
+    # df2 = df_pivot(df, selectDic = {'sub-region': ['Sub-Saharan Africa'], COUNTRY: [], PROD : ['Sorghum']}, value=PRICE )
+    # print(df2.corr().index.values)
+    # for x in df2.corr().values:
+    #     print(list(x))
+    # cluster(df, NGroups = 5, category_dic = {'sub-region': ['Sub-Saharan Africa'], COUNTRY: [], PROD : ['Rice (imported)']}, mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True)
     # _,_,data = df_to_np_date_price(df, selectDic = {PROD : [], COUNTRY: ['Ethiopia']}, value = PRICE)
     # print(data)
     # linear_regression(df, data)
