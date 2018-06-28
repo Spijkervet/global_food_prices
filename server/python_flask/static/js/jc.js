@@ -585,6 +585,9 @@ function plotPrices(div, type, data, title='') {
               console.log(this);
             }
           }
+        },
+        marker: {
+          enabled: false
         }
       });
     }
@@ -596,9 +599,7 @@ function plotPrices(div, type, data, title='') {
       height: '500px',
       events: {
         selection: function (event) {
-
           attachZoomChart(event);
-
         }
       },
       zoomType: 'x'
@@ -773,7 +774,7 @@ function getMortality() {
   var url = create_url('/mortality?');
   $.getJSON(url, function(data) {
     var data = JSON.parse(data);
-    plotMortality('mortality_chart', 'mortality_sum', data, title='Mortality');
+    plotMortality('mortality_chart', 'Mortality Rate', data, title='Mortality');
   });
 }
 
@@ -788,11 +789,11 @@ function plotMortality(div, type, data, title='') {
     for (var j = 0; j < data.length; j++) {
       if (p == data[j].adm0_name || data[j]['sub-region']) {
 
-        setMortality(p, data[j]['mortality_sum']);
+        setMortality(p, data[j][type]);
         // if (data[j]['sub-region']) {
         //   name = data[j]['sub-region'];
         // }
-        var d = [data[j].datetime, data[j]['mortality_sum']];
+        var d = [data[j].datetime, data[j][type]];
         timeData.push(d);
       }
     }
