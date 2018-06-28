@@ -631,7 +631,7 @@ def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, m
     # plt.rcParams.update({'font.size': 16})
     # plt.rcParams['legend.fontsize'] = 16
     # plt.legend(fancybox=True,loc="best",framealpha=0.8)
-    # plt.ylabel('USD ($)', fontsize=16)
+    # plt.ylabel('Betaalbaarheid-index', fontsize=18)
     # plt.xlabel('Datum (jaren)', fontsize=16)
     # plt.show(True)
     return dic, data
@@ -692,11 +692,11 @@ if __name__ == "__main__":
     # df1 = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
     # df2 = pd.read_csv('../datasets/data/WFPVAM_FoodPrices_version5_Retail.csv')
 
-    region_df = pd.read_csv(REGIONAL_FILE_NAME)
-    region_df.rename(columns={'name': 'adm0_name'}, inplace=True)
-    new_regions = region_df.loc[:, ['adm0_name', 'sub-region']]
-    df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
-    df = df_regions.copy()
+    # region_df = pd.read_csv(REGIONAL_FILE_NAME)
+    # region_df.rename(columns={'name': 'adm0_name'}, inplace=True)
+    # new_regions = region_df.loc[:, ['adm0_name', 'sub-region']]
+    # df_regions = pd.merge(df, new_regions, on='adm0_name', how='left')
+    # df = df_regions.copy()
 
     # # number of city's per region
     # dic = {}
@@ -709,7 +709,7 @@ if __name__ == "__main__":
     # for k, v in dic.items():
     #     print(k, ";", v)
 
-    # cluster(df, NGroups = 5, category_dic = {COUNTRY: ['Ethiopia'], PROD : ['Wheat', 'Fuel (diesel)']}, mode = 0, Alg = 0, init_mode = 2, norm = False, PCA = True)
+    # cluster(df, NGroups = 5, category_dic = {COUNTRY: ['Afghanistan', 'Nepal', 'India', 'Pakistan'], PROD : ['Wheat']}, mode = 0, Alg = 0, init_mode = 2, norm = False, PCA = True)
 
     # df2 = df_pivot(df, selectDic = {'sub-region': ['Sub-Saharan Africa'], COUNTRY: [], PROD : ['Sorghum']}, value=PRICE )
     # print(df2.corr().index.values)
