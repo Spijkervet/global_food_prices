@@ -11,6 +11,8 @@ var region_ndx = crossfilter();
 var country_ndx = crossfilter();
 var product_ndx = crossfilter();
 
+var correlationChart;
+
 function getFilteredDimension(dimension) {
   var a = Array();
   for (var i in dimension) {
@@ -48,6 +50,9 @@ var selected_regions = '';
 var selected_countries = '';
 var selected_products = '';
 
+var correlation = '';
+var correlator = '';
+
 var selected_years = new Set();
 var year_buttons = {};
 
@@ -78,6 +83,7 @@ function create_url(endpoint) {
 
 
   var url = endpoint + "&dataset=" + dataset;
+  url += '&correlation=' + correlation +'&correlator=' + correlator;
 
   for (var i in selected_regions) {
     if (selected_regions[i]) {
@@ -196,6 +202,17 @@ function getAllCountries() {
   });
 }
 
+$("#correlation_select").change(function() {
+  correlation = $(this).val()[0];
+  get_country_data();
+  correlationChart.setTitle({text: "Correlation between " + correlation + " and " + correlator});
+});
+
+$("#correlator_select").change(function() {
+  correlator = $(this).val()[0];
+  get_country_data();
+  correlationChart.setTitle({text: "Correlation between " + correlation + " and " + correlator})
+});
 
 $("#dataset_select").change(function() {
   dataset = $(this).val()[0];
@@ -457,6 +474,87 @@ function attachZoomChart(event) {
   }
 }
 
+
+function plotCorrelation(div, data, title='') {
+
+  console.log("CORRElATION", data);
+
+  var x_categories = Array(),
+  y_categories = Array(),
+  series_data = Array(),
+  x = 0;
+
+  for (var d in data) {
+    y = 0;
+    for (var i in data[d]) {
+      series_data.push([x, y, data[d][i]]);
+      y += 1;
+    }
+    x_categories.push(d);
+    y_categories.push(d);
+    x += 1;
+  }
+
+  console.log(series_data);
+
+  correlationChart = Highcharts.chart(div, {
+
+    chart: {
+      type: 'heatmap',
+      marginTop: 40,
+      marginBottom: 80,
+      plotBorderWidth: 1
+    },
+
+
+    title: {
+      text: title
+    },
+
+    xAxis: {
+      categories: x_categories
+    },
+
+    yAxis: {
+      categories: y_categories,
+      title: null
+    },
+
+    colorAxis: {
+      min: 0,
+      minColor: '#FFFFFF',
+      maxColor: Highcharts.getOptions().colors[0]
+    },
+
+    legend: {
+      align: 'right',
+      layout: 'vertical',
+      margin: 0,
+      verticalAlign: 'top',
+      y: 25,
+      symbolHeight: 280
+    },
+
+    tooltip: {
+      formatter: function () {
+        return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> sold <br><b>' +
+        this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
+      }
+    },
+
+    series: [{
+      name: 'Sales per employee',
+      borderWidth: 1,
+      data: series_data,
+      dataLabels: {
+        enabled: true,
+        color: '#000000'
+      }
+    }]
+
+  });
+}
+
 function plotPrices(div, type, data, title='') {
 
 
@@ -470,23 +568,25 @@ function plotPrices(div, type, data, title='') {
         timeData.push([product_data[j].datetime, product_data[j][type]]);
       }
     }
-
-    seriesOptions.push({
-      name: p,
-      data: timeData,
-      point: {
-        events: {
-          click: function () {
-            console.log(this);
+    if (timeData.length) {
+      seriesOptions.push({
+        name: p,
+        data: timeData,
+        point: {
+          events: {
+            click: function () {
+              console.log(this);
+            }
           }
         }
-      }
-    });
+      });
+    }
   }
 
   var chart = Highcharts.chart(div, {
 
     chart: {
+      height: '500px',
       events: {
         selection: function (event) {
 
@@ -621,8 +721,11 @@ function createTSNEPlot(data) {
 function clusterData() {
 
   var url = create_url("/cluster?");
+  console.log('CLUSTER', url);
 
   $.getJSON(url, function (data) {
+
+    console.log('CLUSTER', data, url);
 
     var kmeans = data['kmeans'];
     var table = '<thead><tr><th>ID</th><th>Cluster</th></tr></thead>';
@@ -651,16 +754,125 @@ function clusterData() {
   });
 }
 
+function getMortality() {
+  var url = create_url('/mortality?');
+  $.getJSON(url, function(data) {
+    var data = JSON.parse(data);
+    plotMortality('mortality_chart', 'mortality_sum', data, title='Mortality');
+  });
+}
+
+
+function plotMortality(div, type, data, title='') {
+
+
+  var seriesOptions = [];
+  for (p in selected_countries) {
+    var timeData = [],
+    name = p;
+    for (var j = 0; j < data.length; j++) {
+      if (p == data[j].adm0_name || data[j]['sub-region']) {
+
+        setMortality(p, data[j]['mortality_sum']);
+        // if (data[j]['sub-region']) {
+        //   name = data[j]['sub-region'];
+        // }
+        var d = [data[j].datetime, data[j]['mortality_sum']];
+        timeData.push(d);
+      }
+    }
+
+
+
+
+    if (timeData.length) {
+      seriesOptions.push({
+        name: name,
+        data: timeData,
+        point: {
+          events: {
+            click: function () {
+              console.log(this);
+            }
+          }
+        }
+      });
+    }
+  }
+
+  console.log("DEATH", data, seriesOptions);
+
+  var chart = Highcharts.chart(div, {
+
+    chart: {
+      height: '500px',
+      events: {
+        selection: function (event) {
+
+          attachZoomChart(event);
+
+        }
+      },
+      zoomType: 'x'
+    },
+
+    title: {
+      text: title
+    },
+
+    subtitle: {
+      text: '...'
+    },
+
+    xAxis: {
+      type: 'datetime',
+      labels: {
+        format: '{value:%Y-%b-%e}'
+      },
+    },
+    // rangeSelector: {
+    //   floating: true,
+    //   y: -65,
+    //   verticalAlign: 'bottom'
+    // },
+    //
+    // navigator: {
+    //   margin: 60,
+    //   enabled: true
+    // },
+    series: seriesOptions
+  });
+
+  if (chart) {
+    lineCharts.push(chart);
+  }
+}
+
+function getCorrelation() {
+
+  console.log("CORRELATION");
+
+  var url = create_url('/correlation?');
+  console.log(url);
+  $.getJSON(url, function(data) {
+
+
+    var data = JSON.parse(data);
+    plotCorrelation('correlation_chart', data, title='Correlation');
+  });
+}
+
 function get_country_data() {
 
 
   getRefugees();
+  getCorrelation();
+  getMortality();
   $('.year-btn').removeClass('accessible');
 
   var url = create_url("/country?");
 
   d3.json(url, function(data) {
-
 
     clusterData();
 

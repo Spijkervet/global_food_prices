@@ -1,6 +1,6 @@
 import sys
 
-sys.path.append("/global_food_prices/code")
+sys.path.append("../../code")
 import os
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -122,13 +122,15 @@ from geopy.geocoders import Nominatim
 geolocator = Nominatim()
 
 
-REGIONAL_FILE_NAME = '/global_food_prices/datasets/Regions/regions.csv'
+REGIONAL_FILE_NAME = '../../datasets/Regions/regions.csv'
 
-df_v5 = pd.read_csv('/global_food_prices/datasets/data/WFPVAM_FoodPrices_version5_Retail.csv')
-df_v4 = pd.read_csv('/global_food_prices/datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
+df_v5 = pd.read_csv('../../datasets/data/WFPVAM_FoodPrices_version5_Retail.csv')
+df_v4 = pd.read_csv('../../datasets/data/WFPVAM_FoodPrices_version4_Retail.csv')
 
 df_v5['datetime'] = pd.to_datetime(df_v5.date, format='%Y-%m')
 df_v4['datetime'] = pd.to_datetime(df_v4.date, format='%Y-%m')
+
+
 
 def merge_regions(df):
     region_df = pd.read_csv(REGIONAL_FILE_NAME)
@@ -143,6 +145,28 @@ df_v4 = merge_regions(df_v4)
 ### REFUGEES ###
 from model.refugees import Refugees
 refugees = Refugees()
+
+df_v5 = refugees.merge_refugees(df_v5)
+df_v4 = refugees.merge_refugees(df_v4)
+
+print("COLUMNS", df_v5.columns)
+
+
+### MORTALITY ###
+
+WHO_MORTALITY = "../../datasets/global_mortality_who.csv"
+
+mortality = pd.read_csv(WHO_MORTALITY, skiprows=1)
+mortality['datetime'] = pd.to_datetime(mortality['Year'], format='%Y')
+
+df_v5 = pd.merge(df_v5, mortality, left_on=['adm0_name', 'datetime'], right_on=['Country', 'datetime'])
+df_v5.drop(columns=['Country', 'Year'], inplace=True)
+df_v5 = df_v5.rename(columns={' Both sexes': 'mortality_sum', ' Male': 'mortality_male', ' Female': 'mortality_female'})
+
+df_v4 = pd.merge(df_v4, mortality, left_on=['adm0_name', 'datetime'], right_on=['Country', 'datetime'])
+df_v4.drop(columns=['Country', 'Year'], inplace=True)
+df_v4 = df_v5.rename(columns={' Both sexes': 'mortality_sum', ' Male': 'mortality_male', ' Female': 'mortality_female'})
+
 
 def get_dataset(df_num):
     global df_v5
@@ -205,6 +229,56 @@ def get_prod_avg(prod_name):
         d.append(add_d)
     return d
 
+def get_mortality(df, regions, countries, years):
+    selector = ''
+
+    if countries:
+        selector = tj.COUNTRY
+        df = df.loc[df[selector].isin(countries)]
+    elif regions:
+        selector = 'sub-region'
+        df = df.loc[df[selector].isin(regions)]
+
+    if years:
+        df = df[df['datetime'].dt.year.isin(years)]
+        df = df.groupby([selector, 'datetime']).mean()[['mortality_sum', 'mortality_male', 'mortality_female']].reset_index()
+    else:
+        df = df.groupby([df[selector], df['datetime'].dt.year]).mean()[['mortality_sum', 'mortality_male', 'mortality_female']].reset_index()
+        df['datetime'] = pd.to_datetime(df['datetime'], format='%Y')
+    return df.to_json(orient='records')
+
+def get_correlation(df, regions, countries, products, years, correlation, correlator):
+
+    if not correlation:
+        correlation = 'cm_name'
+    if not correlator:
+        correlator = 'mp_price'
+
+    y_axis = correlator
+    selector = ''
+
+    if products:
+        df = df.loc[df[tj.PROD].isin(products)]
+
+    if countries:
+        selector = tj.COUNTRY
+        df = df.loc[df[selector].isin(countries)]
+    elif regions:
+        selector = 'sub-region'
+        df = df.loc[df[selector].isin(regions)]
+
+    if years:
+        df = df[df['datetime'].dt.year.isin(years)]
+        df = df.groupby([selector, df[correlation], 'datetime'])[y_axis].mean().reset_index()
+    else:
+        df = df.groupby([df[selector], df[correlation], df['datetime'].dt.year])[y_axis].mean().reset_index()
+        df['datetime'] = pd.to_datetime(df['datetime'], format='%Y')
+
+    df = df.pivot_table(correlator, [selector, 'datetime'], correlation)
+    result = df.corr(method='pearson')
+    return result.to_json()
+
+
 def get_country_data(df, regions, countries, products, years, average=True):
 
     d = []
@@ -232,7 +306,7 @@ def get_country_data(df, regions, countries, products, years, average=True):
         df = df.groupby([selector, 'cm_name', 'datetime']).mean()[['mp_price', 'Gradient']].reset_index()
     else:
         df = df.groupby([df[selector], df['cm_name'], df['datetime'].dt.year]).mean()[['mp_price', 'Gradient']].reset_index()
-
+        df['datetime'] = pd.to_datetime(df['datetime'], format='%Y')
     if average:
         js = json.loads(df.to_json(orient='records'))
         year_d['data'] = js
@@ -258,7 +332,7 @@ def get_cluster_data(df, countries, products, years):
     else:
         year_min = '1992'
         year_max = '2017'
-        
+
     date_selection = tj.selecton_date(df, year_min + '-01', year_max + '-12')
 
     dic, data = tj.cluster(date_selection, NGroups = 4, category_dic = {tj.PROD: [], tj.COUNTRY: countries}, \
@@ -459,6 +533,28 @@ class RefugeesDestination(Resource):
         refugees_data['destinations'] = total
         return jsonify(refugees_data)
 
+class Correlation(Resource):
+    def get(self):
+        args = parser.parse_args()
+        dataset = args['dataset']
+        regions = args['region']
+        countries = args['country']
+        products = args['product']
+        years = args['year']
+        correlation = args['correlation']
+        correlator = args['correlator']
+        correlation_data = get_correlation(get_dataset(dataset), regions, countries, products, years, correlation, correlator)
+        return jsonify(correlation_data)
+
+class Mortality(Resource):
+    def get(self):
+        args = parser.parse_args()
+        dataset = args['dataset']
+        regions = args['region']
+        countries = args['country']
+        years = args['year']
+        mortality_data = get_mortality(get_dataset(dataset), regions, countries, years)
+        return jsonify(mortality_data)
 
 parser = reqparse.RequestParser()
 parser.add_argument('region', type=str, action='append')
@@ -467,6 +563,8 @@ parser.add_argument('product', type=str, action='append')
 parser.add_argument('year', type=int, action='append')
 parser.add_argument('average', type=bool)
 parser.add_argument('dataset', type=int)
+parser.add_argument('correlation', type=str)
+parser.add_argument('correlator', type=str)
 
 api.add_resource(AvgProducts, '/avg_prod/<string:product_id>')
 api.add_resource(Years, '/years')
@@ -482,6 +580,8 @@ api.add_resource(WDI_data, '/wdi')
 
 api.add_resource(RefugeesData, '/refugees')
 api.add_resource(RefugeesDestination, '/refugees_destinations')
+api.add_resource(Correlation, '/correlation')
+api.add_resource(Mortality, '/mortality')
 
 
 @app.route("/")
