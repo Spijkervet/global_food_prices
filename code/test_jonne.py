@@ -608,11 +608,7 @@ def cluster(df, NGroups = 2, category_dic = {PROD: [], COUNTRY: ['Ethiopia']}, m
         print(np.nanmean(datagroup.NewGroupAvg[i]))
         i += 1
 
-<<<<<<< HEAD
-    # plot de geselecteerde data
-=======
-    # # plot de geselecteerde data
->>>>>>> 39d26120b979942de6bb7cf6e93e1754cf10c751
+
     # plt.rcParams['axes.prop_cycle'] = "cycler('ls', ['-','--','-.',':']) * cycler(u'color', ['r','g','b','c','k','y','m','934c00'])" #changes the colour of the graph lines
     # for i, row in enumerate(data):
     #     # if i == 0:
