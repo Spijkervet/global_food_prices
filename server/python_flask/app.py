@@ -292,9 +292,9 @@ def get_correlation(df, regions, countries, products, years, correlation, correl
 
     if years:
         df = df[df['datetime'].dt.year.isin(years)]
-        df = df.groupby([selector, 'cm_name', 'Mortality Rate', 'Refugees', 'Currency Rate', 'GDP', 'datetime'])[y_axis].mean().reset_index()
+        df = df.groupby(['sub-region', 'adm0_name', 'cm_name', 'Mortality Rate', 'Refugees', 'Currency Rate', 'GDP', 'datetime'])[y_axis].mean().reset_index()
     else:
-        df = df.groupby([df[selector], 'cm_name', 'Mortality Rate', 'Refugees', 'Currency Rate', 'GDP', df['datetime'].dt.year])[y_axis].mean().reset_index()
+        df = df.groupby(['sub-region', 'adm0_name', 'cm_name', 'Mortality Rate', 'Refugees', 'Currency Rate', 'GDP', df['datetime'].dt.year])[y_axis].mean().reset_index()
         df['datetime'] = pd.to_datetime(df['datetime'], format='%Y')
 
 
