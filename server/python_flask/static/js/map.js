@@ -5,6 +5,9 @@ var defaultMapColor = 'rgb(66, 66, 66)';
 var highlightMapColor = 'rgb(180, 180, 180)';
 var selectedMapColor = 'rgb(221, 167, 67)';
 
+var arcColors = ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5'];
+var totalArcs = 0;
+
 function test(name) {
   console.log(name);
 }
@@ -40,16 +43,18 @@ var map = new Datamap({
   done: function(datamap) {
     datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
       var country_name = geography.properties.name;
-      country_select.filter(country_name)
-      select_countries(country_select.filters());
-      country_select.render();
+
+      // var defaultData = [{id: country_name, text: country_name}];
+      // $('#country_select').data().select2.updateSelection(defaultData);
+
       show_info(geography, d3.mouse(this));
     });
 
-    datamap.svg.call(d3.behavior.zoom().on("zoom", redraw));
-    function redraw() {
-      datamap.svg.selectAll("g").attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-    }
+    // ZOOM BEHAVIOR
+    // datamap.svg.call(d3.behavior.zoom().on("zoom", redraw));
+    // function redraw() {
+    //   datamap.svg.selectAll("g").attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+    // }
 
   }
 });
@@ -95,6 +100,9 @@ function clearArcs() {
   arcs = Array();
 }
 
+var colors = d3.scale.category10();
+
+
 function drawArc(frequency, origin_lat, origin_lon, dest_lat, dest_lon) {
 
   var new_arc = {
@@ -108,7 +116,7 @@ function drawArc(frequency, origin_lat, origin_lon, dest_lat, dest_lon) {
     },
     options: {
       strokeWidth: frequency / 10000,
-      strokeColor: 'rgba(100, 200, 200, 0.8)',
+      strokeColor: arcColors[totalArcs], //'rgba(100, 200, 200, 0.8)',
       greatArc: true
     }
   };
@@ -117,13 +125,28 @@ function drawArc(frequency, origin_lat, origin_lon, dest_lat, dest_lon) {
   map.arc(arcs, {strokeWidth: 2});
 }
 
-var colors = d3.scale.category10();
+
+
+function perc2color(perc) {
+  var r, g, b = 0;
+  if(perc < 50) {
+    r = 255;
+    g = Math.round(5.1 * perc);
+  }
+  else {
+    g = 255;
+    r = Math.round(510 - 5.10 * perc);
+  }
+  var h = r * 0x10000 + g * 0x100 + b * 0x1;
+  return '#' + ('000000' + h.toString(16)).slice(-6);
+}
 
 function setMortality(country, mortality_rate) {
 
+  // mortality_rate is per 1000, rescale to 100%.
+  console.log(country, mortality_rate);
   var code = getCountryCode(country);
-  console.log('color', code, country, mortality_rate);
   var obj = {};
-  obj[code] = 'rgb(150, 10, 10)';
+  obj[code] = perc2color(mortality_rate / 10);
   map.updateChoropleth(obj);
 }

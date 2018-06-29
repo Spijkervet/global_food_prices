@@ -27,8 +27,7 @@ function filterDimension(dimension, filter) {
 }
 
 function createSelectMenu(id, array) {
-  // $("#" + id).html('');
-
+  $("#" + id).html('');
   // $("#" + id).append('<option value=""></option>');
   var d = {}
   for (var i = 0; i < array.length; i++) {
@@ -59,9 +58,6 @@ var selected_years = new Set();
 var year_buttons = {};
 
 var year_array = Array();
-
-
-getYears();
 
 
 $("#resetButton").on('click', function() {
@@ -196,18 +192,6 @@ function getAllCountries() {
   });
 }
 
-$("#correlation_select").change(function() {
-  correlation = $(this).val()[0];
-  get_country_data();
-  correlationChart.setTitle({text: "Correlation between " + correlation + " and " + correlator});
-});
-
-$("#correlator_select").change(function() {
-  correlator = $(this).val()[0];
-  get_country_data();
-  correlationChart.setTitle({text: "Correlation between " + correlation + " and " + correlator})
-});
-
 $("#dataset_select").change(function() {
   dataset = $(this).val()[0];
   select_countries();
@@ -220,6 +204,7 @@ $("#region_select").change(function(e) {
   select_products();
 
   setMapColor(defaultMapColor);
+  clearArcs();
 
   var url = create_url("/all_countries?");
   $.getJSON(url, function(data) {
@@ -233,6 +218,7 @@ $("#region_select").change(function(e) {
 
     select_countries();
   });
+
 
   // getRefugees(countries);
 })
@@ -266,11 +252,11 @@ function getRefugeeDestinations() {
 
     var frequency = Array();
     var lat_lon = Array();
-    clearArcs();
     for (var d in destinations) {
       frequency.push([destinations[d][0], destinations[d][1]]);
       drawArc(destinations[d][1], destinations[d][2], destinations[d][3], destinations[d][4], destinations[d][5]);
     }
+    totalArcs++;
 
 
     Highcharts.chart('refugeesBarChart', {
@@ -324,20 +310,32 @@ function getRefugeeDestinations() {
   });
 }
 
-function getRefugees() {
+function getPanelText() {
+  var s_years = getSelectedYears(),
+  countries = getFilteredDimension(selected_countries),
+  html = '';
 
-  var s_years = getSelectedYears();
+  for (var i = 0; i < countries.length; i++) {
+    html += countries[i] + ', ';
+  }
+
+  html += ' between ';
+
   if (!s_years.length) {
-    $("#refugeesCountry").html("1990 - 2017");
+    html += '1990 - 2017';
   }
   else {
-    var html = '';
-    for (var i = s_years.length - 1; i >= 0; i--) {
-      html += s_years[i] + ', ';
-    }
-    $("#refugeesCountry").html(html);
+    html += s_years[0] + ' - ' + s_years[s_years.length-1];
   }
+  return html;
+}
 
+
+function getRefugees() {
+
+  var html = getPanelText();
+
+  $("#refugeesCountry").html(html);
   getRefugeeDestinations();
 
   var seriesOptions = [],
@@ -433,16 +431,27 @@ function select_products() {
 function select_countries() {
 
   // var countries = country_select.filters();
-
+  var countryTitle = '';
   for (c in selected_countries) {
 
     var color = selected_countries[c] ? selectedMapColor : highlightMapColor;
+
+    if (selected_countries[c]) {
+      countryTitle += c + ' | ';
+    }
+
     setMapColor(color, c);
   }
+
+  // for (var i = 0; i < priceCharts.length; i++) {
+  //   priceCharts[i].setTitle({text: "Prices in " + countryTitle});
+  // }
+
   get_country_data();
 }
 
 var lineCharts = Array();
+var priceCharts = Array();
 
 function resetZoom() {
   for (var i = 0; i < lineCharts.length; i++) {
@@ -556,9 +565,88 @@ function plotCorrelation(div, data, title='') {
   });
 }
 
+function plotCurrency(div, type, data, title='') {
+  var seriesOptions = [];
+
+  var selection = selected_regions,
+  selector = 'sub-region';
+
+  if (getFilteredDimension(selected_countries).length > 0) {
+    selection = selected_countries;
+    selector = 'adm0_name';
+  }
+
+  console.log(data);
+  for (p in selection) {
+
+    var timeData = [];
+    for (var j = 0; j < data.length; j++) {
+
+      if (p == data[j][selector]) {
+        timeData.push([data[j].datetime, data[j][type]]);
+      }
+    }
+    if (timeData.length) {
+      seriesOptions.push({
+        name: p,
+        data: timeData,
+        point: {
+          events: {
+            click: function () {
+              console.log(this);
+            }
+          }
+        },
+        marker: {
+          enabled: false
+        }
+      });
+    }
+  }
+
+  var chart = Highcharts.chart(div, {
+
+    chart: {
+      height: '500px',
+      events: {
+        selection: function (event) {
+          attachZoomChart(event);
+        }
+      },
+      zoomType: 'x'
+    },
+
+    title: {
+      text: title
+    },
+
+    subtitle: {
+      text: '...'
+    },
+
+    xAxis: {
+      type: 'datetime',
+      labels: {
+        format: '{value:%Y-%b-%e}'
+      },
+      title: {
+        text: 'Date'
+      }
+    },
+    yAxis: {
+      title: {
+        text: 'USD'
+      }
+    },
+    series: seriesOptions
+  });
+
+  if (chart) {
+    lineCharts.push(chart);
+  }
+}
+
 function plotPrices(div, type, data, title='') {
-
-
   var product_data = data['data'],
   seriesOptions = [];
 
@@ -629,21 +717,12 @@ function plotPrices(div, type, data, title='') {
         text: 'USD'
       }
     },
-    // rangeSelector: {
-    //   floating: true,
-    //   y: -65,
-    //   verticalAlign: 'bottom'
-    // },
-    //
-    // navigator: {
-    //   margin: 60,
-    //   enabled: true
-    // },
     series: seriesOptions
   });
 
   if (chart) {
     lineCharts.push(chart);
+    priceCharts.push(chart);
   }
 }
 
@@ -775,6 +854,9 @@ function clusterData() {
 function getMortality() {
   var url = create_url('/mortality?');
   $.getJSON(url, function(data) {
+
+    var html = getPanelText();
+    $('#mortalityCountry').html(html);
     var data = JSON.parse(data);
     plotMortality('mortality_chart', 'Mortality Rate', data, title='Mortality');
   });
@@ -784,24 +866,24 @@ function getMortality() {
 function plotMortality(div, type, data, title='') {
 
 
-  var seriesOptions = [];
+  var seriesOptions = [],
+  avgMortality = 0,
+  avg_i = 0;
+
+
   for (p in selected_countries) {
     var timeData = [],
     name = p;
     for (var j = 0; j < data.length; j++) {
       if (p == data[j].adm0_name || data[j]['sub-region']) {
 
-        setMortality(p, data[j][type]);
-        // if (data[j]['sub-region']) {
-        //   name = data[j]['sub-region'];
-        // }
+        // setMortality(p, data[j][type]);
         var d = [data[j].datetime, data[j][type]];
         timeData.push(d);
+        avgMortality += data[j][type];
+        avg_i += 1;
       }
     }
-
-
-
 
     if (timeData.length) {
       seriesOptions.push({
@@ -818,7 +900,8 @@ function plotMortality(div, type, data, title='') {
     }
   }
 
-  console.log("DEATH", data, seriesOptions);
+  var counter = new CountUp('totalMortality', 0, Number(avgMortality / avg_i / 10), 0, 1.0);
+  counter.start();
 
   var chart = Highcharts.chart(div, {
 
@@ -848,16 +931,6 @@ function plotMortality(div, type, data, title='') {
         format: '{value:%Y-%b-%e}'
       },
     },
-    // rangeSelector: {
-    //   floating: true,
-    //   y: -65,
-    //   verticalAlign: 'bottom'
-    // },
-    //
-    // navigator: {
-    //   margin: 60,
-    //   enabled: true
-    // },
     series: seriesOptions
   });
 
@@ -880,12 +953,27 @@ function getCorrelation() {
   });
 }
 
+function getCurrency() {
+
+  var url = create_url('/currency_data?');
+  console.log(url);
+  $.getJSON(url, function(data) {
+
+    data = JSON.parse(data);
+    plotCurrency('currency_chart', 'Currency Rate', data, title='Currency Rate');
+    plotCurrency('gdp_chart', 'GDP', data, title='GDP');
+  });
+}
+
 function get_country_data() {
 
 
   getRefugees();
   getCorrelation();
   getMortality();
+
+  getCurrency();
+
   $('.year-btn').removeClass('accessible');
 
   var url = create_url("/country?");
@@ -896,8 +984,6 @@ function get_country_data() {
 
     plotPrices('gradient_chart', 'Gradient', data, title='Gradient');
     plotPrices('prices_chart', 'mp_price', data, title='Prices');
-    plotPrices('currency_chart', 'Currency Rate', data, title='Currency Rate');
-    plotPrices('gdp_chart', 'GDP', data, title='GDP');
 
     if (data != null) {
       for (var i = 0; i < data['years'].length; i++) {
@@ -912,7 +998,21 @@ function get_country_data() {
 
 
 $(document).ready(function() {
-  $("#region_select").select2({ width: 'resolve' });
-  $("#country_select").select2({ width: 'resolve' });
-  $("#product_select").select2({ width: 'resolve' });
+  $("#dataset_select").select2({ width: 'resolve'});
+  $("#region_select").select2({ width: 'resolve', placeholder: "Region" });
+  $("#country_select").select2({ width: 'resolve', placeholder: "Country" });
+  $("#product_select").select2({ width: 'resolve', placeholder: "Product" });
+
+  getYears();
+
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
 });

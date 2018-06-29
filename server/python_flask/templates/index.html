@@ -11,7 +11,8 @@
   <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/table.css')}}"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+  <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/table.css')}}"/> -->
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/map.css')}}"/>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/app.css')}}"/>
 </head>
@@ -21,8 +22,55 @@
 
   <div class="country-info"></div>
 
-  <main class="container-fluid">
+
+  <div id="top_menu">
+    <div class="go-to-top">
+      <a href="#begin"><i class="fa fa-globe" aria-hidden="true"></i></a>
+    </div>
     <div class="row">
+      <div class="col-2">
+        <div class="country-container">
+          <!-- <div class="country-title">Dataset</div> -->
+          <select id="dataset_select" class="form-control form-control-lg">
+            <option class="dc-select-option" selected="selected" value="0">U.S. Dollar</option>
+            <option class="dc-select-option" value="1">Affordability Index</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="country-container">
+          <!-- <div class="country-title">Regions</div> -->
+          <select id="region_select" class="form-control form-control-lg" multiple="multiple"></select>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="country-container">
+          <!-- <div class="country-title">Countries</div> -->
+          <select id="country_select" class="form-control form-control-lg" multiple="multiple"></select>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="country-container">
+          <!-- <div class="country-title">Products</div> -->
+          <select id="product_select" class="form-control form-control-lg" multiple="multiple"></select>
+        </div>
+      </div>
+      <div class="col-1">
+        <button id="resetButton" type="button" class="btn btn-dark">Reset</button>
+      </div>
+    </div>
+    <div class="row" style="padding-top: 10px;">
+      <div class="col-12">
+        <div id="years" class="row col-12">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="container-fluid">
+
+
+    <div id="begin" class="row">
       <div class="col">
         <h1 class="site-title">World Food Security</h1>
       </div>
@@ -32,40 +80,7 @@
     </div>
     <div class="row">
       <div class="col-11">
-        <div id="years" class="row col-12">
-        </div>
-      </div>
-      <div class="col-1">
-        <button id="resetButton" type="button" class="btn btn-danger">Reset</button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-2">
-        <div class="country-container">
-          <div class="country-title">Dataset</div>
-          <select id="dataset_select" class="dc-select-menu" multiple="true" size=3>
-            <option class="dc-select-option" selected="selected" value="0">U.S. Dollar</option>
-            <option class="dc-select-option" value="1">Affordability Index</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-2">
-        <div class="country-container">
-          <div class="country-title">Regions</div>
-          <select id="region_select" class="form-control form-control-lg" name="country" multiple="multiple"></select>
-        </div>
-      </div>
-      <div class="col-2">
-        <div class="country-container">
-          <div class="country-title">Countries</div>
-          <select id="country_select" class="form-control form-control-lg" name="country" multiple="multiple"></select>
-        </div>
-      </div>
-      <div class="col-2">
-        <div class="country-container">
-          <div class="country-title">Products</div>
-          <select id="product_select" class="form-control form-control-lg" name="country" multiple="multiple"></select>
-        </div>
+
       </div>
     </div>
 
@@ -75,107 +90,144 @@
       </div>
     </div>
 
-    <!-- DATA -->
+    <!-- <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-product-tab" data-toggle="tab" href="#av-product" role="tab" aria-controls="nav-product" aria-selected="true">Product Prices</a>
+    <a class="nav-item nav-link" id="nav-economy-tab" data-toggle="tab" href="#nav-economy" role="tab" aria-controls="nav-economy" aria-selected="false">Economy</a>
+    <a class="nav-item nav-link" id="nav-correlation-tab" data-toggle="tab" href="#nav-correlation" role="tab" aria-controls="nav-correlation" aria-selected="false">Correlation</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+<div class="tab-pane fade show active" id="av-product" role="tabpanel" aria-labelledby="nav-product-tab">
 
-    <div class="row">
-      <div class="col-6">
-        <h5>Prices</h5>
-        <div id="prices_chart" class="data-panel"></div>
-      </div>
-      <div class="col-6">
-        <h5>Gradient</h5>
-        <div id="gradient_chart" class="data-panel"></div>
-      </div>
-    </div>
 
-    <div class="row">
-      <div class="col-6">
-        <h5>Currency</h5>
-        <div id="currency_chart" class="data-panel"></div>
-      </div>
-      <div class="col-6">
-        <h5>GDP</h5>
-        <div id="gdp_chart" class="data-panel"></div>
-      </div>
-    </div>
+</div>
+<div class="tab-pane fade" id="nav-economy" role="tabpanel" aria-labelledby="nav-economy-tab">
 
-    <div class="row">
-      <div class="col-12">
-        <h5>Correlation</h5>
-        <div id="correlation_chart" class="data-panel"></div>
-      </div>
-    </div>
+</div>
 
-    <div class="row">
-      <div class="col-8">
-        <table id="cluster_table" class="data-panel"></table>
-      </div>
-      <div class="col-4">
-        <div id="tsne_plot" class="data-panel"></div>
-      </div>
-    </div>
+<div class="tab-pane fade" id="nav-correlation" role="tabpanel" aria-labelledby="nav-correlation-tab">
 
-    <div class="row">
-      <div class="col-6">
-        <div id="mortality_chart" class="data-panel"></div>
-      </div>
-    </div>
+</div>
+-->
 
-    <div class="row">
-      <div class="col-4">
-        <div class="data-panel">
-          <div class="jumbotron bg-dark">
-            <h1 class="display-3">Refugees</h1>
-            <p class="lead">Total refugees in <div id="refugeesCountry"></div>.</p>
-            <hr class="my-4">
-            <h1 id="totalRefugees" class="display-3"></h1>
-            <!-- <p></p> -->
-            <p class="lead">
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-8">
-        <div class="data-panel">
-          <div id="refugeesChart" style="height: 400px"></div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="row">
-      <div class="col-4">
-        <div id="refugeesBarChart">
+<section class="section-dark">
+  <div class="row">
+    <div class="col-3">
+      <div class="data-panel">
+        <div class="jumbotron panel-mortality">
+          <img style="width: 50px" src="http://pngimg.com/uploads/skeleton/skeleton_PNG5540.png"/>
+          <h1 class="display-6">Mortality Rate</h1>
+          <p class="lead">Average Mortality Rate in <span id="mortalityCountry"></span></p>
+          <h1><span id="totalMortality" class="display-6"></span>%</h1>
+          <a href="#mortality" class="btn btn-danger">Learn more</a>
         </div>
       </div>
     </div>
 
-
-
-
-
-    <div class="row">
-      <div class="col-6">
-        <div id="test_3" class="data-panel"></div>
-      </div>
-      <div class="col-6">
-        <div id="test" class="data-panel data-table" style="max-height: 15vh; overflow: scroll;"></div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <!-- <table id="cluster_table" class="data-panel"></table> -->
+    <div class="col-3">
+      <div class="data-panel">
+        <div class="jumbotron panel-refugees">
+          <img style="width: 50px" src="https://cdn.freebiesupply.com/logos/large/2x/unhcr-1-logo-png-transparent.png"/>
+          <h1 class="display-6">Refugees</h1>
+          <p class="lead">Total refugees in <span id="refugeesCountry"></span></p>
+          <h1 id="totalRefugees" class="display-6"></h1>
+          <a href="#refugees" class="btn btn-danger">Learn more</a>
+        </div>
       </div>
     </div>
-    <footer class="row">
-      <div class="col">
-        <p class="footer-text">Data provided by: WHO</p>
+  </div>
+</section>
+
+<section class="section-light">
+
+
+
+
+  <!-- DATA -->
+
+  <div class="section-title panel-products">
+    <h1 class="display-3">Products</h1>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <h5>Prices</h5>
+      <div id="prices_chart" class="data-panel"></div>
+    </div>
+    <div class="col-6">
+      <h5>Gradient</h5>
+      <div id="gradient_chart" class="data-panel"></div>
+    </div>
+  </div>
+  <div class="section-title panel-economy">
+    <h1 class="display-3">Economy</h1>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <h5>Currency</h5>
+      <div id="currency_chart" class="data-panel"></div>
+    </div>
+    <div class="col-6">
+      <h5>GDP</h5>
+      <div id="gdp_chart" class="data-panel"></div>
+    </div>
+  </div>
+
+
+  <div class="section-title panel-cluster">
+    <h1 class="display-3">Clustering & Correlation</h1>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h5>Correlation</h5>
+      <div id="correlation_chart" class="data-panel"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-8">
+      <h1 class="display-6 text-dark">K-Means</h1>
+      <table id="cluster_table" class="data-panel"></table>
+    </div>
+    <div class="col-4">
+      <div id="tsne_plot" class="data-panel"></div>
+    </div>
+  </div>
+
+  <div class="section-title panel-mortality">
+    <h1 class="display-3">Mortality</h1>
+  </div>
+  <div id="mortality" class="row">
+    <div class="col-6">
+      <div id="mortality_chart" class="data-panel"></div>
+    </div>
+  </div>
+
+  <div class="section-title panel-refugees">
+    <h1 class="display-3">Refugees</h1>
+  </div>
+  <div id="refugees" class="row">
+    <div class="col-8">
+      <div class="data-panel">
+        <div id="refugeesChart" style="height: 400px"></div>
       </div>
-    </footer>
-  </main>
-  <!--
+    </div>
+    <div class="col-4">
+      <div id="refugeesBarChart">
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="row">
   <div class="col">
-  <div id="city_select"> </div>
+    <p class="footer-text">Data provided by: WHO</p>
+  </div>
+</footer>
+</main>
+<!--
+<div class="col">
+<div id="city_select"> </div>
 </div>
 <div class="col">
 <div id="select1"> </div>
@@ -189,8 +241,8 @@
 
 
 <script src="{{ url_for('static', filename='js/countUp.js') }}" type="text/javascript"></script>
-<!-- <script src="https://code.highcharts.com/highcharts.js"></script> -->
-<script src="http://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<!-- <script src="http://code.highcharts.com/stock/highstock.js"></script> -->
 <script src="https://code.highcharts.com/modules/heatmap.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 

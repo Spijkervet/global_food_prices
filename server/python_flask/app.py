@@ -209,7 +209,7 @@ def get_dataset(df_num):
 
 def get_all_years(df):
     l = []
-    years = set(df['datetime'].dt.year)
+    years = sorted(set(df['datetime'].dt.year))
     for y in years:
         d = {}
         d['year'] = y
@@ -232,7 +232,7 @@ def get_all_countries(df, regions=[]):
 
 def get_all_regions(df):
     l = []
-    regions = set(df['sub-region'])
+    regions = df['sub-region'].unique()
     # for r in regions:
     #     d = {}
     #     d['region'] = r
@@ -264,9 +264,9 @@ def get_mortality(df, regions, countries, years):
 
     if years:
         df = df[df['datetime'].dt.year.isin(years)]
-        df = df.groupby([selector, 'datetime']).mean()[['Mortality Rate', 'mortality_male', 'mortality_female']].reset_index()
+        df = df.groupby(['sub-region', 'adm0_name', 'datetime']).mean()[['Mortality Rate', 'mortality_male', 'mortality_female']].reset_index()
     else:
-        df = df.groupby([df[selector], df['datetime'].dt.year]).mean()[['Mortality Rate', 'mortality_male', 'mortality_female']].reset_index()
+        df = df.groupby([df['sub-region'], df['adm0_name'],  df['datetime'].dt.year]).mean()[['Mortality Rate', 'mortality_male', 'mortality_female']].reset_index()
         df['datetime'] = pd.to_datetime(df['datetime'], format='%Y')
     return df.to_json(orient='records')
 
@@ -305,10 +305,28 @@ def get_correlation(df, regions, countries, products, years, correlation, correl
     result = t.corr(method='pearson')
     return result.to_json()
 
+def get_currency_data(df, regions, countries, years):
+
+    selector = ''
+    if countries:
+        selector = tj.COUNTRY
+        df = df.loc[df[selector].isin(countries)]
+    elif regions:
+        selector = 'sub-region'
+        df = df.loc[df[selector].isin(regions)]
+
+    if years:
+        df = df[df['datetime'].dt.year.isin(years)]
+        df = df.groupby([selector, 'datetime']).mean()[['Currency Rate', 'GDP']].reset_index()
+    else:
+        df = df.groupby([df[selector], df['datetime'].dt.year]).mean()[['Currency Rate', 'GDP']].reset_index()
+        df['datetime'] = pd.to_datetime(df['datetime'], format='%Y')
+
+    return df.to_json(orient='records')
+
+
 
 def get_country_data(df, regions, countries, products, years, average=True):
-
-    d = []
 
     js = {}
     year_d = {}
@@ -348,7 +366,7 @@ def get_country_products(df, regions, countries):
     if countries:
         df = df.loc[df[tj.COUNTRY].isin(countries)]
 
-    products = set(df[tj.PROD])
+    products = df[tj.PROD].unique()
     return list(products)
 
 def get_cluster_data(df, countries, products, years):
@@ -583,6 +601,16 @@ class Mortality(Resource):
         mortality_data = get_mortality(get_dataset(dataset), regions, countries, years)
         return jsonify(mortality_data)
 
+class Currency(Resource):
+    def get(self):
+        args = parser.parse_args()
+        dataset = args['dataset']
+        regions = args['region']
+        countries = args['country']
+        years = args['year']
+        currency_data = get_currency_data(get_dataset(dataset), regions, countries, years)
+        return jsonify(currency_data)
+
 parser = reqparse.RequestParser()
 parser.add_argument('region', type=str, action='append')
 parser.add_argument('country', type=str, action='append')
@@ -609,6 +637,7 @@ api.add_resource(RefugeesData, '/refugees')
 api.add_resource(RefugeesDestination, '/refugees_destinations')
 api.add_resource(Correlation, '/correlation')
 api.add_resource(Mortality, '/mortality')
+api.add_resource(Currency, '/currency_data')
 
 
 @app.route("/")

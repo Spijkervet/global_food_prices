@@ -7,6 +7,7 @@
   --active-btn-color-hl: rgb(240, 180, 80);
   --accessible-btn-color: rgba(120, 120, 120,0.8);
   --data-background: #232323;
+  --selected-color: rgb(221, 167, 67);
 
 }
 
@@ -14,6 +15,37 @@ body {
   font-family: 'Montserrat', sans-serif;
   background-color: var(--dark-grey);
   color: var(--text-color);
+}
+
+main {
+  margin-top: 40px;
+}
+
+.section-light {
+  background: white
+}
+
+#top_menu {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: rgba(20, 20, 20, 0.75);
+}
+
+.go-to-top {
+  position: absolute;
+  right: 30px;
+  top: 0;
+}
+
+.go-to-top i {
+  font-size: 2em;
+  transition: 0.5s;
+}
+
+.go-to-top i:hover {
+  color: var(--selected-color);
 }
 
 .country-info {
@@ -31,6 +63,11 @@ body {
 
 #cluster_table {
   font-size: 0.75em;
+  color: black;
+}
+
+.select2-search__field {
+  color: white !important;
 }
 
 .select2-selection {
@@ -47,6 +84,12 @@ body {
 
 .select2-results {
   background-color: var(--dark-grey);
+}
+
+
+.select2-selection__choice {
+  background-color: var(--selected-color) !important;
+  border: 0px solid #000 !important;
 }
 
 /*
@@ -176,20 +219,53 @@ select {
   font-size: 0.8rem;
 }
 
+
+.panel-products {
+  background-color: rgba(90, 160, 120, 0.8);
+}
+
+.panel-economy {
+  background-color: rgba(100, 120, 150, 0.8);
+}
+
+.panel-cluster {
+  background-color: rgba(150, 90, 130, 0.8);
+}
+
+.panel-mortality {
+  background-color: rgba(150, 30, 40, 0.8);
+}
+
+.panel-refugees {
+  background-color: rgba(83, 55, 89, 0.8);
+}
+
+.section-title {
+  padding: 20px;
+  text-align: center;
+}
+
+
 .data-panel {
-  background: var(--data-background);
-  border-collapse: collapse;
+  /* background: var(--data-background); */
+  /* border-collapse: collapse; */
   margin: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 .dc-chart svg {
   margin: 15px;
 }
 
-
-.dc-table-row {
-  background-color: rgb(70, 70, 70);
-  border: 1px solid black;
+.data-table tbody {
+  display:block;
+  max-height:300px;
+  overflow-y:scroll;
+}
+.data-table thead, tbody tr {
+  display:table;
+  width:100%;
+  table-layout:fixed;
 }
 
 .data-table>tbody>tr>td {

@@ -6,7 +6,7 @@
  * Dark theme for Highcharts JS
  * @author Torstein Honsi
  */
- 
+
 'use strict';
 /* global document */
 // Load the fonts
@@ -23,12 +23,12 @@ Highcharts.theme = {
         backgroundColor: {
             linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
             stops: [
-                [0, '#2a2a2b'],
-                [1, '#3e3e40']
+                [0, 'rgb(50, 50, 50)'],
+                [1, 'rgb(50, 50, 50)']
             ]
         },
         style: {
-            fontFamily: '\'Unica One\', sans-serif'
+            // fontFamily: '\'Unica One\', sans-serif'
         },
         plotBorderColor: '#606063'
     },
