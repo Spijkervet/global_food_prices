@@ -518,13 +518,16 @@ class Countries(Resource):
 class CountryData(Resource):
     def get(self):
         args = parser.parse_args()
-        countries = args['country']
         dataset = args['dataset']
         regions = args['region']
+        countries = args['country']
         products = args['product']
         years = args['year']
-        country_data = get_country_data(get_dataset(dataset), regions, countries, products, years)
-        return jsonify(country_data)
+
+        if countries or regions:
+            country_data = get_country_data(get_dataset(dataset), regions, countries, products, years)
+            return jsonify(country_data)
+        return ''
 
 class CountryProducts(Resource):
     def get(self):
@@ -577,11 +580,13 @@ class RefugeesDestination(Resource):
         countries = args['country']
         years = args['year']
 
-        # only single country.
-        total = refugees.get_refugee_destinations(countries, years)
-        refugees_data = {}
-        refugees_data['destinations'] = total
-        return jsonify(refugees_data)
+        if countries is not None:
+            # only single country.
+            total = refugees.get_refugee_destinations(countries, years)
+            refugees_data = {}
+            refugees_data['destinations'] = total
+            return jsonify(refugees_data)
+        return ''
 
 class Correlation(Resource):
     def get(self):
