@@ -369,7 +369,7 @@ def get_country_products(df, regions, countries):
     products = df[tj.PROD].unique()
     return list(products)
 
-def get_cluster_data(df, countries, products, years):
+def get_cluster_data(df, countries, products, years, cluster_group=5):
 
     if years:
         year_min = str(min(years))
@@ -380,7 +380,7 @@ def get_cluster_data(df, countries, products, years):
 
     date_selection = tj.selecton_date(df, year_min + '-01', year_max + '-12')
 
-    dic, data = tj.cluster(date_selection, NGroups = 4, category_dic = {tj.PROD: products, tj.COUNTRY: countries}, \
+    dic, data = tj.cluster(date_selection, NGroups = cluster_group, category_dic = {tj.PROD: products, tj.COUNTRY: countries}, \
         mode = 2, Alg = 0, init_mode = 2, norm = True, PCA = True, dim = 20)
 
     l = []
@@ -543,7 +543,12 @@ class Cluster(Resource):
         product = args['product']
         dataset = args['dataset']
         years = args['year']
-        cluster_data, cluster_dic = get_cluster_data(get_dataset(dataset), countries, product, years)
+        cluster_group = args['cluster_group']
+
+        if cluster_group is None:
+            cluster_group = 5
+
+        cluster_data, cluster_dic = get_cluster_data(get_dataset(dataset), countries, product, years, cluster_group)
         tsne_data = get_tsne_data(get_dataset(dataset), countries, product, cluster_dic)
 
         merged = {}
@@ -620,6 +625,7 @@ parser.add_argument('average', type=bool)
 parser.add_argument('dataset', type=int)
 parser.add_argument('correlation', type=str)
 parser.add_argument('correlator', type=str)
+parser.add_argument('cluster_group', type=int)
 
 api.add_resource(AvgProducts, '/avg_prod/<string:product_id>')
 api.add_resource(Years, '/years')

@@ -51,6 +51,8 @@ var selected_regions = '';
 var selected_countries = '';
 var selected_products = '';
 
+var cluster_groups = 5;
+
 
 var selected_years = new Set();
 var year_buttons = {};
@@ -72,10 +74,15 @@ function numberFormat(number, decimals=2) {
   return "$" + number.toFixed(decimals);
 }
 
+$("#clusterGroups").change(function() {
+
+  cluster_groups = $(this).val();
+});
+
 function create_url(endpoint) {
 
-
   var url = endpoint + "&dataset=" + dataset;
+  url += "&cluster_group=" + cluster_groups;
 
   for (var i in selected_regions) {
     if (selected_regions[i]) {
@@ -494,7 +501,6 @@ function plotCorrelation(div, data, title='') {
     x += 1;
   }
 
-  console.log(series_data);
 
   correlationChart = Highcharts.chart(div, {
 
@@ -553,13 +559,20 @@ function plotCorrelation(div, data, title='') {
       borderWidth: 1,
       data: series_data,
       dataLabels: {
-        enabled: true,
-        color: '#000000'
+        enabled: false,
+        color: '#000000',
+        style: {
+          fontSize: '9px'
+        }
       },
     }]
 
   });
 }
+
+$("#kmeansbutton").on('click', function() {
+  clusterData();
+});
 
 function plotCurrency(div, type, data, title='') {
   var seriesOptions = [];
@@ -603,7 +616,7 @@ function plotCurrency(div, type, data, title='') {
   var chart = Highcharts.chart(div, {
 
     chart: {
-      height: '500px',
+      height: '800px',
       events: {
         selection: function (event) {
           attachZoomChart(event);
@@ -648,7 +661,7 @@ function plotPrices(div, type, data, title='') {
 
   var selector = 'sub-region';
 
-  if (getFilteredDimension(selected_products).length == 1) {
+  if (getFilteredDimension(selected_countries).length > 0) {
     selector = 'adm0_name';
   }
 
@@ -681,45 +694,23 @@ function plotPrices(div, type, data, title='') {
     });
   }
 
-  console.log(placeHolder);
-  //
-  //
-  // for (p in selection) {
-  //   var timeData = [];
-  //   for (var j = 0; j < product_data.length; j++) {
-  //
-  //     if (p == product_data[j][selector]) {
-  //       timeData.push([product_data[j].datetime, product_data[j][type]]);
-  //     }
-  //   }
-  //   if (timeData.length) {
-  //     seriesOptions.push({
-  //       name: p,
-  //       data: timeData,
-  //       point: {
-  //         events: {
-  //           click: function () {
-  //             console.log(this);
-  //           }
-  //         }
-  //       },
-  //       marker: {
-  //         enabled: false
-  //       }
-  //     });
-  //   }
-  // }
+
 
   var chart = Highcharts.chart(div, {
 
     chart: {
-      height: '500px',
+      height: '600px',
       events: {
         selection: function (event) {
           attachZoomChart(event);
         }
       },
-      zoomType: 'x'
+      zoomType: 'x',
+    },
+    legend: {
+      enabled: true,
+      // layout: 'vertical',
+      maxHeight: 100
     },
 
     title: {
@@ -898,34 +889,74 @@ function plotMortality(div, type, data, title='') {
   avg_i = 0;
 
 
-  for (p in selected_countries) {
-    var timeData = [],
-    name = p;
-    for (var j = 0; j < data.length; j++) {
-      if (p == data[j].adm0_name || data[j]['sub-region']) {
+  var selector = 'adm0_name';
 
-        // setMortality(p, data[j][type]);
-        var d = [data[j].datetime, data[j][type]];
-        timeData.push(d);
-        avgMortality += data[j][type];
-        avg_i += 1;
-      }
+  if (getFilteredDimension(selected_countries).length > 0) {
+    selector = 'adm0_name';
+  }
+
+  var placeHolder = {};
+  for (var i = 0; i < data.length; i++) {
+    var key = data[i][selector];
+
+    if (!(key in placeHolder)) {
+      placeHolder[key] = Array();
     }
-
-    if (timeData.length) {
-      seriesOptions.push({
-        name: name,
-        data: timeData,
-        point: {
-          events: {
-            click: function () {
-              console.log(this);
-            }
-          }
-        }
-      });
+    else {
+      placeHolder[key].push([data[i].datetime, data[i][type]]);
+      avgMortality += data[i][type];
+      avg_i += 1;
     }
   }
+
+  for (var p in placeHolder) {
+    seriesOptions.push({
+      name: p,
+      data: placeHolder[p],
+      point: {
+        events: {
+          click: function () {
+            console.log(this);
+          }
+        }
+      },
+      marker: {
+        enabled: false
+      }
+    });
+  }
+
+
+
+
+  // for (p in selected_countries) {
+  //   var timeData = [],
+  //   name = p;
+  //   for (var j = 0; j < data.length; j++) {
+  //     if (p == data[j].adm0_name || data[j]['sub-region']) {
+  //
+  //       // setMortality(p, data[j][type]);
+  //       var d = [data[j].datetime, data[j][type]];
+  //       timeData.push(d);
+  //       avgMortality += data[j][type];
+  //       avg_i += 1;
+  //     }
+  //   }
+  //
+  //   if (timeData.length) {
+  //     seriesOptions.push({
+  //       name: name,
+  //       data: timeData,
+  //       point: {
+  //         events: {
+  //           click: function () {
+  //             console.log(this);
+  //           }
+  //         }
+  //       }
+  //     });
+  //   }
+  // }
 
   var counter = new CountUp('totalMortality', 0, Number(avgMortality / avg_i / 10), 0, 1.0);
   counter.start();

@@ -26,6 +26,8 @@
   <div id="top_menu">
     <div class="go-to-top">
       <a href="#begin"><i class="fa fa-globe" aria-hidden="true"></i></a>
+      <a href="#mortality"><i class="fa fa-heartbeat" aria-hidden="true"></i></a>
+      <a href="#refugees"><i class="fa fa-home" aria-hidden="true"></i></a>
     </div>
     <div class="row">
       <div class="col-2">
@@ -117,8 +119,8 @@
       <div class="data-panel">
         <div class="jumbotron panel-mortality">
           <img style="width: 50px" src="http://pngimg.com/uploads/skeleton/skeleton_PNG5540.png"/>
-          <h1 class="display-6">Mortality Rate</h1>
-          <p class="lead">Average Mortality Rate in <span id="mortalityCountry"></span></p>
+          <h1 class="display-6">Adult Mortality Rate</h1>
+          <p class="lead">Average Adult Mortality Rate in <span id="mortalityCountry"></span></p>
           <h1><span id="totalMortality" class="display-6"></span>%</h1>
           <a href="#mortality" class="btn btn-danger">Learn more</a>
         </div>
@@ -159,20 +161,6 @@
       <div id="gradient_chart" class="data-panel"></div>
     </div>
   </div>
-  <div class="section-title panel-economy">
-    <h1 class="display-3">Economy</h1>
-  </div>
-  <div class="row">
-    <div class="col-6">
-      <h5>Currency</h5>
-      <div id="currency_chart" class="data-panel"></div>
-    </div>
-    <div class="col-6">
-      <h5>GDP</h5>
-      <div id="gdp_chart" class="data-panel"></div>
-    </div>
-  </div>
-
 
   <div class="section-title panel-cluster">
     <h1 class="display-3">Clustering & Correlation</h1>
@@ -187,43 +175,71 @@
   <div class="row">
     <div class="col-8">
       <h1 class="display-6 text-dark">K-Means</h1>
-      <table id="cluster_table" class="data-panel"></table>
-    </div>
-    <div class="col-4">
-      <div id="tsne_plot" class="data-panel"></div>
-    </div>
-  </div>
+      <button id="kmeansbutton" class="btn btn-warning" style="margin-bottom: 20px;">Cluster again</button>
 
-  <div class="section-title panel-mortality">
-    <h1 class="display-3">Mortality</h1>
-  </div>
-  <div id="mortality" class="row">
-    <div class="col-6">
-      <div id="mortality_chart" class="data-panel"></div>
-    </div>
-  </div>
-
-  <div class="section-title panel-refugees">
-    <h1 class="display-3">Refugees</h1>
-  </div>
-  <div id="refugees" class="row">
-    <div class="col-8">
-      <div class="data-panel">
-        <div id="refugeesChart" style="height: 400px"></div>
+      <div style="margin-bottom: 20px">
+        <span class="text-dark">Cluster Groups: <span>
+          <select id="clusterGroups" class="form-group form-control">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option selected>4</option>
+            <option>5</option>
+            <option>6</option>
+          </select>
+        </div>
+        <table id="cluster_table" class="data-panel"></table>
+      </div>
+      <div class="col-4">
+        <div id="tsne_plot" class="data-panel"></div>
       </div>
     </div>
-    <div class="col-4">
-      <div id="refugeesBarChart">
+
+
+    <div class="section-title panel-economy">
+      <h1 class="display-3">Economy</h1>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <h5>Currency</h5>
+        <div id="currency_chart" class="data-panel"></div>
+      </div>
+      <div class="col-6">
+        <h5>GDP</h5>
+        <div id="gdp_chart" class="data-panel"></div>
       </div>
     </div>
-  </div>
-</section>
 
-<footer class="row">
-  <div class="col">
-    <p class="footer-text">Data provided by: WHO</p>
-  </div>
-</footer>
+    <div id="mortality" class="section-title panel-mortality">
+      <h1 class="display-3">Mortality</h1>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div id="mortality_chart" class="data-panel"></div>
+      </div>
+    </div>
+
+    <div id="refugees" class="section-title panel-refugees">
+      <h1 class="display-3">Refugees</h1>
+    </div>
+    <div class="row">
+      <div class="col-8">
+        <div class="data-panel">
+          <div id="refugeesChart" style="height: 400px"></div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div id="refugeesBarChart">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="row">
+    <div class="col">
+      <p class="footer-text">Data provided by: WHO</p>
+    </div>
+  </footer>
 </main>
 <!--
 <div class="col">
