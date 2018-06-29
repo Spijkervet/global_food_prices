@@ -348,9 +348,9 @@ def get_country_data(df, regions, countries, products, years, average=True):
 
     if years:
         df = df[df['datetime'].dt.year.isin(years)]
-        df = df.groupby([selector, 'cm_name', 'datetime']).mean()[['mp_price', 'Gradient', 'Currency Rate', 'GDP']].reset_index()
+        df = df.groupby([selector, 'cm_name', 'datetime']).mean()[['mp_price', 'Gradient']].reset_index()
     else:
-        df = df.groupby([df[selector], df['cm_name'], df['datetime'].dt.year]).mean()[['mp_price', 'Gradient', 'Currency Rate', 'GDP']].reset_index()
+        df = df.groupby([df[selector], df['cm_name'], df['datetime'].dt.year]).mean()[['mp_price', 'Gradient']].reset_index()
         df['datetime'] = pd.to_datetime(df['datetime'], format='%Y')
     if average:
         js = json.loads(df.to_json(orient='records'))

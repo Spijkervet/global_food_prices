@@ -51,8 +51,6 @@ var selected_regions = '';
 var selected_countries = '';
 var selected_products = '';
 
-var correlation = '';
-var correlator = '';
 
 var selected_years = new Set();
 var year_buttons = {};
@@ -61,13 +59,12 @@ var year_array = Array();
 
 
 $("#resetButton").on('click', function() {
-  country_ndx.remove();
-  product_ndx.remove();
-  dimensions = {};
-  deSelectAllYears();
-  setMapColor(defaultMapColor);
-
-  resetZoom();
+  location.reload();
+  //
+  // deSelectAllYears();
+  // setMapColor(defaultMapColor);
+  //
+  // resetZoom();
 });
 
 
@@ -79,7 +76,6 @@ function create_url(endpoint) {
 
 
   var url = endpoint + "&dataset=" + dataset;
-  url += '&correlation=' + correlation +'&correlator=' + correlator;
 
   for (var i in selected_regions) {
     if (selected_regions[i]) {
@@ -325,7 +321,7 @@ function getPanelText() {
     html += '1990 - 2017';
   }
   else {
-    html += s_years[0] + ' - ' + s_years[s_years.length-1];
+    html +=  s_years[s_years.length-1] + ' - ' + s_years[0];
   }
   return html;
 }
@@ -650,38 +646,69 @@ function plotPrices(div, type, data, title='') {
   var product_data = data['data'],
   seriesOptions = [];
 
-  var selector = 'cm_name', selection = selected_products;
+  var selector = 'sub-region';
 
-  if (type == new String('GDP').valueOf() || type == new String('Currency Rate').valueOf()) {
+  if (getFilteredDimension(selected_products).length == 1) {
     selector = 'adm0_name';
-    selection = selected_countries;
   }
 
-  for (p in selection) {
-    var timeData = [];
-    for (var j = 0; j < product_data.length; j++) {
+  var placeHolder = {};
+  for (var i = 0; i < product_data.length; i++) {
+    var key = product_data[i].cm_name + ' ' + product_data[i][selector];
 
-      if (p == product_data[j][selector]) {
-        timeData.push([product_data[j].datetime, product_data[j][type]]);
-      }
+    if (!(key in placeHolder)) {
+      placeHolder[key] = Array();
     }
-    if (timeData.length) {
-      seriesOptions.push({
-        name: p,
-        data: timeData,
-        point: {
-          events: {
-            click: function () {
-              console.log(this);
-            }
+    else {
+      placeHolder[key].push([product_data[i].datetime, product_data[i][type]]);
+    }
+  }
+
+  for (var p in placeHolder) {
+    seriesOptions.push({
+      name: p,
+      data: placeHolder[p],
+      point: {
+        events: {
+          click: function () {
+            console.log(this);
           }
-        },
-        marker: {
-          enabled: false
         }
-      });
-    }
+      },
+      marker: {
+        enabled: false
+      }
+    });
   }
+
+  console.log(placeHolder);
+  //
+  //
+  // for (p in selection) {
+  //   var timeData = [];
+  //   for (var j = 0; j < product_data.length; j++) {
+  //
+  //     if (p == product_data[j][selector]) {
+  //       timeData.push([product_data[j].datetime, product_data[j][type]]);
+  //     }
+  //   }
+  //   if (timeData.length) {
+  //     seriesOptions.push({
+  //       name: p,
+  //       data: timeData,
+  //       point: {
+  //         events: {
+  //           click: function () {
+  //             console.log(this);
+  //           }
+  //         }
+  //       },
+  //       marker: {
+  //         enabled: false
+  //       }
+  //     });
+  //   }
+  // }
 
   var chart = Highcharts.chart(div, {
 
@@ -979,6 +1006,8 @@ function get_country_data() {
   var url = create_url("/country?");
 
   d3.json(url, function(data) {
+
+    console.log(url, data);
 
     clusterData();
 
